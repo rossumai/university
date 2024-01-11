@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcookbook=self.webpackChunkcookbook||[]).push([[4589],{4265:o=>{o.exports=JSON.parse('{"permalink":"/cookbook/blog/tags/docusaurus","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);

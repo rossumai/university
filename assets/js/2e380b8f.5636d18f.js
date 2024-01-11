@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcookbook=self.webpackChunkcookbook||[]).push([[3510],{3833:o=>{o.exports=JSON.parse('{"permalink":"/cookbook/blog/tags/facebook","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
