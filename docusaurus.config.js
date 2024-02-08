@@ -4,12 +4,12 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Cookbook',
-  tagline: 'Dinosaurs are cool',
+  title: 'Rossum.ai Cookbook',
+  tagline: 'Build something cool with Rossum.ai',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -77,9 +77,21 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Integrations',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            type: 'docSidebar',
+            sidebarId: 'extensionsSidebar',
+            position: 'left',
+            label: 'Extensions',
+          },
+          {
+            type: 'docSidebar',
+            sidebarId: 'docusaurusSidebar',
+            position: 'left',
+            label: 'Docusaurus',
+          },
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/rossumai-community/cookbook',
             label: 'GitHub',
@@ -91,11 +103,11 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Integrations',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'NetSuite',
+                to: '/docs/category/netsuite',
               },
             ],
           },
