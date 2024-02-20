@@ -10,7 +10,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 const config = {
   title: 'Rossum.ai Cookbook',
   tagline: 'Build something cool with Rossum.ai',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/128-blue-crunch.png',
 
   // Set the production url of your site here
   url: 'https://rossumai-community.github.io',
@@ -42,17 +42,11 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/rossumai-community/cookbook/tree/master/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/rossumai-community/cookbook/tree/master/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -67,10 +61,10 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Cookbook',
+        title: 'Rossum.ai Cookbook',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'Rossum.ai Logo',
+          src: 'img/128-blue-crunch.png',
         },
         items: [
           {
@@ -85,13 +79,21 @@ const config = {
             position: 'left',
             label: 'Extensions',
           },
-          {
-            type: 'docSidebar',
-            sidebarId: 'docusaurusSidebar',
-            position: 'left',
-            label: 'Docusaurus',
-          },
-          { to: '/blog', label: 'Blog', position: 'left' },
+
+          // See: http://localhost:3000/cookbook/docs/docusaurus/intro
+          // {
+          //   type: 'docSidebar',
+          //   sidebarId: 'docusaurusSidebar',
+          //   position: 'left',
+          //   label: 'Docusaurus',
+          // },
+
+          // http://localhost:3000/cookbook/blog
+          // {
+          //   to: '/blog',
+          //   label: 'Blog',
+          //   position: 'left',
+          // },
           {
             href: 'https://github.com/rossumai-community/cookbook',
             label: 'GitHub',
@@ -112,23 +114,6 @@ const config = {
             ],
           },
           {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
             title: 'More',
             items: [
               {
@@ -137,16 +122,22 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/rossumai-community/cookbook',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Rossum.ai`,
+      },
+      announcementBar: {
+        content: '🚧 Work in progress. 🚧',
+        backgroundColor: '#fff8e6',
+        isCloseable: false,
       },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['json'],
       },
     }),
 };
