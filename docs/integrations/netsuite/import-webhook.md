@@ -6,6 +6,8 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+Notice that each configuration has `concurrency_limit` configured. The best way how to determine the right number is to visit **Setup > Integration > Integration Governance** where you can see (and configure) not only the concurrency limits but also peak concurrency of all integrations allowing you to choose the best number.
+
 ## Full data imports (weekly)
 
 Schedule: `0 0 * * 6`
@@ -38,6 +40,27 @@ Schedule: `0 0 * * 6`
             "operator": "anyOf",
             "searchValue": "_inventoryItem",
             "attribute_name": "type"
+          },
+          {
+            "ns_type": "SearchBooleanField",
+            "searchValue": "false",
+            "attribute_name": "isInactive"
+          }
+        ]
+      }
+    },
+    {
+      // Item Receipts (GRNs)
+      "ns_type": "Transaction",
+      "search_type": "search",
+      "master_data_name": "sandbox_NS_ItemReceipt",
+      "basic_search_config": {
+        "attributes": [
+          {
+            "ns_type": "SearchEnumMultiSelectField",
+            "operator": "anyOf",
+            "searchValue": "_itemReceipt",
+            "attribute_name": "type"
           }
         ]
       }
@@ -47,6 +70,22 @@ Schedule: `0 0 * * 6`
       "ns_type": "Location",
       "search_type": "search",
       "master_data_name": "sandbox_NS_Location"
+    },
+    {
+      // Purchase Orders
+      "ns_type": "Transaction",
+      "search_type": "search",
+      "master_data_name": "sandbox_NS_PurchaseOrder",
+      "basic_search_config": {
+        "attributes": [
+          {
+            "ns_type": "SearchEnumMultiSelectField",
+            "operator": "anyOf",
+            "searchValue": "_purchaseOrder",
+            "attribute_name": "type"
+          }
+        ]
+      }
     },
     {
       // Subsidiaries
