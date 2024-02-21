@@ -3,9 +3,24 @@ title: 'Import webhook'
 sidebar_position: 2
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ## Full data imports (weekly)
 
 Schedule: `0 0 * * 6`
+
+<Tabs groupId="netsuite-flavor" queryString>
+  <TabItem value="modern" label="Modern" default>
+
+```json
+{
+  // 🚧 WORK IN PROGESS 🚧
+}
+```
+
+  </TabItem>
+  <TabItem value="original" label="Original">
 
 ```json
 {
@@ -50,9 +65,24 @@ Schedule: `0 0 * * 6`
 }
 ```
 
+  </TabItem>
+</Tabs>
+
 ## Differential data imports (daily)
 
 Schedule: `0 0 * * *`
+
+<Tabs groupId="netsuite-flavor" queryString>
+  <TabItem value="modern" label="Modern" default>
+
+```json
+{
+  // 🚧 WORK IN PROGESS 🚧
+}
+```
+
+  </TabItem>
+  <TabItem value="original" label="Original">
 
 The main idea is to add the following `last_modified_date` search value to each import config:
 
@@ -87,3 +117,6 @@ The main idea is to add the following `last_modified_date` search value to each 
   "concurrency_limit": 4
 }
 ```
+
+  </TabItem>
+</Tabs>
