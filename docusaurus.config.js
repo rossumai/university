@@ -114,6 +114,15 @@ const config = {
             ],
           },
           {
+            title: 'Extensions',
+            items: [
+              {
+                label: 'Master Data Hub',
+                to: '/docs/category/master-data-hub',
+              },
+            ],
+          },
+          {
             title: 'More',
             items: [
               {
