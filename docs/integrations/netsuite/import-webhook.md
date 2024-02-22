@@ -29,6 +29,12 @@ Schedule: `0 0 * * 6`
   "run_async": true,
   "import_config": [
     {
+      // Currencies
+      "ns_type": "Currency",
+      "search_type": "getAll",
+      "master_data_name": "sandbox_NS_Currency"
+    },
+    {
       // Inventory items
       "ns_type": "Item",
       "search_type": "search",
@@ -123,7 +129,14 @@ Schedule: `0 0 * * *`
   </TabItem>
   <TabItem value="original" label="Original">
 
-The main idea is to add the following `last_modified_date` search value to each import config:
+The main idea is to add the following `last_modified_date` search value to each import config. Note, however, that not all records support this differential search.
+
+We typically configure the differential import for:
+
+1. Inventory items
+2. Purchase orders
+3. Vendors
+4. ...
 
 ```json
 {
