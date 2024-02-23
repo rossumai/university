@@ -1,6 +1,6 @@
 ---
 title: 'Common Errors'
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 List of common errors when integrating with NetSuite. Alphabetically sorted.
