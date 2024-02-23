@@ -1,6 +1,6 @@
 ---
 title: 'Configuration'
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 To configure an access token in NetSuite for SOAP communication, especially when there is no integration user yet, involves several steps that include creating an integration record in NetSuite, setting up a role with the necessary permissions, creating an integration user, and then generating the access token. Below is a step-by-step guide:
