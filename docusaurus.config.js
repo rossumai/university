@@ -79,6 +79,12 @@ const config = {
             position: 'left',
             label: 'Extensions',
           },
+          {
+            type: 'docSidebar',
+            sidebarId: 'tutorialsSidebar',
+            position: 'left',
+            label: 'Tutorials',
+          },
 
           // See: http://localhost:3000/cookbook/docs/docusaurus/intro
           // {
@@ -94,6 +100,11 @@ const config = {
           //   label: 'Blog',
           //   position: 'left',
           // },
+          {
+            href: 'https://elis.rossum.ai/api/docs/',
+            label: 'API',
+            position: 'right',
+          },
           {
             href: 'https://github.com/rossumai-community/cookbook',
             label: 'GitHub',
