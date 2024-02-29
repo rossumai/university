@@ -14,8 +14,7 @@ The following snippet removes all non-alphanumeric characters. The source datapo
       "transformations": [
         {
           "pattern_to_replace": "[^a-zA-Z\\d]",
-          "value_to_replace_with": "",
-          "replace_if_this_pattern_matches": "[^a-zA-Z\\d]"
+          "value_to_replace_with": ""
         }
       ],
       "source_target_mappings": [
@@ -31,7 +30,7 @@ The following snippet removes all non-alphanumeric characters. The source datapo
 
 ## Prepend and Append Values
 
-The regular expressions use Python flavor which allows us to write references to capture groups as `\g<0>`, `\g<1>`, etc. The following example transforms order ID from `123` to `PO123/000` as an example:
+The regular expressions use Python flavor which allows us to write references to capture groups as `\g<0>`, `\g<1>`, etc. The following example transforms order ID from `123` to `PO123/000` as an example (first prepend, later append):
 
 ```json
 {
@@ -39,16 +38,14 @@ The regular expressions use Python flavor which allows us to write references to
     {
       "transformations": [
         {
-          "pattern_to_replace": "^(.*)$",
-          "value_to_replace_with": "PO\\g<0>",
-          "replace_if_this_pattern_matches": ".*"
+          "pattern_to_replace": "^(?!PO)(.*)$",
+          "value_to_replace_with": "PO\\g<1>",
+          "replace_if_this_pattern_matches": "^(?!PO).*$"
         },
         {
-          // This transformation is applied after the first. Both of these transformations could be
-          // combined into one, however. This is just to demonstrate that multiple transformations:
-          "pattern_to_replace": "^(.*)$",
-          "value_to_replace_with": "\\g<0>/000",
-          "replace_if_this_pattern_matches": ".*"
+          "pattern_to_replace": "^(.*)(?<!/000)$",
+          "value_to_replace_with": "\\g<1>/000",
+          "replace_if_this_pattern_matches": "^.*(?<!/000)$"
         }
       ],
       "source_target_mappings": [
