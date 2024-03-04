@@ -69,7 +69,7 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'guidesSidebar',
             position: 'left',
             label: 'Integrations',
           },
@@ -81,9 +81,9 @@ const config = {
           },
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialsSidebar',
+            sidebarId: 'guidesSidebar',
             position: 'left',
-            label: 'Tutorials',
+            label: 'Guides',
           },
 
           // See: http://localhost:3000/cookbook/docs/docusaurus/intro
