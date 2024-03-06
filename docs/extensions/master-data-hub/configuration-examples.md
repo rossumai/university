@@ -26,6 +26,20 @@ The following examples are showing commonly used configurations of the Rossum.ai
 }
 ```
 
+## Count all records in the collection
+
+You can quickly get a total number of records in the whole collection by calling `$count`:
+
+```json
+{
+  "aggregate": [
+    {
+      "$count": "total"
+    }
+  ]
+}
+```
+
 ## Exact match
 
 Even though exact match can be achieved using `find` method instead of `aggregate` (see [below](#exact-match-case-insensitive)), it is still recommended to use `aggregate` because it's often necessary to specify `$project` stage:
