@@ -15,7 +15,115 @@ Here you can find the most common configurations. They might all need to be adju
 
 ```json
 {
-  // 🚧 WORK IN PROGESS 🚧
+  "run_async": false,
+  "export_configs": [
+    {
+      "payload": {
+        "soap_method": "upsert",
+        "soap_record": {
+          "entity": {
+            "type": "vendor",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_vendor_match}"
+          },
+          "tranId": "@{document_id}",
+          "dueDate": {
+            "$IF_SCHEMA_ID$": {
+              "schema_id": "date_due",
+              "mapping": {
+                "$DATAPOINT_VALUE$": {
+                  "schema_id": "date_due",
+                  "value_type": "iso_datetime"
+                }
+              }
+            }
+          },
+          "_ns_type": {
+            "$DATAPOINT_MAPPING$": {
+              "mapping": {
+                "tax_credit": "VendorCredit",
+                "tax_invoice": "VendorBill"
+              },
+              "schema_id": "document_type"
+            }
+          },
+          "currency": {
+            "type": "currency",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_currency_match}"
+          },
+          "itemList": {
+            "item": {
+              "$FOR_EACH_SCHEMA_ID$": {
+                "mapping": {
+                  "$DATAPOINT_MAPPING$": {
+                    "mapping": {
+                      "inventory_item": {
+                        "item": {
+                          "type": "inventoryItem",
+                          "_ns_type": "RecordRef",
+                          "internalId": "@{item_ns_item_match}"
+                        },
+                        "rate": "@{item_amount_total}",
+                        "_ns_type": "VendorBillItem",
+                        "location": {
+                          "type": "location",
+                          "_ns_type": "RecordRef",
+                          "internalId": "@{item_ns_location_match}"
+                        },
+                        "quantity": "@{item_quantity}"
+                      }
+                    },
+                    "schema_id": "item_ns_type_manual"
+                  }
+                },
+                "schema_id": "line_item"
+              }
+            },
+            "_ns_type": "VendorBillItemList"
+          },
+          "externalId": "@{ns_vb_external_id_generated}",
+          "subsidiary": {
+            "type": "subsidiary",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_subsidiary_match}"
+          },
+          "expenseList": {
+            "expense": {
+              "$FOR_EACH_SCHEMA_ID$": {
+                "mapping": {
+                  "$DATAPOINT_MAPPING$": {
+                    "mapping": {
+                      "expense": {
+                        "memo": "@{item_description}",
+                        "amount": "@{item_amount_total}",
+                        "account": {
+                          "type": "account",
+                          "_ns_type": "RecordRef",
+                          "internalId": "@{item_gl_code_match}"
+                        },
+                        "_ns_type": "VendorBillExpense"
+                      }
+                    },
+                    "schema_id": "item_ns_type_manual"
+                  }
+                },
+                "schema_id": "line_item"
+              }
+            },
+            "_ns_type": "VendorBillExpenseList"
+          }
+        }
+      }
+    }
+  ],
+  "netsuite_settings": {
+    "account": "XXX",
+    "wsdl_url": "https://XXX.suitetalk.api.netsuite.com/wsdl/v2022_2_0/netsuite.wsdl",
+    "service_url": "https://XXX.suitetalk.api.netsuite.com/services/NetSuitePort_2022_2",
+    "concurrency_limit": 14,
+    "service_binding_name": "{urn:platform_2022_2.webservices.netsuite.com}NetSuiteBinding"
+  }
 }
 ```
 
