@@ -41,15 +41,22 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          // Will be passed to @docusaurus/plugin-content-docs (false to disable)
           sidebarPath: './sidebars.js',
           editUrl: 'https://github.com/rossumai-community/cookbook/tree/master/',
         },
         blog: {
+          // Will be passed to @docusaurus/plugin-content-blog (false to disable)
           showReadingTime: true,
           editUrl: 'https://github.com/rossumai-community/cookbook/tree/master/',
         },
         theme: {
+          // Will be passed to @docusaurus/theme-classic.
           customCss: './src/css/custom.css',
+        },
+        gtag: {
+          // Will be passed to @docusaurus/plugin-google-gtag (only enabled when explicitly specified)
+          trackingID: 'G-2DBTH3BGYK',
         },
       }),
     ],
