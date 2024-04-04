@@ -16,11 +16,14 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/docs/category/netsuite">
-            Integrations
-          </Link>
-          <Link className="button button--secondary button--lg" to="/docs/category/master-data-hub">
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/extensions/master-data-hub/configuration-examples"
+          >
             Extensions
+          </Link>
+          <Link className="button button--secondary button--lg" to="/docs/guides/peppol">
+            Guides
           </Link>
         </div>
       </div>
