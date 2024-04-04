@@ -64,7 +64,7 @@ Here you can find the most common configurations. They might all need to be adju
                           "_ns_type": "RecordRef",
                           "internalId": "@{item_ns_item_match}"
                         },
-                        "rate": "@{item_amount_total}",
+                        "rate": "@{item_amount}",
                         "_ns_type": "VendorBillItem",
                         "location": {
                           "type": "location",
@@ -163,7 +163,7 @@ Here you can find the most common configurations. They might all need to be adju
               "_record_type": "RecordRef$inventoryItem"
             },
             "rate": {
-              "_schema_id": "item_amount_total",
+              "_schema_id": "item_amount",
               "_value_type": "double",
               "_record_type": "simple"
             },
