@@ -1,6 +1,6 @@
 ---
-sidebar_position: 1
 title: 'Configuration examples'
+sidebar_position: 4
 ---
 
 The following examples are showing commonly used configurations of the Rossum.ai Master Data Hub matching. All of these examples are typically nested in the following config:
@@ -40,7 +40,86 @@ You can quickly get a total number of records in the whole collection by calling
 }
 ```
 
+## Compound queries
+
+Compound queries are very useful when we need to match against multiple attributes and give to each match a different importance. In the following example we use Fibonacci Sequence boosts to [fuzzy match](#fuzzy-match) against XXX, YYY and ZZZ:
+
+```json
+{
+  "aggregate": [
+    {
+      "$search": {
+        "index": "default",
+        "compound": {
+          "must": [
+            {
+              "text": {
+                "path": "XXX",
+                "query": "{product_code}",
+                "score": {
+                  "boost": {
+                    "value": 8
+                  }
+                }
+              }
+            },
+            {
+              "text": {
+                "path": "YYY",
+                "query": "{product_name}",
+                "score": {
+                  "boost": {
+                    "value": 5
+                  }
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "text": {
+                "path": "ZZZ",
+                "query": "{product_label}",
+                "score": {
+                  "boost": {
+                    "value": 3
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$match": {
+        "__score": {
+          "$gt": 30 // Check the resulting `__score` to set some appropriate value
+        }
+      }
+    }
+  ]
+}
+```
+
 ## Exact match
+
+```json
+{
+  "find": {
+    "Vendor name": "{sender_name}"
+  }
+}
+```
+
+The query checks the "Vendor name" in the dataset and compares it to the value of the "Vendor name" field extracted from the document. To refer to the "Vendor name" field, we used its schema ID - `sender_name`.
 
 Even though exact match can be achieved using `find` method instead of `aggregate` (see [below](#exact-match-case-insensitive)), it is still recommended to use `aggregate` because it's often necessary to specify `$project` stage:
 
@@ -49,7 +128,7 @@ Even though exact match can be achieved using `find` method instead of `aggregat
   "aggregate": [
     {
       "$match": {
-        "email": "{email_from}"
+        "Vendor name": "{sender_name}"
       }
     },
     {
@@ -69,6 +148,20 @@ Even though exact match can be achieved using `find` method instead of `aggregat
     "role_code": {
       "$regex": "^{item_role | re}$",
       "$options": "i"
+    }
+  }
+}
+```
+
+## Exact submatch
+
+Sometimes it is necessary to match an exact substring. This can easily be achieved by using `$regex` like so:
+
+```json
+{
+  "find": {
+    "role_code": {
+      "$regex": "^.*{item_role | re}.*$"
     }
   }
 }
