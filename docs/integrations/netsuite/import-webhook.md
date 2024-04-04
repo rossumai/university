@@ -17,7 +17,88 @@ Schedule: `0 0 * * 6`
 
 ```json
 {
-  // 🚧 WORK IN PROGESS 🚧
+  "run_async": true,
+  "netsuite_settings": {
+    "account": "XXX",
+    "concurrency_limit": 4,
+    "wsdl_url": "https://XXX.suitetalk.api.netsuite.com/wsdl/v2022_2_0/netsuite.wsdl",
+    "service_url": "https://XXX.suitetalk.api.netsuite.com/services/NetSuitePort_2022_2",
+    "service_binding_name": "{urn:platform_2022_2.webservices.netsuite.com}NetSuiteBinding"
+  },
+  "import_configs": [
+    {
+      // Currencies
+      "master_data_name": "sandbox_NS_Currency",
+      "payload": {
+        "soap_method": "getAll",
+        "soap_record": {
+          "_ns_type": "GetAllRecord",
+          "recordType": "currency"
+        }
+      }
+    },
+    {
+      // Inventory items
+      "master_data_name": "sandbox_NS_InventoryItem",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "ItemSearchBasic",
+          "type": {
+            "searchValue": "_inventoryItem",
+            "operator": "anyOf"
+          },
+          "isInactive": {
+            "searchValue": false
+          }
+        }
+      }
+    },
+    {
+      // Locations
+      "master_data_name": "sandbox_NS_Location",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "LocationSearchBasic"
+        }
+      }
+    },
+    {
+      // Purchase Orders
+      "master_data_name": "sandbox_NS_PurchaseOrder",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "searchValue": "_purchaseOrder",
+            "operator": "anyOf"
+          }
+        }
+      }
+    },
+    {
+      // Subsidiaries
+      "master_data_name": "sandbox_NS_Subsidiary",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "SubsidiarySearchBasic"
+        }
+      }
+    },
+    {
+      // Vendors
+      "master_data_name": "sandbox_NS_Vendor",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "VendorSearchBasic"
+        }
+      }
+    }
+  ]
 }
 ```
 
