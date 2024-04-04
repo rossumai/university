@@ -18,7 +18,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/extensions/master-data-hub/configuration-examples"
+            to="/docs/extensions/master-data-hub/getting-started"
           >
             Extensions
           </Link>
