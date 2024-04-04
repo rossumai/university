@@ -69,12 +69,6 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'integrationsSidebar',
-            position: 'left',
-            label: 'Integrations',
-          },
-          {
-            type: 'docSidebar',
             sidebarId: 'extensionsSidebar',
             position: 'left',
             label: 'Extensions',
@@ -115,37 +109,37 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-          {
-            title: 'Integrations',
-            items: [
-              {
-                label: 'NetSuite',
-                to: '/docs/category/netsuite',
-              },
-            ],
-          },
-          {
-            title: 'Extensions',
-            items: [
-              {
-                label: 'Master Data Hub',
-                to: '/docs/category/master-data-hub',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/rossumai-community/cookbook',
-              },
-            ],
-          },
+          // {
+          //   title: 'Integrations',
+          //   items: [
+          //     {
+          //       label: 'NetSuite',
+          //       to: '/docs/category/netsuite',
+          //     },
+          //   ],
+          // },
+          // {
+          //   title: 'Extensions',
+          //   items: [
+          //     {
+          //       label: 'Master Data Hub',
+          //       to: '/docs/category/master-data-hub',
+          //     },
+          //   ],
+          // },
+          // {
+          //   title: 'More',
+          //   items: [
+          //     {
+          //       label: 'Blog',
+          //       to: '/blog',
+          //     },
+          //     {
+          //       label: 'GitHub',
+          //       href: 'https://github.com/rossumai-community/cookbook',
+          //     },
+          //   ],
+          // },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Rossum.ai`,
       },
