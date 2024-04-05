@@ -8,9 +8,9 @@ import TabItem from '@theme/TabItem';
 
 Notice that each configuration has `concurrency_limit` configured. The best way how to determine the right number is to visit **Setup > Integration > Integration Governance** where you can see (and configure) not only the concurrency limits but also peak concurrency of all integrations allowing you to choose the best number.
 
-## Full data imports (weekly)
+## Differential data imports (daily)
 
-Schedule: `0 0 * * 6`
+Schedule: `0 0 * * *`
 
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
@@ -28,7 +28,7 @@ Schedule: `0 0 * * 6`
   "import_configs": [
     {
       // Currencies
-      "master_data_name": "sandbox_NS_Currency",
+      "master_data_name": "sandbox_NS_Currency_v1",
       "payload": {
         "soap_method": "getAll",
         "soap_record": {
@@ -39,7 +39,7 @@ Schedule: `0 0 * * 6`
     },
     {
       // Inventory items
-      "master_data_name": "sandbox_NS_InventoryItem",
+      "master_data_name": "sandbox_NS_InventoryItem_v1",
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -55,8 +55,26 @@ Schedule: `0 0 * * 6`
       }
     },
     {
+      // Item Receipts (GRNs)
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "operator": "anyOf",
+            "searchValue": "_itemReceipt"
+          },
+          "lastModifiedDate": {
+            "operator": "onOrAfter",
+            "searchValue": "{last_modified_date}"
+          }
+        }
+      },
+      "master_data_name": "sandbox_NS_ItemReceipt_v1"
+    },
+    {
       // Locations
-      "master_data_name": "sandbox_NS_Location",
+      "master_data_name": "sandbox_NS_Location_v1",
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -66,7 +84,7 @@ Schedule: `0 0 * * 6`
     },
     {
       // Purchase Orders
-      "master_data_name": "sandbox_NS_PurchaseOrder",
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -74,27 +92,37 @@ Schedule: `0 0 * * 6`
           "type": {
             "searchValue": "_purchaseOrder",
             "operator": "anyOf"
+          },
+          "lastModifiedDate": {
+            "operator": "onOrAfter",
+            "searchValue": "{last_modified_date}"
           }
         }
       }
     },
     {
       // Subsidiaries
-      "master_data_name": "sandbox_NS_Subsidiary",
+      "master_data_name": "sandbox_NS_Subsidiary_v1",
       "payload": {
         "soap_method": "search",
         "soap_record": {
-          "_ns_type": "SubsidiarySearchBasic"
+          "_ns_type": "SubsidiarySearchBasic",
+          "isInactive": {
+            "searchValue": "false"
+          }
         }
       }
     },
     {
       // Vendors
-      "master_data_name": "sandbox_NS_Vendor",
+      "master_data_name": "sandbox_NS_Vendor_v1",
       "payload": {
         "soap_method": "search",
         "soap_record": {
-          "_ns_type": "VendorSearchBasic"
+          "_ns_type": "VendorSearchBasic",
+          "isInactive": {
+            "searchValue": "false"
+          }
         }
       }
     }
@@ -105,6 +133,12 @@ Schedule: `0 0 * * 6`
   </TabItem>
   <TabItem value="original" label="Original">
 
+:::warning
+
+The following "original" configuration is **deprecated**. Consider using the "modern" version instead.
+
+:::
+
 ```json
 {
   "run_async": true,
@@ -113,13 +147,13 @@ Schedule: `0 0 * * 6`
       // Currencies
       "ns_type": "Currency",
       "search_type": "getAll",
-      "master_data_name": "sandbox_NS_Currency"
+      "master_data_name": "sandbox_NS_Currency_v1"
     },
     {
       // Inventory items
       "ns_type": "Item",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_InventoryItem",
+      "master_data_name": "sandbox_NS_InventoryItem_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -132,6 +166,12 @@ Schedule: `0 0 * * 6`
             "ns_type": "SearchBooleanField",
             "searchValue": "false",
             "attribute_name": "isInactive"
+          },
+          {
+            "ns_type": "SearchDateField",
+            "operator": "onOrAfter",
+            "searchValue": "${last_modified_date}",
+            "attribute_name": "lastModifiedDate"
           }
         ]
       }
@@ -140,7 +180,7 @@ Schedule: `0 0 * * 6`
       // Item Receipts (GRNs)
       "ns_type": "Transaction",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_ItemReceipt",
+      "master_data_name": "sandbox_NS_ItemReceipt_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -148,6 +188,12 @@ Schedule: `0 0 * * 6`
             "operator": "anyOf",
             "searchValue": "_itemReceipt",
             "attribute_name": "type"
+          },
+          {
+            "ns_type": "SearchDateField",
+            "operator": "onOrAfter",
+            "searchValue": "${last_modified_date}",
+            "attribute_name": "lastModifiedDate"
           }
         ]
       }
@@ -156,13 +202,13 @@ Schedule: `0 0 * * 6`
       // Locations
       "ns_type": "Location",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_Location"
+      "master_data_name": "sandbox_NS_Location_v1"
     },
     {
       // Purchase Orders
       "ns_type": "Transaction",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_PurchaseOrder",
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -170,6 +216,12 @@ Schedule: `0 0 * * 6`
             "operator": "anyOf",
             "searchValue": "_purchaseOrder",
             "attribute_name": "type"
+          },
+          {
+            "ns_type": "SearchDateField",
+            "operator": "onOrAfter",
+            "searchValue": "${last_modified_date}",
+            "attribute_name": "lastModifiedDate"
           }
         ]
       }
@@ -178,13 +230,13 @@ Schedule: `0 0 * * 6`
       // Subsidiaries
       "ns_type": "Subsidiary",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_Subsidiary"
+      "master_data_name": "sandbox_NS_Subsidiary_v1"
     },
     {
       // Vendors
       "ns_type": "Vendor",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_Vendor"
+      "master_data_name": "sandbox_NS_Vendor_v1"
     }
   ],
   "concurrency_limit": 4
@@ -194,62 +246,58 @@ Schedule: `0 0 * * 6`
   </TabItem>
 </Tabs>
 
-## Differential data imports (daily)
+## Full data imports (weekly)
 
-Schedule: `0 0 * * *`
+Schedule: `0 0 * * 6`
 
-<Tabs groupId="netsuite-flavor" queryString>
-  <TabItem value="modern" label="Modern" default>
+Full weekly data imports should not be necessary unless explicitly required.
 
-```json
-{
-  // 🚧 WORK IN PROGESS 🚧
-}
-```
-
-  </TabItem>
-  <TabItem value="original" label="Original">
-
-The main idea is to add the following `last_modified_date` search value to each import config. Note, however, that not all records support this differential search.
-
-We typically configure the differential import for:
-
-1. Inventory items
-2. Purchase orders
-3. Vendors
-4. ...
+The imports configuration is essentially the same as differential import with the only difference being removed `last_modified_date` usages. For example, instead of using:
 
 ```json
 {
-  "run_async": true,
-  "import_config": [
+  "import_configs": [
     {
-      "ns_type": "Item",
-      "search_type": "search",
-      "master_data_name": "sandbox_NS_InventoryItem",
-      "basic_search_config": {
-        "attributes": [
-          {
-            "ns_type": "SearchEnumMultiSelectField",
-            "operator": "anyOf",
-            "searchValue": "_inventoryItem",
-            "attribute_name": "type"
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "searchValue": "_purchaseOrder",
+            "operator": "anyOf"
           },
           // highlight-start
-          {
-            "ns_type": "SearchDateField",
+          "lastModifiedDate": {
             "operator": "onOrAfter",
-            "searchValue": "${last_modified_date}",
-            "attribute_name": "lastModifiedDate"
+            "searchValue": "{last_modified_date}"
           }
           // highlight-end
-        ]
+        }
       }
     }
-  ],
-  "concurrency_limit": 4
+  ]
 }
 ```
 
-  </TabItem>
-</Tabs>
+You'd simply remove the `lastModifiedDate` resulting in:
+
+```json
+{
+  "import_configs": [
+    {
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "searchValue": "_purchaseOrder",
+            "operator": "anyOf"
+          }
+        }
+      }
+    }
+  ]
+}
+```
