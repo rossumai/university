@@ -66,7 +66,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/og_image.jpg',
+      image: 'img/og_image.png',
       navbar: {
         title: 'Rossum.ai Cookbook',
         logo: {
