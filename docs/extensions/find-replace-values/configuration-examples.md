@@ -72,3 +72,33 @@ The regular expressions use Python flavor which allows us to write references to
 ```
 
 It prepends/appends values only if they are not already present, and it handles empty values gracefully (no prepend/append).
+
+Consider combining this approach with [named capturing groups](#using-named-capturing-groups-in-replace).
+
+## Using named capturing groups in replace
+
+Sometimes it is necessary to capture part of the input and either [append/prepend](#prepend-and-append-values) it or simply remove everything else. For these purposes, it can be quite handy to use **named** [capturing groups](https://docs.python.org/3/howto/regex.html#non-capturing-and-named-groups):
+
+```json
+{
+  "actions": [
+    {
+      "transformations": [
+        {
+          "pattern_to_replace": "^[0-9]+-(?P<SKU>[0-9]+)$",
+          "value_to_replace_with": "\\g<SKU>",
+          "replace_if_this_pattern_matches": "^[0-9]+-[0-9]+$"
+        }
+      ],
+      "source_target_mappings": [
+        {
+          "source": "item_code",
+          "target": "item_code_norm"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Such pattern allows us to capture the SKU precisely and reference it later in `value_to_replace_with`.

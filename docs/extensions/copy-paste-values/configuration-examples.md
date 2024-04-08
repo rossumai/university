@@ -11,13 +11,13 @@ Sometimes it is necessary to copy header field value (such as Purchase Order no.
 {
   "operations": [
     {
-      "//": "1: Copy the Purchase Order no. only if it doesn't exist on the line item already.",
+      "//": "1.1: Copy the Purchase Order no. only if it doesn't exist on the line item already:",
       "condition": "len({line_items}) > 0 and {item_po} == ''",
       "source_field": "order_id",
       "target_field": "item_po_copy"
     },
     {
-      "//": "2: Copy the Purchase Order no. from the line items.",
+      "//": "1.2: Copy the Purchase Order no. from the line items:",
       "condition": "len({line_items}) > 0 and {item_po} != ''",
       "source_field": "item_po",
       "target_field": "item_po_copy"
@@ -32,19 +32,19 @@ It might be necessary to have **manual** PO number overwrite on header fields. I
 {
   "operations": [
     {
-      "//": "1: Copy the Purchase Order no. only if it doesn't exist on the line item already (and there is no manual overwrite).",
+      "//": "1.1: Copy the Purchase Order no. only if it doesn't exist on the line item already (and there is no manual overwrite):",
       "condition": "len({line_items}) > 0 and {item_order_id} == '' and {order_id_manual} == ''",
       "source_field": "order_id",
       "target_field": "item_order_id_copy"
     },
     {
-      "//": "2: Copy the Purchase Order Manual no. only if it doesn't exist on the line item already.",
+      "//": "1.2: Copy the Purchase Order Manual no. only if it doesn't exist on the line item already:",
       "condition": "len({line_items}) > 0 and {item_order_id} == '' and {order_id_manual} != ''",
       "source_field": "order_id_manual",
       "target_field": "item_order_id_copy"
     },
     {
-      "//": "3: Copy the Purchase Order no. from the line items.",
+      "//": "1.3: Copy the Purchase Order no. from the line items:",
       "condition": "len({line_items}) > 0 and {item_order_id} != ''",
       "source_field": "item_order_id",
       "target_field": "item_order_id_copy"
