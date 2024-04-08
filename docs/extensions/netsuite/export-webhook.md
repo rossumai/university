@@ -15,7 +15,7 @@ Here you can find the most common configurations. They might all need to be adju
 
 ```json
 {
-  "run_async": false,
+  "run_async": true,
   "export_configs": [
     {
       "payload": {

@@ -15,6 +15,12 @@ Schedule: `0 0 * * *`
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
 
+:::tip
+
+Visit the following link when trying to figure out how should the import searches be configured (drill down to the required fields): https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2022_2/schema/search/transactionsearch.html?mode=package
+
+:::
+
 ```json
 {
   "run_async": true,
@@ -122,6 +128,28 @@ Schedule: `0 0 * * *`
           "_ns_type": "VendorSearchBasic",
           "isInactive": {
             "searchValue": "false"
+          },
+          "lastModifiedDate": {
+            "operator": "onOrAfter",
+            "searchValue": "{last_modified_date}"
+          }
+        }
+      }
+    },
+    {
+      // Vendor Bills (Invoices)
+      "master_data_name": "sandbox_NS_VendorBill_v1",
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "searchValue": "_vendorBill",
+            "operator": "anyOf"
+          },
+          "lastModifiedDate": {
+            "operator": "onOrAfter",
+            "searchValue": "{last_modified_date}"
           }
         }
       }
@@ -245,6 +273,48 @@ The following "original" configuration is **deprecated**. Consider using the "mo
 
   </TabItem>
 </Tabs>
+
+### Async settings
+
+Usually, all imports (as well as exports) will run in asynchronous mode, see:
+
+```json
+{
+  "run_async": true
+}
+```
+
+If you'd like to modify the async settings, you can do so using the following `async_settings` configuration:
+
+```json
+{
+  "run_async": true,
+  "import_configs": [
+    {
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      // highlight-start
+      "async_settings": {
+        "retries": 2, // max: 10
+        "max_run_time_s": 7200 // 2 hours default, min: 60 (1 minute), max: 36000 (10 hours)
+        "valid_for_s": 43200 // 12 hours default, min: 300 (5 minutes), max: 172800 (2 days)
+      },
+      // highlight-end
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "searchValue": "_purchaseOrder",
+            "operator": "anyOf"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+Note that this configuration must be applied to all relevant import configs. Each config can even have a different timeouts and retries.
 
 ## Full data imports (weekly)
 
