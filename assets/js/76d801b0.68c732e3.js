@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcookbook=self.webpackChunkcookbook||[]).push([[8898],{861:t=>{t.exports=JSON.parse('{"title":"Master data hub","slug":"/category/master-data-hub","permalink":"/cookbook/docs/category/master-data-hub","navigation":{"next":{"title":"Getting started","permalink":"/cookbook/docs/extensions/master-data-hub/getting-started"}}}')}}]);
