@@ -1,8 +1,25 @@
 ---
-title: 'PEPPOL'
+sidebar_position: 1
+title: 'Configuration examples'
 ---
 
-## PEPPOL BIS Billing 3.0
+## Generic XML import
+
+:::warning[todo]
+
+_How to + examples_
+
+:::
+
+## Generic JSON import
+
+:::warning[todo]
+
+_How to + examples_
+
+:::
+
+## XML: PEPPOL BIS Billing 3.0
 
 Basic configuration (works with the default Rossum.ai schema for invoices) and the following PEPPOL BIS Billing 3.0 example: https://github.com/OpenPEPPOL/peppol-bis-invoice-3/blob/0f63848fc46fe4ab87d1860a18bfe381c41e01ff/rules/examples/base-example.xml
 

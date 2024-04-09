@@ -18,11 +18,11 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/extensions/master-data-hub/getting-started"
+            to="/docs/category/business-rules-validation"
           >
             Extensions
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs/guides/peppol">
+          <Link className="button button--secondary button--lg" to="/docs/guides/sso">
             Guides
           </Link>
         </div>
