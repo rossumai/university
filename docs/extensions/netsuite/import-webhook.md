@@ -10,7 +10,7 @@ Notice that each configuration has `concurrency_limit` configured. The best way 
 
 ## Differential data imports (daily)
 
-Schedule: `0 0 * * *`
+Recommended schedule: `0 0 * * *`
 
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
@@ -35,6 +35,10 @@ Visit the following link when trying to figure out how should the import searche
     {
       // Currencies
       "master_data_name": "sandbox_NS_Currency_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "getAll",
         "soap_record": {
@@ -46,6 +50,10 @@ Visit the following link when trying to figure out how should the import searche
     {
       // Inventory items
       "master_data_name": "sandbox_NS_InventoryItem_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -62,6 +70,11 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Item Receipts (GRNs)
+      "master_data_name": "sandbox_NS_ItemReceipt_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -75,12 +88,15 @@ Visit the following link when trying to figure out how should the import searche
             "searchValue": "{last_modified_date}"
           }
         }
-      },
-      "master_data_name": "sandbox_NS_ItemReceipt_v1"
+      }
     },
     {
       // Locations
       "master_data_name": "sandbox_NS_Location_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -91,6 +107,10 @@ Visit the following link when trying to figure out how should the import searche
     {
       // Purchase Orders
       "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -109,6 +129,10 @@ Visit the following link when trying to figure out how should the import searche
     {
       // Subsidiaries
       "master_data_name": "sandbox_NS_Subsidiary_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -122,6 +146,10 @@ Visit the following link when trying to figure out how should the import searche
     {
       // Vendors
       "master_data_name": "sandbox_NS_Vendor_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -139,6 +167,10 @@ Visit the following link when trying to figure out how should the import searche
     {
       // Vendor Bills (Invoices)
       "master_data_name": "sandbox_NS_VendorBill_v1",
+      "async_settings": {
+        "retries": 10,
+        "max_run_time_s": 36000
+      },
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -316,13 +348,11 @@ If you'd like to modify the async settings, you can do so using the following `a
 
 Note that this configuration must be applied to all relevant import configs. Each config can even have a different timeouts and retries.
 
-## Full data imports (weekly)
+## Initial full data imports
 
-Schedule: `0 0 * * 6`
+Periodic full data imports are typically not necessary. One exception, however, is initial import of the datasets where differential imports do not make sense.
 
-Full weekly data imports should not be necessary unless explicitly required.
-
-The imports configuration is essentially the same as differential import with the only difference being removed `last_modified_date` usages. For example, instead of using:
+For full imports, the configuration is essentially the same as for differential import with the only difference being removed `last_modified_date` usages. For example, instead of using:
 
 ```json
 {
@@ -369,5 +399,56 @@ You'd simply remove the `lastModifiedDate` resulting in:
       }
     }
   ]
+}
+```
+
+### Recovering from failed initial imports
+
+Initial imports are typically very large and can take **several days**. It's expected that the initial imports can fail during this period. The following section describes how to deal with such failures.
+
+:::warning
+
+Rossum's team of Solution Architects is typically needed for large NetSuite imports and recoveries. Consider contacting [Rossum Sales](https://rossum.ai/form/contact/) department or Rossum Support team.
+
+:::
+
+All imported records typically have sorting specified: https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_N3518731.html
+
+For example, in case of failed purchase orders import, we can find the latest imported records and their respective `dateCreated` which can be used for narrowing down the transaction search (very similar to differential imports except it goes from a specific date):
+
+```json
+{
+  "import_configs": [
+    {
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "type": {
+            "operator": "anyOf",
+            "searchValue": "_purchaseOrder"
+          },
+          "_ns_type": "TransactionSearchBasic",
+          "dateCreated": {
+            "operator": "onOrAfter",
+            "searchValue": "2021-01-13T16:26:08"
+          }
+        }
+      },
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+    }
+  ]
+}
+```
+
+After the successful import, it is a good idea to run differential import (using `lastModifiedDate`) for the whole period when we were performing the initial migration to synchronize records that were updated in the meantime.
+
+And finally, it is possible to switch to differential imports only:
+
+```json
+{
+  "lastModifiedDate": {
+    "operator": "onOrAfter",
+    "searchValue": "{last_modified_date}"
+  }
 }
 ```
