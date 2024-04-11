@@ -9,18 +9,18 @@ The following examples are showing commonly used configurations of the Rossum.ai
 {
   "configurations": [
     {
-      "name": "...",
+      "name": "…",
       "source": {
-        "dataset": "...",
+        "dataset": "…",
         // highlight-start
         "queries": [
           // paste the examples here
         ],
         // highlight-end
       },
-      "default": { ... },
-      "mapping": { ... },
-      "result_actions": { ... }
+      "default": { … },
+      "mapping": { … },
+      "result_actions": { … }
     }
   ]
 }
@@ -55,7 +55,7 @@ Compound queries are very useful when we need to match against multiple attribut
             {
               "text": {
                 "path": "XXX",
-                "query": "{product_code}",
+                "query": "{product_code} ", // notice the extra space at the end!
                 "score": {
                   "boost": {
                     "value": 8
@@ -66,7 +66,7 @@ Compound queries are very useful when we need to match against multiple attribut
             {
               "text": {
                 "path": "YYY",
-                "query": "{product_name}",
+                "query": "{product_name} ", // notice the extra space at the end!
                 "score": {
                   "boost": {
                     "value": 5
@@ -79,7 +79,7 @@ Compound queries are very useful when we need to match against multiple attribut
             {
               "text": {
                 "path": "ZZZ",
-                "query": "{product_label}",
+                "query": "{product_label} ", // notice the extra space at the end!
                 "score": {
                   "boost": {
                     "value": 3
@@ -178,7 +178,7 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
       "$search": {
         "index": "default",
         "text": {
-          "query": "{item_description}",
+          "query": "{item_description} ", // notice the extra space at the end!
           "path": "description"
         }
       }
@@ -209,7 +209,7 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 ```json
 {
   "aggregate": [
-    // ...
+    // …
     {
       "$group": {
         "_id": "$vendorRegNo",
@@ -223,10 +223,56 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
         "newRoot": "$__tmpRoot"
       }
     },
-    // ...
+    // …
     {
       "$sort": {
         "__score": -1 // it is important to sort the results correctly after using $group
+      }
+    }
+  ]
+}
+```
+
+## Return all collection records (sorted)
+
+Sometimes it might be useful to always return all records and perhaps sort them by matching score. That is, always return everything but on put the best results on top.
+
+This can be achieved by first searching and returning records with their respective `__score` (see [fuzzy match](#fuzzy-match), for example) and later appending all records with zero `__score` using `$unionWith`. Finally, all the results are grouped to remove duplicates and sorted by the score:
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search first)
+    {
+      // highlight-start
+      "$unionWith": {
+        "coll": "legal_entities_v1",
+        "pipeline": [
+          {
+            "$addFields": {
+              "__score": 0
+            }
+          }
+        ]
+      }
+      // highlight-end
+    },
+    {
+      "$group": {
+        "_id": "$legal_entity",
+        "__tmpRoot": {
+          "$first": "$$ROOT"
+        }
+      }
+    },
+    {
+      "$replaceRoot": {
+        "newRoot": "$__tmpRoot"
+      }
+    },
+    {
+      "$sort": {
+        "__score": -1
       }
     }
   ]
@@ -238,7 +284,7 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 ```json
 {
   "aggregate": [
-    // ...
+    // …
     {
       "$addFields": {
         "__tax_id_stringified": {
@@ -307,7 +353,7 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 ```json
 {
   "aggregate": [
-    // ...
+    // …
     {
       "$setWindowFields": {
         "output": {
@@ -331,7 +377,7 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 ```json
 {
   "aggregate": [
-    // ...
+    // …
     {
       "$setWindowFields": {
         "output": {
@@ -381,12 +427,48 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 }
 ```
 
+## Score normalization
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$setWindowFields": {
+        "output": {
+          "__max_score": {
+            "$max": "$__score"
+          }
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": ["$__score", "$__max_score"]
+        }
+      }
+    }
+    // …
+  ]
+}
+```
+
+Note that one disadvantage of this normalization is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
+
 ## Custom JS code
 
 ```json
 {
   "aggregate": [
-    // ...
+    // …
     {
       "$addFields": {
         "__order_number_sanitized": {
@@ -398,7 +480,7 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
         }
       }
     }
-    // ...
+    // …
   ]
 }
 ```
