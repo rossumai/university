@@ -8,14 +8,23 @@ import TabItem from '@theme/TabItem';
 
 Here you can find the most common configurations. They might all need to be adjusted to your specific NetSuite instance configuration.
 
-## VendorBills (Invoices)
+## Vendor Bills (Invoices)
 
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
 
+The following shows a generic export that (perhaps with some small tweaks) should work for most of the cases:
+
 ```json
 {
   "run_async": true,
+  "netsuite_settings": {
+    "account": "XXX_SB1", // Case sensitive!
+    "concurrency_limit": 4,
+    "wsdl_url": "https://XXX-sb1.suitetalk.api.netsuite.com/wsdl/v2024_1_0/netsuite.wsdl",
+    "service_url": "https://XXX-sb1.suitetalk.api.netsuite.com/services/NetSuitePort_2024_1",
+    "service_binding_name": "{urn:platform_2024_1.webservices.netsuite.com}NetSuiteBinding"
+  },
   "export_configs": [
     {
       "payload": {
@@ -116,19 +125,18 @@ Here you can find the most common configurations. They might all need to be adju
         }
       }
     }
-  ],
-  "netsuite_settings": {
-    "account": "XXX",
-    "wsdl_url": "https://XXX.suitetalk.api.netsuite.com/wsdl/v2022_2_0/netsuite.wsdl",
-    "service_url": "https://XXX.suitetalk.api.netsuite.com/services/NetSuitePort_2022_2",
-    "concurrency_limit": 14,
-    "service_binding_name": "{urn:platform_2022_2.webservices.netsuite.com}NetSuiteBinding"
-  }
+  ]
 }
 ```
 
   </TabItem>
   <TabItem value="original" label="Original">
+
+:::warning
+
+The following "original" configuration is **deprecated**. Consider using the "modern" version instead.
+
+:::
 
 ```json
 {
@@ -230,3 +238,40 @@ Here you can find the most common configurations. They might all need to be adju
 
   </TabItem>
 </Tabs>
+
+### Linking Vendor Bills with Purchase Orders
+
+To connect Vendor Bills with Purchase Orders, it is necessary to set both `orderDoc` and `orderLine` on line-items level (showing only relevant parts of the export config):
+
+```json
+{
+  "export_configs": [
+    {
+      "payload": {
+        "soap_method": "upsert",
+        "soap_record": {
+          "tranId": "@{document_id}",
+          "itemList": {
+            "item": {
+              "$FOR_EACH_SCHEMA_ID$": {
+                "mapping": {
+                  // …
+                  "_ns_type": "VendorBillItem",
+                  "orderDoc": "@{item_po_match}", // PO internal ID
+                  "orderLine": "@{item_po_item_line_match}" // Relevant line-item number from PO (itemList.item.line)
+                  // …
+                },
+                "schema_id": "line_item"
+              }
+            },
+            "_ns_type": "VendorBillItemList"
+          }
+          // …
+        }
+      }
+    }
+  ]
+}
+```
+
+Note that the combination of Purchase Order and line item no. can appear only once in the payload. In case it appears twice on the invoice then it's necessary to group the line items before exporting.
