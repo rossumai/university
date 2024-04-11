@@ -25,18 +25,18 @@ Visit the following link when trying to figure out how should the import searche
 {
   "run_async": true,
   "netsuite_settings": {
-    "account": "XXX",
+    "account": "XXX_SB1", // Case sensitive!
     "concurrency_limit": 4,
-    "wsdl_url": "https://XXX.suitetalk.api.netsuite.com/wsdl/v2022_2_0/netsuite.wsdl",
-    "service_url": "https://XXX.suitetalk.api.netsuite.com/services/NetSuitePort_2022_2",
-    "service_binding_name": "{urn:platform_2022_2.webservices.netsuite.com}NetSuiteBinding"
+    "wsdl_url": "https://XXX-sb1.suitetalk.api.netsuite.com/wsdl/v2024_1_0/netsuite.wsdl",
+    "service_url": "https://XXX-sb1.suitetalk.api.netsuite.com/services/NetSuitePort_2024_1",
+    "service_binding_name": "{urn:platform_2024_1.webservices.netsuite.com}NetSuiteBinding"
   },
   "import_configs": [
     {
       // Currencies
       "master_data_name": "sandbox_NS_Currency_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -51,7 +51,7 @@ Visit the following link when trying to figure out how should the import searche
       // Inventory items
       "master_data_name": "sandbox_NS_InventoryItem_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -72,7 +72,7 @@ Visit the following link when trying to figure out how should the import searche
       // Item Receipts (GRNs)
       "master_data_name": "sandbox_NS_ItemReceipt_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -94,7 +94,7 @@ Visit the following link when trying to figure out how should the import searche
       // Locations
       "master_data_name": "sandbox_NS_Location_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -108,7 +108,7 @@ Visit the following link when trying to figure out how should the import searche
       // Purchase Orders
       "master_data_name": "sandbox_NS_PurchaseOrder_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -130,7 +130,7 @@ Visit the following link when trying to figure out how should the import searche
       // Subsidiaries
       "master_data_name": "sandbox_NS_Subsidiary_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -147,7 +147,7 @@ Visit the following link when trying to figure out how should the import searche
       // Vendors
       "master_data_name": "sandbox_NS_Vendor_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -168,7 +168,7 @@ Visit the following link when trying to figure out how should the import searche
       // Vendor Bills (Invoices)
       "master_data_name": "sandbox_NS_VendorBill_v1",
       "async_settings": {
-        "retries": 10,
+        "retries": 5,
         "max_run_time_s": 36000
       },
       "payload": {
@@ -297,6 +297,28 @@ The following "original" configuration is **deprecated**. Consider using the "mo
       "ns_type": "Vendor",
       "search_type": "search",
       "master_data_name": "sandbox_NS_Vendor_v1"
+    },
+    {
+      // Vendor Bills (Invoices)
+      "ns_type": "Transaction",
+      "search_type": "search",
+      "master_data_name": "sandbox_NS_VendorBill_v1",
+      "basic_search_config": {
+        "attributes": [
+          {
+            "ns_type": "SearchEnumMultiSelectField",
+            "operator": "anyOf",
+            "searchValue": "_vendorBill",
+            "attribute_name": "type"
+          },
+          {
+            "ns_type": "SearchDateField",
+            "operator": "onOrAfter",
+            "searchValue": "${last_modified_date}",
+            "attribute_name": "lastModifiedDate"
+          }
+        ]
+      }
     }
   ],
   "concurrency_limit": 4
