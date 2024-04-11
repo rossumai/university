@@ -151,7 +151,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Rossum.ai`,
       },
       announcementBar: {
-        content: '🚧 Work in progress. 🚧',
+        content: '🚧 Work in progress. <strong>Do not share publicly.</strong> 🚧',
         backgroundColor: '#fff8e6',
         isCloseable: false,
       },
