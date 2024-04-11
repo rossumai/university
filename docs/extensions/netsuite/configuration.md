@@ -40,21 +40,34 @@ To configure an access token in NetSuite for SOAP communication, especially when
 
 With the Consumer Key, Consumer Secret, Token ID, and Token Secret, you can now configure Rossum.ai SOAP client for communication with NetSuite:
 
+Secrets:
+
 ```json
 {
-  "ACCOUNT": "__change_me__",
-  "API_URL": "__change_me__",
-  "WSDL_URL": "https://webservices.netsuite.com/wsdl/v2022_1_0/netsuite.wsdl",
-  "CONSUMER_KEY": "__change_me__",
-  "CONSUMER_SECRET": "__change_me__",
-  "TOKEN_KEY": "__change_me__",
-  "TOKEN_SECRET": "__change_me__",
-  "ROSSUM_PASSWORD": "__change_me__",
-  "ROSSUM_USERNAME": "__change_me__"
+  "consumer_key": "…", // change
+  "consumer_secret": "…", // change
+  "token_key": "…", // change
+  "token_secret": "…", // change
+  "rossum_username": "system.user@rossum.example", // change
+  "rossum_password": "…" // change
 }
 ```
 
-Account ID (`ACCOUNT`) can be found under **Setup > Company > Company Information**.
+Import/Export configuration:
+
+```json
+{
+  "netsuite_settings": {
+    "account": "XXX_SB1", // Case sensitive!
+    "concurrency_limit": 4,
+    "wsdl_url": "https://XXX-sb1.suitetalk.api.netsuite.com/wsdl/v2024_1_0/netsuite.wsdl",
+    "service_url": "https://XXX-sb1.suitetalk.api.netsuite.com/services/NetSuitePort_2024_1",
+    "service_binding_name": "{urn:platform_2024_1.webservices.netsuite.com}NetSuiteBinding"
+  }
+}
+```
+
+Account ID (`account`) can be found under **Setup > Company > Company Information**.
 
 ## Important Notes
 
