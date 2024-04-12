@@ -372,76 +372,73 @@ Note that this configuration must be applied to all relevant import configs. Eac
 
 ## Initial full data imports
 
-Periodic full data imports are typically not necessary. One exception, however, is initial import of the datasets where differential imports do not make sense.
-
-For full imports, the configuration is essentially the same as for differential import with the only difference being removed `last_modified_date` usages. For example, instead of using:
-
-```json
-{
-  "import_configs": [
-    {
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
-      "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "searchValue": "_purchaseOrder",
-            "operator": "anyOf"
-          },
-          // highlight-start
-          "lastModifiedDate": {
-            "operator": "onOrAfter",
-            "searchValue": "{last_modified_date}"
-          }
-          // highlight-end
-        }
-      }
-    }
-  ]
-}
-```
-
-You'd simply remove the `lastModifiedDate` resulting in:
-
-```json
-{
-  "import_configs": [
-    {
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
-      "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "searchValue": "_purchaseOrder",
-            "operator": "anyOf"
-          }
-        }
-      }
-    }
-  ]
-}
-```
-
-### Recovering from failed initial imports
-
-Initial imports are typically very large and can take **several days**. It's expected that the initial imports can fail during this period. The following section describes how to deal with such failures.
-
 :::warning
 
 Rossum's team of Solution Architects is typically needed for large NetSuite imports and recoveries. Consider contacting [Rossum Sales](https://rossum.ai/form/contact/) department or Rossum Support team.
 
 :::
 
-All imported records typically have sorting specified: https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_N3518731.html
+When creating a new organization, the Master Data Hub collections are empty and need to be imported from NetSuite. The most naive approach is to simply run the [differential import from above](#differential-data-imports-daily) which will on the first run import everything. This is because when the collections are empty, the `last_modified_date` will default to January 1st, 1970 (effectively resulting in a full import).
 
-For example, in case of failed purchase orders import, we can find the latest imported records and their respective `dateCreated` which can be used for narrowing down the transaction search (very similar to differential imports except it goes from a specific date):
+However, initial imports are typically very large and can take **several days** when ran sequentially. It's expected that the initial imports can fail during this period. Moreover, the maximum runtime of import jobs is currently **10 hours**. The following section describes how to deal with such failures and how to approach initial imports in a less naive and more controlled way.
+
+:::tip
+
+Consider whether full dataset import is necessary. It might be enough to pull the last year only, for example.
+
+:::
+
+All imported records typically have sorting specified. For example, all transactions are typically sorted by "Date Created", see: https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_N3518731.html
+
+We can leverage this default sorting and partition the initial imports to years (so that we can download several years in parallel):
 
 ```json
 {
   "import_configs": [
     {
+      // Download Purchase Orders for year 2022:
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "operator": "anyOf",
+            "searchValue": "_purchaseOrder"
+          },
+          "dateCreated": {
+            // highlight-start
+            "operator": "within",
+            "searchValue": "2022-01-01T00:00:01Z",
+            "searchValue2": "2023-01-01T00:00:01Z"
+            // highlight-end
+          }
+        }
+      },
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+    },
+    {
+      // Download Purchase Orders for year 2023:
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchBasic",
+          "type": {
+            "operator": "anyOf",
+            "searchValue": "_purchaseOrder"
+          },
+          "dateCreated": {
+            // highlight-start
+            "operator": "within",
+            "searchValue": "2023-01-01T00:00:01Z",
+            "searchValue2": "2024-01-01T00:00:01Z"
+            // highlight-end
+          }
+        }
+      },
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+    },
+    {
+      // Download Purchase Orders for the rest of the years:
       "payload": {
         "soap_method": "search",
         "soap_record": {
@@ -451,8 +448,10 @@ For example, in case of failed purchase orders import, we can find the latest im
           },
           "_ns_type": "TransactionSearchBasic",
           "dateCreated": {
+            // highlight-start
             "operator": "onOrAfter",
-            "searchValue": "2021-01-13T16:26:08"
+            "searchValue": "2024-01-01T00:00:01Z"
+            // highlight-end
           }
         }
       },
@@ -461,6 +460,32 @@ For example, in case of failed purchase orders import, we can find the latest im
   ]
 }
 ```
+
+It is necessary to observe whether all the partitions were imported successfully. In case they were not (for example some network issue cause the import jobs to fail), we can adjust the `within` window to ignore the already imported dates and restart the import. To check the latest available date in the partition, you can use the following MongoDB query:
+
+```json
+{
+  "aggregate": [
+    {
+      "$match": {
+        "createdDate": {
+          "$gte": { "$date": "2024-01-01T00:00:01Z" },
+          "$lte": { "$date": "2025-01-01T00:00:01Z" }
+        }
+      }
+    },
+    { "$sort": { "createdDate": -1 } },
+    { "$limit": 10 },
+    { "$project": { "createdDate": 1 } }
+  ]
+}
+```
+
+:::warning
+
+Confusingly, NetSuite returns `createdDate` field but the SOAP API exposes `dateCreated` search argument instead!
+
+:::
 
 After the successful import, it is a good idea to run differential import (using `lastModifiedDate`) for the whole period when we were performing the initial migration to synchronize records that were updated in the meantime.
 
