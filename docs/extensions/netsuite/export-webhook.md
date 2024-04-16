@@ -6,18 +6,18 @@ sidebar_position: 4
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Here you can find the most common configurations. They might all need to be adjusted to your specific NetSuite instance configuration.
+This page showcases the most common configurations. The final configuration depends heavily on the NetSuite instance configuration and might need to be adjusted as needed.
 
 ## Vendor Bills (Invoices)
 
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
 
-The following shows a generic export that (perhaps with some small tweaks) should work for most of the cases:
+The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases:
 
 ```json
 {
-  "run_async": true,
+  "run_async": false,
   "netsuite_settings": {
     "account": "XXX_SB1", // Case sensitive!
     "concurrency_limit": 4,
@@ -30,12 +30,27 @@ The following shows a generic export that (perhaps with some small tweaks) shoul
       "payload": {
         "soap_method": "upsert",
         "soap_record": {
-          "entity": {
-            "type": "vendor",
+          "_ns_type": "VendorBill",
+          "class": {
+            "type": "classification",
             "_ns_type": "RecordRef",
-            "internalId": "@{ns_vendor_match}"
+            "internalId": "@{ns_class_match}"
           },
-          "tranId": "@{document_id}",
+          "customForm": {
+            "type": "customRecord",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_customForm}"
+          },
+          "currency": {
+            "type": "currency",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_currency_match}"
+          },
+          "department": {
+            "type": "department",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_department_match}"
+          },
           "dueDate": {
             "$IF_SCHEMA_ID$": {
               "schema_id": "date_due",
@@ -47,43 +62,51 @@ The following shows a generic export that (perhaps with some small tweaks) shoul
               }
             }
           },
-          "_ns_type": {
-            "$DATAPOINT_MAPPING$": {
-              "mapping": {
-                "tax_credit": "VendorCredit",
-                "tax_invoice": "VendorBill"
-              },
-              "schema_id": "document_type"
-            }
-          },
-          "currency": {
-            "type": "currency",
+          "entity": {
+            "type": "vendor",
             "_ns_type": "RecordRef",
-            "internalId": "@{ns_currency_match}"
+            "internalId": "@{ns_vendor_match}"
+          },
+          "externalId": "@{ns_external_id_generated}",
+          "subsidiary": {
+            "type": "subsidiary",
+            "_ns_type": "RecordRef",
+            "internalId": "@{ns_subsidiary_match}"
+          },
+          "tranId": "@{document_id}",
+          "tranDate": {
+            "$IF_SCHEMA_ID$": {
+              "mapping": {
+                "$DATAPOINT_VALUE$": {
+                  "schema_id": "date_issue",
+                  "value_type": "iso_datetime"
+                }
+              },
+              "schema_id": "date_issue"
+            }
           },
           "itemList": {
             "item": {
               "$FOR_EACH_SCHEMA_ID$": {
                 "mapping": {
-                  "$DATAPOINT_MAPPING$": {
-                    "mapping": {
-                      "inventory_item": {
-                        "item": {
-                          "type": "inventoryItem",
-                          "_ns_type": "RecordRef",
-                          "internalId": "@{item_ns_item_match}"
-                        },
-                        "rate": "@{item_amount}",
-                        "_ns_type": "VendorBillItem",
-                        "location": {
-                          "type": "location",
-                          "_ns_type": "RecordRef",
-                          "internalId": "@{item_ns_location_match}"
-                        },
-                        "quantity": "@{item_quantity}"
-                      }
-                    },
-                    "schema_id": "item_ns_type_manual"
+                  "_ns_type": "VendorBillItem",
+                  "description": "@{item_description}",
+                  "item": {
+                    "type": "inventoryItem",
+                    "_ns_type": "RecordRef",
+                    "internalId": "@{item_ns_item_match}"
+                  },
+                  "rate": "@{item_amount_base}",
+                  "location": {
+                    "type": "location",
+                    "_ns_type": "RecordRef",
+                    "internalId": "@{item_ns_location_match}"
+                  },
+                  "quantity": "@{item_quantity}",
+                  "taxCode": {
+                    "type": "taxType",
+                    "_ns_type": "RecordRef",
+                    "internalId": "@{item_po_item_taxCode_match}"
                   }
                 },
                 "schema_id": "line_item"
@@ -91,30 +114,17 @@ The following shows a generic export that (perhaps with some small tweaks) shoul
             },
             "_ns_type": "VendorBillItemList"
           },
-          "externalId": "@{ns_vb_external_id_generated}",
-          "subsidiary": {
-            "type": "subsidiary",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_subsidiary_match}"
-          },
           "expenseList": {
             "expense": {
               "$FOR_EACH_SCHEMA_ID$": {
                 "mapping": {
-                  "$DATAPOINT_MAPPING$": {
-                    "mapping": {
-                      "expense": {
-                        "memo": "@{item_description}",
-                        "amount": "@{item_amount_total}",
-                        "account": {
-                          "type": "account",
-                          "_ns_type": "RecordRef",
-                          "internalId": "@{item_gl_code_match}"
-                        },
-                        "_ns_type": "VendorBillExpense"
-                      }
-                    },
-                    "schema_id": "item_ns_type_manual"
+                  "_ns_type": "VendorBillExpense",
+                  "memo": "@{item_description}",
+                  "amount": "@{item_amount_total}",
+                  "account": {
+                    "type": "account",
+                    "_ns_type": "RecordRef",
+                    "internalId": "@{item_gl_code_match}"
                   }
                 },
                 "schema_id": "line_item"
