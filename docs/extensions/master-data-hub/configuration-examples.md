@@ -109,6 +109,34 @@ Compound queries are very useful when we need to match against multiple attribut
 }
 ```
 
+## Dummy object
+
+Creating dummy objects can be handy when we need to create some dummy (empty) record on the fly:
+
+```json
+{
+  "aggregate": [
+    {
+      "$unionWith": {
+        "coll": "__non_existent_collection__",
+        "pipeline": [
+          {
+            "$documents": [
+              {
+                "__score": -1,
+                "zip": "",
+                "companyName": "Company Unknown",
+                "contactName": ""
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
 ## Exact match
 
 ```json
@@ -200,6 +228,77 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
         }
       }
     }
+  ]
+}
+```
+
+## HTTP requests
+
+Master Data Hub can work not only with existing collections, but it can also send HTTP requests. The whole configuration for HTTP requests is slightly different:
+
+```json
+{
+  "configurations": [
+    {
+      "name": "…",
+      "source": {
+        // highlight-start
+        "auth": {
+          "url": "https://elis.rossum.ai/api/v1/auth/login",
+          "body": {
+            "password": "{secrets.elis_password}",
+            "username": "{secrets.elis_username}"
+          },
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "queries": [
+          {
+            "url": "https://elis.rossum.ai/api/v1/annotations/{annotation_id}/content",
+            "method": "GET",
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer {auth.body.key}"
+            },
+            "result_path": "content[?contains(schema_id, 'line_items_section')].children[].children[].children[?contains(schema_id, 'item_po_number')].content[]"
+          }
+        ]
+        // highlight-end
+      },
+      "default": { … },
+      "mapping": { … },
+      "result_actions": { … }
+    }
+  ]
+}
+```
+
+## JavaScript in-line functions
+
+:::warning
+
+Even though using JavaScript can be easier in some scenarios, it is typically less performant than using native MongoDB queries. Use this carefully!
+
+:::
+
+```json
+{
+  "aggregate": [
+    // …
+    {
+      "$addFields": {
+        "__order_number_sanitized": {
+          "$function": {
+            "body": "function(x) { return x.replace(/[^0-9a-z]/ig, '').toLowerCase(); }",
+            "args": ["$Order Number"],
+            "lang": "js"
+          }
+        }
+      }
+    }
+    // …
   ]
 }
 ```
@@ -462,25 +561,3 @@ This can be achieved by first searching and returning records with their respect
 ```
 
 Note that one disadvantage of this normalization is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
-
-## Custom JS code
-
-```json
-{
-  "aggregate": [
-    // …
-    {
-      "$addFields": {
-        "__order_number_sanitized": {
-          "$function": {
-            "body": "function(x) { return x.replace(/[^0-9a-z]/ig, '').toLowerCase(); }",
-            "args": ["$Order Number"],
-            "lang": "js"
-          }
-        }
-      }
-    }
-    // …
-  ]
-}
-```
