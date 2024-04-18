@@ -73,21 +73,23 @@ The following shows a Vendor Bill export that (perhaps with some small tweaks) s
             "_ns_type": "RecordRef",
             "internalId": "@{ns_subsidiary_match}"
           },
-          "tranId": "@{document_id}",
+          "tranId": "@{document_id_normalized}",
           "tranDate": {
             "$IF_SCHEMA_ID$": {
+              "schema_id": "date_issue",
               "mapping": {
                 "$DATAPOINT_VALUE$": {
                   "schema_id": "date_issue",
                   "value_type": "iso_datetime"
                 }
-              },
-              "schema_id": "date_issue"
+              }
             }
           },
           "itemList": {
+            "_ns_type": "VendorBillItemList",
             "item": {
               "$FOR_EACH_SCHEMA_ID$": {
+                "schema_id": "line_item",
                 "mapping": {
                   "_ns_type": "VendorBillItem",
                   "description": "@{item_description}",
@@ -108,29 +110,9 @@ The following shows a Vendor Bill export that (perhaps with some small tweaks) s
                     "_ns_type": "RecordRef",
                     "internalId": "@{item_po_item_taxCode_match}"
                   }
-                },
-                "schema_id": "line_item"
+                }
               }
-            },
-            "_ns_type": "VendorBillItemList"
-          },
-          "expenseList": {
-            "expense": {
-              "$FOR_EACH_SCHEMA_ID$": {
-                "mapping": {
-                  "_ns_type": "VendorBillExpense",
-                  "memo": "@{item_description}",
-                  "amount": "@{item_amount_total}",
-                  "account": {
-                    "type": "account",
-                    "_ns_type": "RecordRef",
-                    "internalId": "@{item_gl_code_match}"
-                  }
-                },
-                "schema_id": "line_item"
-              }
-            },
-            "_ns_type": "VendorBillExpenseList"
+            }
           }
         }
       }
@@ -262,19 +244,21 @@ To connect Vendor Bills with Purchase Orders, it is necessary to set both `order
         "soap_record": {
           "tranId": "@{document_id}",
           "itemList": {
+            "_ns_type": "VendorBillItemList",
             "item": {
               "$FOR_EACH_SCHEMA_ID$": {
+                "schema_id": "line_item",
                 "mapping": {
                   // …
                   "_ns_type": "VendorBillItem",
+                  // highlight-start
                   "orderDoc": "@{item_po_match}", // PO internal ID
                   "orderLine": "@{item_po_item_line_match}" // Relevant line-item number from PO (itemList.item.line)
+                  // highlight-end
                   // …
-                },
-                "schema_id": "line_item"
+                }
               }
-            },
-            "_ns_type": "VendorBillItemList"
+            }
           }
           // …
         }
@@ -285,3 +269,121 @@ To connect Vendor Bills with Purchase Orders, it is necessary to set both `order
 ```
 
 Note that the combination of Purchase Order and line item no. can appear only once in the payload. In case it appears twice on the invoice then it's necessary to group the line items before exporting.
+
+### Conditional configuration using `$DATAPOINT_MAPPING$`
+
+You can leverage JSON Templating to introduce conditions into the configuration. For example, in this example, we are changing document (NS) type based on the detected document type:
+
+```json
+{
+  "_ns_type": {
+    // highlight-start
+    "$DATAPOINT_MAPPING$": {
+      // highlight-end
+      "schema_id": "document_type",
+      "mapping": {
+        "tax_credit": "VendorCredit",
+        "tax_invoice": "VendorBill"
+      }
+    }
+  }
+}
+```
+
+Similarly, for line items and so on:
+
+```json
+{
+  "_ns_type": {
+    // highlight-start
+    "$DATAPOINT_MAPPING$": {
+      // highlight-end
+      "schema_id": "document_type",
+      "mapping": {
+        "tax_credit": "VendorCreditItemList",
+        "tax_invoice": "VendorBillItemList"
+      }
+    }
+  }
+}
+```
+
+Consider implementing this `$DATAPOINT_MAPPING$` condition higher in the configuration tree and duplicating the whole sections to avoid too complex conditional configurations.
+
+### Working with custom fields
+
+On `VendorBill` SOAP record:
+
+```json
+{
+  "customFieldList": {
+    "_ns_type": "CustomFieldList",
+    "customField": [
+      {
+        "value": "@{ns_custcol_some_field}",
+        "_ns_type": "StringCustomFieldRef",
+        "scriptId": "custcol_some_field"
+      }
+    ]
+  }
+}
+```
+
+### Using NetSuite File Cabinet (`pipeline_context`)
+
+You can reference earlier export stages by accessing `pipeline_context` variable. In this example, we use `pipeline_context` for attaching file uploaded to the NetSuite File Cabinet:
+
+```json
+{
+  "export_configs": [
+    {
+      "payload": [
+        {
+          // … upsert VendorBill here as usual
+        },
+        {
+          "soap_method": "add",
+          "soap_record": {
+            "name": "@{file_name}",
+            "folder": {
+              "type": "folder",
+              "_ns_type": "RecordRef",
+              "internalId": "123456"
+            },
+            "content": {
+              // highlight-start
+              "$GET_DOCUMENT_CONTENT$": {}
+              // highlight-end
+            },
+            "_ns_type": "File",
+            "attachFrom": "_web",
+            "description": "VendorBill processed by Rossum"
+          }
+        },
+        {
+          "soap_method": "attach",
+          "soap_record": {
+            "_ns_type": "AttachBasicReference",
+            "attachTo": {
+              "type": "vendorBill",
+              "_ns_type": "RecordRef",
+              // highlight-start
+              "internalId": "{pipeline_context[0].internal_id}"
+              // highlight-end
+            },
+            "attachedRecord": {
+              "type": "file",
+              "_ns_type": "RecordRef",
+              // highlight-start
+              "internalId": "{pipeline_context[1].internal_id}"
+              // highlight-end
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+Notice also the highlighted `$GET_DOCUMENT_CONTENT$` which returns the content of the original file.
