@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 title: 'Configuration examples'
 ---
 
@@ -27,6 +27,9 @@ Basic configuration (works with the default Rossum.ai schema for invoices) and t
 {
   "configurations": [
     {
+      "trigger_condition": {
+        "file_type": "xml"
+      },
       "fields": [
         {
           "schema_id": "document_id",
