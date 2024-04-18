@@ -370,6 +370,93 @@ If you'd like to modify the async settings, you can do so using the following `a
 
 Note that this configuration must be applied to all relevant import configs. Each config can even have a different timeouts and retries.
 
+### Importing individual records
+
+Sometimes, it can be handy to import just one specific record:
+
+```json
+{
+  "run_async": true,
+  "import_configs": [
+    {
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "type": {
+            "operator": "anyOf",
+            "searchValue": "_purchaseOrder"
+          },
+          "tranId": {
+            "operator": "is",
+            "searchValue": "PO-45512"
+          },
+          "_ns_type": "TransactionSearchBasic"
+        }
+      },
+      "async_settings": {
+        "retries": 5,
+        "max_run_time_s": 36000
+      },
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+    }
+  ],
+  "netsuite_settings": {
+    // …
+  }
+}
+```
+
+### Using advanced transaction search
+
+Using `TransactionSearchAdvanced` can be very beneficial if we want to select which fields should be fetched from NetSuite (to lower the payload size as well as data storage requirements).
+
+:::warning
+
+This functionality is currently in progress.
+
+:::
+
+```json
+{
+  "run_async": false,
+  "import_configs": [
+    {
+      "payload": {
+        "soap_method": "search",
+        "soap_record": {
+          "_ns_type": "TransactionSearchAdvanced",
+          "criteria": {
+            "_ns_type": "TransactionSearch",
+            "basic": {
+              "_ns_type": "TransactionSearchBasic",
+              "type": {
+                "operator": "anyOf",
+                "searchValue": "_purchaseOrder"
+              },
+              "dateCreated": {
+                "operator": "onOrAfter",
+                "searchValue": "2024-01-01T00:00:01Z"
+              }
+            }
+          },
+          "columns": {
+            "_ns_type": "TransactionSearchRow",
+            "basic": {
+              "_ns_type": "TransactionSearchRowBasic",
+              "tranId": {}
+            }
+          }
+        }
+      },
+      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+    }
+  ],
+  "netsuite_settings": {
+    // …
+  }
+}
+```
+
 ## Initial full data imports
 
 :::warning
