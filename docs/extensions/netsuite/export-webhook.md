@@ -13,7 +13,9 @@ This page showcases the most common configurations. The final configuration depe
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
 
-The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases:
+The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases.
+
+Visit [Formula fields](../formula-fields/configuration-examples#netsuite-external-ids) page to learn how to create external NetSuite IDs.
 
 ```json
 {
