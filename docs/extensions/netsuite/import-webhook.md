@@ -40,11 +40,13 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "getAll",
-        "soap_record": {
-          "_ns_type": "GetAllRecord",
-          "recordType": "currency"
-        }
+        "method_name": "getAll",
+        "method_args": [
+          {
+            "_ns_type": "GetAllRecord",
+            "recordType": "currency"
+          }
+        ]
       }
     },
     {
@@ -55,15 +57,24 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "ItemSearchBasic",
-          "type": {
-            "searchValue": "_inventoryItem",
-            "operator": "anyOf"
-          },
-          "isInactive": {
-            "searchValue": false
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "ItemSearchBasic",
+            "type": {
+              "searchValue": "_inventoryItem",
+              "operator": "anyOf"
+            },
+            "isInactive": {
+              "searchValue": false
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       }
@@ -76,16 +87,25 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "operator": "anyOf",
-            "searchValue": "_itemReceipt"
-          },
-          "lastModifiedDate": {
-            "operator": "onOrAfter",
-            "searchValue": "{last_modified_date}"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchBasic",
+            "type": {
+              "operator": "anyOf",
+              "searchValue": "_itemReceipt"
+            },
+            "lastModifiedDate": {
+              "operator": "onOrAfter",
+              "searchValue": "{last_modified_date}"
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       }
@@ -98,9 +118,18 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "LocationSearchBasic"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "LocationSearchBasic"
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
+          }
         }
       }
     },
@@ -112,16 +141,25 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "searchValue": "_purchaseOrder",
-            "operator": "anyOf"
-          },
-          "lastModifiedDate": {
-            "operator": "onOrAfter",
-            "searchValue": "{last_modified_date}"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchBasic",
+            "type": {
+              "searchValue": "_purchaseOrder",
+              "operator": "anyOf"
+            },
+            "lastModifiedDate": {
+              "operator": "onOrAfter",
+              "searchValue": "{last_modified_date}"
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       }
@@ -134,11 +172,20 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "SubsidiarySearchBasic",
-          "isInactive": {
-            "searchValue": "false"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "SubsidiarySearchBasic",
+            "isInactive": {
+              "searchValue": "false"
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       }
@@ -151,15 +198,24 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "VendorSearchBasic",
-          "isInactive": {
-            "searchValue": "false"
-          },
-          "lastModifiedDate": {
-            "operator": "onOrAfter",
-            "searchValue": "{last_modified_date}"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "VendorSearchBasic",
+            "isInactive": {
+              "searchValue": "false"
+            },
+            "lastModifiedDate": {
+              "operator": "onOrAfter",
+              "searchValue": "{last_modified_date}"
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       }
@@ -172,16 +228,25 @@ Visit the following link when trying to figure out how should the import searche
         "max_run_time_s": 36000
       },
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "searchValue": "_vendorBill",
-            "operator": "anyOf"
-          },
-          "lastModifiedDate": {
-            "operator": "onOrAfter",
-            "searchValue": "{last_modified_date}"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchBasic",
+            "type": {
+              "searchValue": "_vendorBill",
+              "operator": "anyOf"
+            },
+            "lastModifiedDate": {
+              "operator": "onOrAfter",
+              "searchValue": "{last_modified_date}"
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       }
@@ -354,14 +419,16 @@ If you'd like to modify the async settings, you can do so using the following `a
       },
       // highlight-end
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "searchValue": "_purchaseOrder",
-            "operator": "anyOf"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchBasic",
+            "type": {
+              "searchValue": "_purchaseOrder",
+              "operator": "anyOf"
+            }
           }
-        }
+        ]
       }
     }
   ]
@@ -380,22 +447,29 @@ Sometimes, it can be handy to import just one specific record:
   "import_configs": [
     {
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "type": {
-            "operator": "anyOf",
-            "searchValue": "_purchaseOrder"
-          },
-          "tranId": {
-            "operator": "is",
-            "searchValue": "PO-45512"
-          },
-          "_ns_type": "TransactionSearchBasic"
+        "method_name": "search",
+        "method_args": [
+          {
+            "type": {
+              "operator": "anyOf",
+              "searchValue": "_purchaseOrder"
+            },
+            "tranId": {
+              "operator": "is",
+              "searchValue": "PO-45512"
+            },
+            "_ns_type": "TransactionSearchBasic"
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
+          }
         }
       },
       "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
+        "retries": 5
       },
       "master_data_name": "sandbox_NS_PurchaseOrder_v1"
     }
@@ -422,29 +496,38 @@ This functionality is currently in progress.
   "import_configs": [
     {
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchAdvanced",
-          "criteria": {
-            "_ns_type": "TransactionSearch",
-            "basic": {
-              "_ns_type": "TransactionSearchBasic",
-              "type": {
-                "operator": "anyOf",
-                "searchValue": "_purchaseOrder"
-              },
-              "dateCreated": {
-                "operator": "onOrAfter",
-                "searchValue": "2024-01-01T00:00:01Z"
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchAdvanced",
+            "criteria": {
+              "_ns_type": "TransactionSearch",
+              "basic": {
+                "_ns_type": "TransactionSearchBasic",
+                "type": {
+                  "operator": "anyOf",
+                  "searchValue": "_purchaseOrder"
+                },
+                "dateCreated": {
+                  "operator": "onOrAfter",
+                  "searchValue": "2024-01-01T00:00:01Z"
+                }
+              }
+            },
+            "columns": {
+              "_ns_type": "TransactionSearchRow",
+              "basic": {
+                "_ns_type": "TransactionSearchRowBasic",
+                "tranId": {}
               }
             }
-          },
-          "columns": {
-            "_ns_type": "TransactionSearchRow",
-            "basic": {
-              "_ns_type": "TransactionSearchRowBasic",
-              "tranId": {}
-            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 1000,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       },
@@ -485,19 +568,28 @@ We can leverage this default sorting and partition the initial imports to years 
     {
       // Download Purchase Orders for year 2022:
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "operator": "anyOf",
-            "searchValue": "_purchaseOrder"
-          },
-          "dateCreated": {
-            // highlight-start
-            "operator": "within",
-            "searchValue": "2022-01-01T00:00:01Z",
-            "searchValue2": "2023-01-01T00:00:01Z"
-            // highlight-end
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchBasic",
+            "type": {
+              "operator": "anyOf",
+              "searchValue": "_purchaseOrder"
+            },
+            "dateCreated": {
+              // highlight-start
+              "operator": "within",
+              "searchValue": "2022-01-01T00:00:01Z",
+              "searchValue2": "2023-01-01T00:00:01Z"
+              // highlight-end
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 100,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       },
@@ -506,19 +598,28 @@ We can leverage this default sorting and partition the initial imports to years 
     {
       // Download Purchase Orders for year 2023:
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "_ns_type": "TransactionSearchBasic",
-          "type": {
-            "operator": "anyOf",
-            "searchValue": "_purchaseOrder"
-          },
-          "dateCreated": {
-            // highlight-start
-            "operator": "within",
-            "searchValue": "2023-01-01T00:00:01Z",
-            "searchValue2": "2024-01-01T00:00:01Z"
-            // highlight-end
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "TransactionSearchBasic",
+            "type": {
+              "operator": "anyOf",
+              "searchValue": "_purchaseOrder"
+            },
+            "dateCreated": {
+              // highlight-start
+              "operator": "within",
+              "searchValue": "2023-01-01T00:00:01Z",
+              "searchValue2": "2024-01-01T00:00:01Z"
+              // highlight-end
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 100,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       },
@@ -527,18 +628,27 @@ We can leverage this default sorting and partition the initial imports to years 
     {
       // Download Purchase Orders for the rest of the years:
       "payload": {
-        "soap_method": "search",
-        "soap_record": {
-          "type": {
-            "operator": "anyOf",
-            "searchValue": "_purchaseOrder"
-          },
-          "_ns_type": "TransactionSearchBasic",
-          "dateCreated": {
-            // highlight-start
-            "operator": "onOrAfter",
-            "searchValue": "2024-01-01T00:00:01Z"
-            // highlight-end
+        "method_name": "search",
+        "method_args": [
+          {
+            "type": {
+              "operator": "anyOf",
+              "searchValue": "_purchaseOrder"
+            },
+            "_ns_type": "TransactionSearchBasic",
+            "dateCreated": {
+              // highlight-start
+              "operator": "onOrAfter",
+              "searchValue": "2024-01-01T00:00:01Z"
+              // highlight-end
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 100,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
           }
         }
       },
@@ -574,7 +684,16 @@ Confusingly, NetSuite returns `createdDate` field but the SOAP API exposes `date
 
 :::
 
-After the successful import, it is a good idea to run differential import (using `lastModifiedDate`) for the whole period when we were performing the initial migration to synchronize records that were updated in the meantime.
+After the successful import, it is a good idea to run differential import (using `lastModifiedDate`) for the period during which we were performing the initial migration (to synchronize records that were updated in the meantime):
+
+```json
+{
+  "lastModifiedDate": {
+    "operator": "onOrAfter",
+    "searchValue": "__date of the full import start__" // replace with ISO date format
+  }
+}
+```
 
 And finally, it is possible to switch to differential imports only:
 

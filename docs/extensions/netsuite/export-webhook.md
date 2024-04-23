@@ -30,93 +30,95 @@ Visit [Formula fields](../formula-fields/configuration-examples#netsuite-externa
   "export_configs": [
     {
       "payload": {
-        "soap_method": "upsert",
-        "soap_record": {
-          "_ns_type": "VendorBill",
-          "class": {
-            "type": "classification",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_class_match}"
-          },
-          "customForm": {
-            "type": "customRecord",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_customForm}"
-          },
-          "currency": {
-            "type": "currency",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_currency_match}"
-          },
-          "department": {
-            "type": "department",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_department_match}"
-          },
-          "dueDate": {
-            "$IF_SCHEMA_ID$": {
-              "schema_id": "date_due",
-              "mapping": {
-                "$DATAPOINT_VALUE$": {
-                  "schema_id": "date_due",
-                  "value_type": "iso_datetime"
-                }
-              }
-            }
-          },
-          "entity": {
-            "type": "vendor",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_vendor_match}"
-          },
-          "externalId": "@{ns_external_id_generated}",
-          "subsidiary": {
-            "type": "subsidiary",
-            "_ns_type": "RecordRef",
-            "internalId": "@{ns_subsidiary_match}"
-          },
-          "tranId": "@{document_id_normalized}",
-          "tranDate": {
-            "$IF_SCHEMA_ID$": {
-              "schema_id": "date_issue",
-              "mapping": {
-                "$DATAPOINT_VALUE$": {
-                  "schema_id": "date_issue",
-                  "value_type": "iso_datetime"
-                }
-              }
-            }
-          },
-          "itemList": {
-            "_ns_type": "VendorBillItemList",
-            "item": {
-              "$FOR_EACH_SCHEMA_ID$": {
-                "schema_id": "line_item",
+        "method_name": "upsert",
+        "method_args": [
+          {
+            "_ns_type": "VendorBill",
+            "class": {
+              "type": "classification",
+              "_ns_type": "RecordRef",
+              "internalId": "@{ns_class_match}"
+            },
+            "customForm": {
+              "type": "customRecord",
+              "_ns_type": "RecordRef",
+              "internalId": "@{ns_customForm}"
+            },
+            "currency": {
+              "type": "currency",
+              "_ns_type": "RecordRef",
+              "internalId": "@{ns_currency_match}"
+            },
+            "department": {
+              "type": "department",
+              "_ns_type": "RecordRef",
+              "internalId": "@{ns_department_match}"
+            },
+            "dueDate": {
+              "$IF_SCHEMA_ID$": {
+                "schema_id": "date_due",
                 "mapping": {
-                  "_ns_type": "VendorBillItem",
-                  "description": "@{item_description}",
-                  "item": {
-                    "type": "inventoryItem",
-                    "_ns_type": "RecordRef",
-                    "internalId": "@{item_ns_item_match}"
-                  },
-                  "rate": "@{item_amount_base}",
-                  "location": {
-                    "type": "location",
-                    "_ns_type": "RecordRef",
-                    "internalId": "@{item_ns_location_match}"
-                  },
-                  "quantity": "@{item_quantity}",
-                  "taxCode": {
-                    "type": "taxType",
-                    "_ns_type": "RecordRef",
-                    "internalId": "@{item_po_item_taxCode_match}"
+                  "$DATAPOINT_VALUE$": {
+                    "schema_id": "date_due",
+                    "value_type": "iso_datetime"
+                  }
+                }
+              }
+            },
+            "entity": {
+              "type": "vendor",
+              "_ns_type": "RecordRef",
+              "internalId": "@{ns_vendor_match}"
+            },
+            "externalId": "@{ns_external_id_generated}",
+            "subsidiary": {
+              "type": "subsidiary",
+              "_ns_type": "RecordRef",
+              "internalId": "@{ns_subsidiary_match}"
+            },
+            "tranId": "@{document_id_normalized}",
+            "tranDate": {
+              "$IF_SCHEMA_ID$": {
+                "schema_id": "date_issue",
+                "mapping": {
+                  "$DATAPOINT_VALUE$": {
+                    "schema_id": "date_issue",
+                    "value_type": "iso_datetime"
+                  }
+                }
+              }
+            },
+            "itemList": {
+              "_ns_type": "VendorBillItemList",
+              "item": {
+                "$FOR_EACH_SCHEMA_ID$": {
+                  "schema_id": "line_item",
+                  "mapping": {
+                    "_ns_type": "VendorBillItem",
+                    "description": "@{item_description}",
+                    "item": {
+                      "type": "inventoryItem",
+                      "_ns_type": "RecordRef",
+                      "internalId": "@{item_ns_item_match}"
+                    },
+                    "rate": "@{item_amount_base}",
+                    "location": {
+                      "type": "location",
+                      "_ns_type": "RecordRef",
+                      "internalId": "@{item_ns_location_match}"
+                    },
+                    "quantity": "@{item_quantity}",
+                    "taxCode": {
+                      "type": "taxType",
+                      "_ns_type": "RecordRef",
+                      "internalId": "@{item_po_item_taxCode_match}"
+                    }
                   }
                 }
               }
             }
           }
-        }
+        ]
       }
     }
   ]
@@ -242,28 +244,30 @@ To connect Vendor Bills with Purchase Orders, it is necessary to set both `order
   "export_configs": [
     {
       "payload": {
-        "soap_method": "upsert",
-        "soap_record": {
-          "tranId": "@{document_id}",
-          "itemList": {
-            "_ns_type": "VendorBillItemList",
-            "item": {
-              "$FOR_EACH_SCHEMA_ID$": {
-                "schema_id": "line_item",
-                "mapping": {
-                  // …
-                  "_ns_type": "VendorBillItem",
-                  // highlight-start
-                  "orderDoc": "@{item_po_match}", // PO internal ID
-                  "orderLine": "@{item_po_item_line_match}" // Relevant line-item number from PO (itemList.item.line)
-                  // highlight-end
-                  // …
+        "method_name": "upsert",
+        "method_args": [
+          {
+            "tranId": "@{document_id}",
+            "itemList": {
+              "_ns_type": "VendorBillItemList",
+              "item": {
+                "$FOR_EACH_SCHEMA_ID$": {
+                  "schema_id": "line_item",
+                  "mapping": {
+                    // …
+                    "_ns_type": "VendorBillItem",
+                    // highlight-start
+                    "orderDoc": "@{item_po_match}", // PO internal ID
+                    "orderLine": "@{item_po_item_line_match}" // Relevant line-item number from PO (itemList.item.line)
+                    // highlight-end
+                    // …
+                  }
                 }
               }
             }
+            // …
           }
-          // …
-        }
+        ]
       }
     }
   ]
@@ -344,43 +348,47 @@ You can reference earlier export stages by accessing `pipeline_context` variable
           // … upsert VendorBill here as usual
         },
         {
-          "soap_method": "add",
-          "soap_record": {
-            "name": "@{file_name}",
-            "folder": {
-              "type": "folder",
-              "_ns_type": "RecordRef",
-              "internalId": "123456"
-            },
-            "content": {
-              // highlight-start
-              "$GET_DOCUMENT_CONTENT$": {}
-              // highlight-end
-            },
-            "_ns_type": "File",
-            "attachFrom": "_web",
-            "description": "VendorBill processed by Rossum"
-          }
+          "method_name": "add",
+          "method_args": [
+            {
+              "name": "@{file_name}",
+              "folder": {
+                "type": "folder",
+                "_ns_type": "RecordRef",
+                "internalId": "123456"
+              },
+              "content": {
+                // highlight-start
+                "$GET_DOCUMENT_CONTENT$": {}
+                // highlight-end
+              },
+              "_ns_type": "File",
+              "attachFrom": "_web",
+              "description": "VendorBill processed by Rossum"
+            }
+          ]
         },
         {
-          "soap_method": "attach",
-          "soap_record": {
-            "_ns_type": "AttachBasicReference",
-            "attachTo": {
-              "type": "vendorBill",
-              "_ns_type": "RecordRef",
-              // highlight-start
-              "internalId": "{pipeline_context[0].internal_id}"
-              // highlight-end
-            },
-            "attachedRecord": {
-              "type": "file",
-              "_ns_type": "RecordRef",
-              // highlight-start
-              "internalId": "{pipeline_context[1].internal_id}"
-              // highlight-end
+          "method_name": "attach",
+          "method_args": [
+            {
+              "_ns_type": "AttachBasicReference",
+              "attachTo": {
+                "type": "vendorBill",
+                "_ns_type": "RecordRef",
+                // highlight-start
+                "internalId": "{pipeline_context[0].internal_id}"
+                // highlight-end
+              },
+              "attachedRecord": {
+                "type": "file",
+                "_ns_type": "RecordRef",
+                // highlight-start
+                "internalId": "{pipeline_context[1].internal_id}"
+                // highlight-end
+              }
             }
-          }
+          ]
         }
       ]
     }
