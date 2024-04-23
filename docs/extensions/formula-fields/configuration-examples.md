@@ -48,3 +48,29 @@ Remove non-alphanumeric characters (except "-" and "\_"):
 ```py
 substitute(r"[^a-zA-Z\d\-_]", "", field.order_id)
 ```
+
+## Validations
+
+To validate line items, create `item_validator` formula field with the following code:
+
+:::warning
+
+This is not the intended usage, and there will be a better way in the future. It works, however.
+
+:::
+
+```py
+import math
+
+item_total_base_calculated = field.item_quantity * field.item_amount_base
+
+if not math.isclose(item_total_base_calculated, field.item_total_base, rel_tol=0.004):
+    item_total_base_diff = abs(item_total_base_calculated - field.item_total_base)
+    message = (f"The totals do not match. Expected total: {field.item_total_base}, "
+               f"Calculated total: {item_total_base_calculated}, "
+               f"Difference: {item_total_base_diff}")
+
+    show_error(message, field.item_quantity)
+    show_error(message, field.item_amount_base)
+    show_error(message, field.item_total_base)
+```
