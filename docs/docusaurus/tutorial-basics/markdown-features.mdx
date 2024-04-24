@@ -1,4 +1,5 @@
 ---
+unlisted: true
 sidebar_position: 4
 ---
 
@@ -131,7 +132,7 @@ This is <Highlight color="#25c2a0">Docusaurus green</Highlight> !
 This is <Highlight color="#1877F2">Facebook blue</Highlight> !
 ```
 
-export const Highlight = ({children, color}) => (
+export const Highlight = ({ children, color }) => (
   <span
     style={{
       backgroundColor: color,
@@ -142,7 +143,8 @@ export const Highlight = ({children, color}) => (
     }}
     onClick={() => {
       alert(`You clicked the color ${color} with label ${children}`);
-    }}>
+    }}
+  >
     {children}
   </span>
 );
