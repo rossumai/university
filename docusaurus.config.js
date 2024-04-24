@@ -25,7 +25,9 @@ const config = {
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenAnchors: 'throw',
+  onBrokenMarkdownLinks: 'throw',
+  onDuplicateRoutes: 'throw',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -86,6 +88,11 @@ const config = {
             position: 'left',
             label: 'Guides',
           },
+          {
+            href: 'https://elis.rossum.ai/api/docs/',
+            label: 'API Reference',
+            position: 'left',
+          },
 
           // See: http://localhost:3000/cookbook/docs/docusaurus/intro
           // {
@@ -101,9 +108,15 @@ const config = {
           //   label: 'Blog',
           //   position: 'left',
           // },
+
           {
-            href: 'https://elis.rossum.ai/api/docs/',
-            label: 'API',
+            href: 'https://rossum.ai/',
+            label: 'Rossum.ai',
+            position: 'right',
+          },
+          {
+            href: 'https://status.rossum.ai/',
+            label: 'Status page',
             position: 'right',
           },
           {
