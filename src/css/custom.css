@@ -4,6 +4,8 @@
  * work well for content-centric websites.
  */
 
+@import url('satoshi.css');
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #006fe8;
@@ -14,6 +16,9 @@
   --ifm-color-primary-lighter: #0c80ff;
   --ifm-color-primary-lightest: #2f92ff;
   --ifm-code-font-size: 95%;
+  --ifm-font-family-base: Satoshi-Variable, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
