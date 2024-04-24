@@ -28,5 +28,5 @@ test('main navigation (Guides)', async ({ page }) => {
   await page.goto('/cookbook');
 
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Guides' }).click();
-  await expect(page.locator('h1')).toContainText('Single Sign-On (SSO)');
+  await expect(page.locator('h1')).toContainText('Getting Started with Rossum');
 });
