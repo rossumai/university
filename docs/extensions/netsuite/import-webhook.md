@@ -484,7 +484,7 @@ Sometimes, it can be handy to import just one specific record:
 
 Using `TransactionSearchAdvanced` can be beneficial if we want to select which fields should be fetched from NetSuite (to lower the payload size as well as data storage requirements). Additionally, it can be useful to fetch additional columns such as `createdFromJoin` or `applyingTransactionJoin` and similar.
 
-:::note
+:::info
 
 Advanced transaction search requires 'Transactions -> Find Transaction' permission.
 
