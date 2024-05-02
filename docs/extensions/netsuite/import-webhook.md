@@ -72,7 +72,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -103,7 +103,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -126,7 +126,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -157,7 +157,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -183,7 +183,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -213,7 +213,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -244,7 +244,7 @@ Visit the following link when trying to figure out how should the import searche
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
             "returnSearchColumns": false
           }
@@ -480,15 +480,17 @@ Sometimes, it can be handy to import just one specific record:
 }
 ```
 
-### Using advanced transaction search
+## Using advanced transaction search
 
-Using `TransactionSearchAdvanced` can be very beneficial if we want to select which fields should be fetched from NetSuite (to lower the payload size as well as data storage requirements).
+Using `TransactionSearchAdvanced` can be beneficial if we want to select which fields should be fetched from NetSuite (to lower the payload size as well as data storage requirements). Additionally, it can be useful to fetch additional columns such as `createdFromJoin` or `applyingTransactionJoin` and similar.
 
-:::warning
+:::note
 
-This functionality is currently in progress.
+Advanced transaction search requires 'Transactions -> Find Transaction' permission.
 
 :::
+
+`TransactionSearchAdvanced` requires two main fields: `criteria` (to specify the actual search) and `columns` (to specify what columns should be returned). It is also important to set `returnSearchColumns` to `true`:
 
 ```json
 {
@@ -500,7 +502,9 @@ This functionality is currently in progress.
         "method_args": [
           {
             "_ns_type": "TransactionSearchAdvanced",
+            // highlight-start
             "criteria": {
+              // highlight-end
               "_ns_type": "TransactionSearch",
               "basic": {
                 "_ns_type": "TransactionSearchBasic",
@@ -514,20 +518,33 @@ This functionality is currently in progress.
                 }
               }
             },
+            // highlight-start
             "columns": {
+              // highlight-end
               "_ns_type": "TransactionSearchRow",
               "basic": {
                 "_ns_type": "TransactionSearchRowBasic",
-                "tranId": {}
+                "tranId": {},
+                "tranDate": {},
+                "internalId": {},
+                "recordType": {}
+              },
+              "createdFromJoin": {
+                "_ns_type": "TransactionSearchRowBasic",
+                "tranId": {},
+                "internalId": {},
+                "recordType": {}
               }
             }
           }
         ],
         "method_headers": {
           "searchPreferences": {
-            "pageSize": 1000,
+            "pageSize": 100,
             "bodyFieldsOnly": false,
-            "returnSearchColumns": false
+            // highlight-start
+            "returnSearchColumns": true
+            // highlight-end
           }
         }
       },
@@ -536,6 +553,34 @@ This functionality is currently in progress.
   ],
   "netsuite_settings": {
     // …
+  }
+}
+```
+
+### Main line advanced search
+
+By default, the advanced search returns one record for each line item. In case we'd not care about the line items, we can change the search behavior to return one line per main line record by configuring `criteria.basic.mainLine` (see [Main Line in NetSuite](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_4459563851.html)):
+
+```json
+{
+  "_ns_type": "TransactionSearchAdvanced",
+  "columns": {
+    "_ns_type": "TransactionSearchRow",
+    "basic": {
+      // …
+    }
+  },
+  "criteria": {
+    "_ns_type": "TransactionSearch",
+    "basic": {
+      "_ns_type": "TransactionSearchBasic",
+      // highlight-start
+      "mainLine": {
+        "searchValue": true
+      }
+      // highlight-end
+      // …
+    }
   }
 }
 ```
@@ -673,7 +718,7 @@ It is necessary to observe whether all the partitions were imported successfully
     },
     { "$sort": { "createdDate": -1 } },
     { "$limit": 10 },
-    { "$project": { "createdDate": 1 } }
+    { "$project": { "createdDate": 1, "itemList": 1 } }
   ]
 }
 ```
