@@ -1,6 +1,5 @@
 ---
-sidebar_position: 1
-title: 'Getting started'
+title: 'Line item grouping'
 ---
 
 **Line items grouping** extension allows for grouping line items based on given SQL criteria. This is handy when the downstream system has some restrictions such as only one unique line item per invoice.
