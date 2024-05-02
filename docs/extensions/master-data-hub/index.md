@@ -1,6 +1,5 @@
 ---
-title: 'Getting started'
-sidebar_position: 1
+title: 'Master data hub'
 ---
 
 ## What is the Master Data Hub extension

@@ -19,9 +19,6 @@ test('main navigation (Extensions)', async ({ page }) => {
 
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Extensions' }).click();
   await expect(page.locator('h1')).toContainText('Business Rules Validation');
-
-  await page.getByRole('link', { name: '📄️ Configuration examples' }).click();
-  await expect(page.locator('h1')).toContainText('Configuration examples');
 });
 
 test('main navigation (Guides)', async ({ page }) => {
