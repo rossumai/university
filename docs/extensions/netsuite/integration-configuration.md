@@ -1,5 +1,5 @@
 ---
-title: 'Configuration'
+title: 'Integration configuration'
 sidebar_position: 2
 ---
 
