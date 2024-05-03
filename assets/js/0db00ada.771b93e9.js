@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcookbook=self.webpackChunkcookbook||[]).push([[7049],{6705:o=>{o.exports=JSON.parse('{"label":"hola","permalink":"/cookbook/blog/tags/hola","allTagsPath":"/cookbook/blog/tags","count":1,"unlisted":false}')}}]);
