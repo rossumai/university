@@ -318,7 +318,7 @@ Consider implementing this `$DATAPOINT_MAPPING$` condition higher in the configu
 
 ### Working with custom fields
 
-On `VendorBill` SOAP record:
+Custom fields on header level are usually prefixed by `custbody_`:
 
 ```json
 {
@@ -326,14 +326,51 @@ On `VendorBill` SOAP record:
     "_ns_type": "CustomFieldList",
     "customField": [
       {
-        "value": "@{ns_custcol_some_field}",
+        "value": "@{amount_total}",
         "_ns_type": "StringCustomFieldRef",
-        "scriptId": "custcol_some_field"
+        "scriptId": "custbody_captured_total_amount"
       }
+      // …
     ]
   }
 }
 ```
+
+Line item custom fields are usually prefixed by `custcol_`. They also must be nested in the item list:
+
+```json
+{
+  "itemList": {
+    "item": {
+      "customFieldList": {
+        "_ns_type": "CustomFieldList",
+        "customField": [
+          {
+            "value": "@{ns_custcol_some_field}",
+            "_ns_type": "StringCustomFieldRef",
+            "scriptId": "custcol_some_field"
+          }
+          // …
+        ]
+      }
+    }
+  }
+}
+```
+
+Custom fields are represented by the type `CustomFieldRef`, which is an abstract type. The table below contains a list of concrete custom field types that extend the `CustomFieldRef` type:
+
+| JSON Mapping Type           | Custom Field Type in UI                                                       |
+| :-------------------------- | :---------------------------------------------------------------------------- |
+| `LongCustomFieldRef`        | Integer                                                                       |
+| `DoubleCustomFieldRef`      | Decimal Number                                                                |
+| `BooleanCustomFieldRef`     | Check Box                                                                     |
+| `StringCustomFieldRef`      | Free-Form Text, Text Area, Phone Number, E-mail Address, Hyperlink, Rich Text |
+| `DateCustomFieldRef`        | Date, Time of Day, or Date/Time (both in one field)                           |
+| `SelectCustomFieldRef`      | List/Record, Document                                                         |
+| `MultiSelectCustomFieldRef` | Multiple Select                                                               |
+
+For more information, please visit: https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_N3458179.html
 
 ### Using NetSuite File Cabinet (`pipeline_context`)
 
