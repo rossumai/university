@@ -95,3 +95,61 @@ Note that such created CSV is not available anywhere in the UI, but it's rather 
 This extension is typically to be used in combination with [REST API Export extension](../generic-rest-api-export) which knows how to work with it.
 
 :::
+
+## Custom XML
+
+Similarly to other formats, custom XML can be defined using the following template:
+
+```json
+{
+  "export_configs": [
+    {
+      "export_id": "export_annotation_to_xml",
+      "content_encoding": "utf-8",
+      "file_content_template_multiline": [
+        "<ROSSUM>",
+        "  <INVOICE>",
+        "    <HEADER>",
+        "      <DOCUMENT_ID>{{ field.document_id }}</DOCUMENT_ID>",
+        "      <DOCUMENT_TYPE>{{ field.document_type }}</DOCUMENT_TYPE>",
+        "      <DOCUMENT_LANGUAGE>{{ field.language }}</DOCUMENT_LANGUAGE>",
+        "      <DATE_ISSUE>{{ field.date_issue }}</DATE_ISSUE>",
+        "      <DATE_DUE>{{ field.date_due }}</DATE_DUE>",
+        "      <CURRENCY>{{ field.currency|upper }}</CURRENCY>",
+        "      <AMOUNT_TOTAL>{{ field.amount_total }}</AMOUNT_TOTAL>",
+        "      <AMOUNT_TOTAL_TAX>{{ field.amount_total_tax }}</AMOUNT_TOTAL_TAX>",
+        "    </HEADER>",
+        "  </INVOICE>",
+        "</ROSSUM>"
+      ]
+    }
+  ]
+}
+```
+
+## Custom JSON
+
+```json
+{
+  "export_configs": [
+    {
+      "export_id": "export_annotation_to_json",
+      "content_encoding": "utf-8",
+      "file_content_template_multiline": [
+        "{",
+        "  \"document_id\": \"{{ field.document_id }}\",",
+        "  \"document_type\": \"{{ field.document_type }}\",",
+        "  \"line_items\": [",
+        "    {% for item in field.line_items %}{",
+        "      \"code\": \"{{ item.item_code }}\",",
+        "      \"description\": \"{{ item.item_description }}\",",
+        "      \"quantity\": {{ item.item_quantity }},",
+        "      \"amount\": {{ item.item_amount }},",
+        "    }{% if not loop.last %},{% endif %}",
+        "  {% endfor %}]",
+        "}"
+      ]
+    }
+  ]
+}
+```
