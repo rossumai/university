@@ -2,6 +2,8 @@
 title: 'NetSuite'
 ---
 
+import WebhookEndpoints from '../\_webhook_endpoints.md';
+
 ## Webhook configuration
 
 :::warning[TODO]
@@ -12,11 +14,19 @@ _Describe how to create and configure the extension._
 
 Import endpoints:
 
-| Environment | Webhook URL                                                 |
-| :---------- | :---------------------------------------------------------- |
-| EU1         | https://elis.rossum.ai/svc/netsuite-v3/api/v1/import        |
-| EU2         | https://shared-eu2.rossum.app/svc/netsuite-v3/api/v1/import |
-| US2         | https://us.app.rossum.ai/svc/netsuite-v3/api/v1/import      |
+<WebhookEndpoints
+  eu1="https://elis.rossum.ai/svc/netsuite-v3/api/v1/import"
+  eu2="https://shared-eu2.rossum.app/svc/netsuite-v3/api/v1/import"
+  us="https://us.app.rossum.ai/svc/netsuite-v3/api/v1/import"
+/>
+
+Export endpoints:
+
+<WebhookEndpoints
+  eu1="https://elis.rossum.ai/svc/netsuite-v3/api/v1/export"
+  eu2="https://shared-eu2.rossum.app/svc/netsuite-v3/api/v1/export"
+  us="https://us.app.rossum.ai/svc/netsuite-v3/api/v1/export"
+/>
 
 ## Useful links
 
