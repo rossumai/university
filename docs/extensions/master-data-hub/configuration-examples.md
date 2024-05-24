@@ -11,16 +11,32 @@ The following examples are showing commonly used configurations of the Rossum.ai
     {
       "name": "…",
       "source": {
-        "dataset": "…",
+        "dataset": "PurchaseOrder_v1",
         // highlight-start
         "queries": [
-          // paste the examples here
+          // COPY-PASTE THE EXAMPLES HERE
         ],
         // highlight-end
       },
       "default": { … },
       "mapping": { … },
       "result_actions": { … }
+    }
+  ]
+}
+```
+
+In most of the cases, the `dataset` key will be static. It can however be dynamic as well:
+
+```json
+{
+  "configurations": [
+    {
+      "name": "…",
+      "source": {
+        "dataset": "PurchaseOrder_{queue_country}_v1"
+        // …
+      }
     }
   ]
 }
