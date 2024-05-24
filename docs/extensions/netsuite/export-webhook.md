@@ -336,6 +336,29 @@ Custom fields on header level are usually prefixed by `custbody_`:
 }
 ```
 
+Custom fields can also be added conditionally using special `$IF_SCHEMA_ID$` syntax:
+
+```json
+{
+  "customFieldList": {
+    "_ns_type": "CustomFieldList",
+    "customField": [
+      {
+        "$IF_SCHEMA_ID$": {
+          "mapping": {
+            "value": "@{amount_total}",
+            "_ns_type": "StringCustomFieldRef",
+            "scriptId": "custbody_captured_total_amount"
+          },
+          "schema_id": "amount_total"
+        }
+      }
+      // …
+    ]
+  }
+}
+```
+
 Line item custom fields are usually prefixed by `custcol_`. They also must be nested in the item list:
 
 ```json
