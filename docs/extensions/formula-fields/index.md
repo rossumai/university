@@ -4,11 +4,6 @@ title: 'Formula fields'
 
 :::warning[TODO]
 
-_Describe how to create and configure the extension._
+_Describe what does it do and how to use it._
 
 :::
-
-| Environment | Webhook URL |
-| :---------- | :---------- |
-| EU1         | TODO        |
-| EU2         | TODO        |
