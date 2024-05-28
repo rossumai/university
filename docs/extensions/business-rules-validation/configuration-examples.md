@@ -1,9 +1,12 @@
 ---
 sidebar_position: 1
-title: 'Configuration examples'
+title: 'Business Rules Validation: Configuration examples'
+sidebar_label: 'Configuration examples'
 ---
 
-Here you can find examples of the most common real-world use cases for Business Rules Validation.
+# Configuration examples
+
+Here you can find examples of the most common real-world use cases for Business Rules Validation. Simply copy-paste them into extension settings and adjust as needed.
 
 ## Common Accounts Payable (AP) checks
 

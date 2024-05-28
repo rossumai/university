@@ -3,28 +3,49 @@ unlisted: true
 sidebar_position: 4
 ---
 
+<!-- /docs/docusaurus/best-practices-for-content -->
+
 # Best practices for content
 
-## H1
+## Structure of Extensions pages
+
+TODO
+
+### Index page
+
+There should always be an index page in `index.md` with the following sections for fast and easy onboarding:
+
+1. A section shortly explaining what does the extensions do.
+2. **Installation** section. If it's a webhook, it should also contain `<WebhookEndpoint />` component.
+3. **Basic usage** section describing a minimal extension setup (quick start).
+4. **Available configuration options** so that users know what options are available
+
+### Configuration examples page
+
+TODO
+
+## Common rules for all content
+
+### H1
 
 - One per page
 - Sentence case (Getting started with Rossum)
 - Capital letters for proper nouns, product/feature names (Master Data Hub extension, How to use Aurora for Complex Tables)
 - Typeface = Satoshi Variable
 
-## H2
+### H2
 
 - Multiple per page
 - Sentence case
 - Typeface = Satoshi Variable
 
-## H3
+### H3
 
 - Multiple per page
 - Sentence case
 - Typeface = Satoshi Variable
 
-## Content
+### Content
 
 - Typeface = Satoshi Variable
 - US spelling (Organization, color, behavior)
@@ -34,7 +55,7 @@ sidebar_position: 4
 - Avoid underlines unless it’s a link
 - Tone of voice = human, trustworthy, accessible, precise, and playful (when appropriate)
 
-## Images
+### Images
 
 - New branding
 - Alt image text for each, describing what's being shown
