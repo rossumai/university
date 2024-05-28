@@ -8,19 +8,19 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Rossum.ai Cookbook',
-  tagline: 'Build something cool with Rossum.ai',
+  title: 'Rossum.ai University',
+  tagline: 'Build something meaningful with Rossum.ai',
   favicon: 'img/128-blue-crunch.png',
 
   // Set the production url of your site here
-  url: 'https://rossumai-community.github.io',
+  url: 'https://rossum.university',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/cookbook/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'rossumai-community', // Usually your GitHub org/user name.
+  organizationName: 'rossumai', // Usually your GitHub org/user name.
   projectName: 'cookbook', // Usually your repo name.
   trailingSlash: false,
 
@@ -94,10 +94,9 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
       image: 'img/og_image.png',
       navbar: {
-        title: 'Rossum.ai Cookbook',
+        title: 'Rossum.ai University',
         logo: {
           alt: 'Rossum.ai Logo',
           src: 'img/128-blue-crunch.png',
@@ -121,7 +120,7 @@ const config = {
             position: 'left',
           },
 
-          // See: http://localhost:3000/cookbook/docs/docusaurus/intro
+          // See: http://localhost:3000/docs/docusaurus/intro
           // {
           //   type: 'docSidebar',
           //   sidebarId: 'docusaurusSidebar',
@@ -129,7 +128,7 @@ const config = {
           //   label: 'Docusaurus',
           // },
 
-          // http://localhost:3000/cookbook/blog
+          // http://localhost:3000/blog
           // {
           //   to: '/blog',
           //   label: 'Blog',
@@ -191,7 +190,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Rossum.ai`,
       },
       announcementBar: {
-        content: '🚧 Work in progress. 🚧',
+        content:
+          '🚧 Work in progress. Leave <a href="https://github.com/rossumai-community/cookbook/issues" target="_blank">your feedback</a>. 🚧',
         backgroundColor: '#fff8e6',
         isCloseable: false,
       },

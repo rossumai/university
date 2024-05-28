@@ -1,28 +1,30 @@
 const { test, expect } = require('@playwright/test');
 
 test('has title', async ({ page }) => {
-  await page.goto('/cookbook');
+  await page.goto('/');
 
   // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Rossum.ai Cookbook | Rossum.ai Cookbook/);
+  await expect(page).toHaveTitle(/Rossum.ai University | Rossum.ai University/);
 });
 
 test('homepage', async ({ page }) => {
-  await page.goto('/cookbook');
+  await page.goto('/');
 
-  await expect(page.getByRole('heading')).toContainText('Rossum.ai Cookbook');
-  await expect(page.getByRole('paragraph')).toContainText('Build something cool with Rossum.ai');
+  await expect(page.getByRole('heading')).toContainText('Rossum.ai University');
+  await expect(page.getByRole('paragraph')).toContainText(
+    'Build something meaningful with Rossum.ai',
+  );
 });
 
 test('main navigation (Extensions)', async ({ page }) => {
-  await page.goto('/cookbook');
+  await page.goto('/');
 
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Extensions' }).click();
   await expect(page.locator('h1')).toContainText('Business Rules Validation');
 });
 
 test('main navigation (Guides)', async ({ page }) => {
-  await page.goto('/cookbook');
+  await page.goto('/');
 
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Guides' }).click();
   await expect(page.locator('h1')).toContainText('Getting Started with Rossum');
