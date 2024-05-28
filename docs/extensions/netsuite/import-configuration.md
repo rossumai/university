@@ -1,10 +1,13 @@
 ---
-title: 'Import webhook'
+title: 'NetSuite: Import configuration'
 sidebar_position: 3
+sidebar_label: 'Import configuration'
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+
+# Import configuration
 
 Notice that each configuration has `concurrency_limit` configured. The best way how to determine the right number is to visit **Setup > Integration > Integration Governance** where you can see (and configure) not only the concurrency limits but also peak concurrency of all integrations allowing you to choose the best number.
 

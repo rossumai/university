@@ -39,7 +39,7 @@ result = f"{prefix}{external_id}"
 result
 ```
 
-This is typically necessary when [exporting records into NetSuite](../netsuite/export-webhook#vendor-bills-invoices).
+This is typically necessary when [exporting records into NetSuite](../netsuite/export-configuration#vendor-bills-invoices).
 
 ## Normalize field value
 

@@ -1,7 +1,10 @@
 ---
-title: 'Integration configuration'
+title: 'NetSuite: Integration configuration'
 sidebar_position: 2
+sidebar_label: 'Integration configuration'
 ---
+
+# Integration configuration
 
 To configure an access token in NetSuite for SOAP communication, especially when there is no integration user yet, involves several steps that include creating an integration record in NetSuite, setting up a role with the necessary permissions, creating an integration user, and then generating the access token. Below is a step-by-step guide:
 
@@ -15,7 +18,7 @@ To configure an access token in NetSuite for SOAP communication, especially when
 
 ![NetSuite Integration configuration](./img/netsuite-integration.png)
 
-## 2. Create a Role with Necessary Permissions
+## 2. Create a Role with necessary permissions
 
 1. Navigate to **Setup > Users/Roles > Manage Roles > New**.
 1. Provide a **Name** for the role and assign it permissions necessary for the operations the integration will perform. At a minimum, for SOAP communication, you might need permissions like **SOAP Web Services, Log in using Access Tokens**, and any specific permissions related to the data you wish to access or modify (Lists).
@@ -36,7 +39,7 @@ To configure an access token in NetSuite for SOAP communication, especially when
 1. Select the **Application Name** (the integration you created in Step 1), the **User**, and the **Role** you've assigned to this integration.
 1. **Save** to generate the Token ID and Token Secret.
 
-## 5. Use the Access Token in SOAP Communication
+## 5. Use the Access Token in SOAP communication
 
 With the Consumer Key, Consumer Secret, Token ID, and Token Secret, you can now configure Rossum.ai SOAP client for communication with NetSuite:
 
@@ -69,7 +72,7 @@ Import/Export configuration:
 
 Account ID (`account`) can be found under **Setup > Company > Company Information**.
 
-## Important Notes
+## Important notes
 
 - Ensure your NetSuite account has the **Token-Based Authentication** feature enabled. This can be checked and enabled under **Setup > Company > Enable Features > SuiteCloud**.
 - The permissions assigned to the role will dictate what operations can be performed through the SOAP API. Make sure to adjust these according to the least privilege principle, granting only the permissions necessary for the tasks the integration will perform.

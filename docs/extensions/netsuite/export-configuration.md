@@ -1,10 +1,13 @@
 ---
-title: 'Export webhook'
+title: 'NetSuite: Export configuration'
 sidebar_position: 4
+sidebar_label: 'Export configuration'
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+
+# Export configuration
 
 This page showcases the most common configurations. The final configuration depends heavily on the NetSuite instance configuration and might need to be adjusted as needed.
 
