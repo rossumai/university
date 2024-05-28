@@ -72,12 +72,12 @@ const config = {
         docs: {
           // Will be passed to @docusaurus/plugin-content-docs (false to disable)
           sidebarPath: './sidebars.js',
-          editUrl: 'https://github.com/rossumai-community/university/tree/master/',
+          editUrl: 'https://github.com/rossumai/university/tree/master/',
         },
         blog: {
           // Will be passed to @docusaurus/plugin-content-blog (false to disable)
           showReadingTime: true,
-          editUrl: 'https://github.com/rossumai-community/university/tree/master/',
+          editUrl: 'https://github.com/rossumai/university/tree/master/',
         },
         theme: {
           // Will be passed to @docusaurus/theme-classic.
@@ -146,7 +146,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/rossumai-community/university',
+            href: 'https://github.com/rossumai/university',
             label: 'GitHub',
             position: 'right',
           },
@@ -182,7 +182,7 @@ const config = {
           //     },
           //     {
           //       label: 'GitHub',
-          //       href: 'https://github.com/rossumai-community/university',
+          //       href: 'https://github.com/rossumai/university',
           //     },
           //   ],
           // },
@@ -191,7 +191,7 @@ const config = {
       },
       announcementBar: {
         content:
-          '🚧 Work in progress. Leave <a href="https://github.com/rossumai-community/university/issues" target="_blank">your feedback</a>. 🚧',
+          '🚧 Work in progress. Leave <a href="https://github.com/rossumai/university/issues" target="_blank">your feedback</a>. 🚧',
         backgroundColor: '#fff8e6',
         isCloseable: false,
       },
