@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcookbook=self.webpackChunkcookbook||[]).push([[7393],{1838:o=>{o.exports=JSON.parse('{"blogBasePath":"/blog","blogTitle":"Blog"}')}}]);
