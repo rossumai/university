@@ -21,7 +21,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'rossumai', // Usually your GitHub org/user name.
-  projectName: 'cookbook', // Usually your repo name.
+  projectName: 'university', // Usually your repo name.
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
@@ -72,12 +72,12 @@ const config = {
         docs: {
           // Will be passed to @docusaurus/plugin-content-docs (false to disable)
           sidebarPath: './sidebars.js',
-          editUrl: 'https://github.com/rossumai-community/cookbook/tree/master/',
+          editUrl: 'https://github.com/rossumai-community/university/tree/master/',
         },
         blog: {
           // Will be passed to @docusaurus/plugin-content-blog (false to disable)
           showReadingTime: true,
-          editUrl: 'https://github.com/rossumai-community/cookbook/tree/master/',
+          editUrl: 'https://github.com/rossumai-community/university/tree/master/',
         },
         theme: {
           // Will be passed to @docusaurus/theme-classic.
@@ -146,7 +146,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/rossumai-community/cookbook',
+            href: 'https://github.com/rossumai-community/university',
             label: 'GitHub',
             position: 'right',
           },
@@ -182,7 +182,7 @@ const config = {
           //     },
           //     {
           //       label: 'GitHub',
-          //       href: 'https://github.com/rossumai-community/cookbook',
+          //       href: 'https://github.com/rossumai-community/university',
           //     },
           //   ],
           // },
@@ -191,7 +191,7 @@ const config = {
       },
       announcementBar: {
         content:
-          '🚧 Work in progress. Leave <a href="https://github.com/rossumai-community/cookbook/issues" target="_blank">your feedback</a>. 🚧',
+          '🚧 Work in progress. Leave <a href="https://github.com/rossumai-community/university/issues" target="_blank">your feedback</a>. 🚧',
         backgroundColor: '#fff8e6',
         isCloseable: false,
       },
