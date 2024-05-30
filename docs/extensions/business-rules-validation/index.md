@@ -44,16 +44,31 @@ Head over to [Configuration examples](./configuration-examples.md) page for coll
 
 ```json
 {
+  // List of business rules. All rules in this list are evaluated in order.
   "checks": [
-    // List of business rules should be here.
-    // Rules in this list are evaluated in order.
     {
-      // Each business rule consists of:
+      // Rule to be evaluated (visit Expression Engine for more details).
       "rule": "has_value({document_id})",
+
+      // Message to be shown if the rule is violated.
       "message": "Invoice number is mandatory.",
-      "type": "error", // optional (default: "error")
-      "automation_blocker": true // optional (default: false)
-      "active": true // optional (default: true)
+
+      // Type of the message (optional, default: "error").
+      "type": "error",
+
+      // Whether the rule violation blocks automation (optional, default: false). Note that error
+      // messages automatically block automation.
+      "automation_blocker": true,
+
+      // Whether the rule is active (optional, default: true).
+      "active": true,
+
+      // List of queue IDs where the rule is active (optional).
+      "queue_ids": [123, 456],
+
+      // The condition that has to be met in order for validation to be applied (optional).
+      // Do not confuse with the rule. This option only controls whether the rule is applied or not.
+      "condition": "has_value({document_id})"
     }
   ]
 }
