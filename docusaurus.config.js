@@ -191,7 +191,7 @@ const config = {
       },
       announcementBar: {
         content:
-          '🚧 Work in progress. Leave <a href="https://github.com/rossumai/university/issues" target="_blank">your feedback</a>. 🚧',
+          '🚧 Work in progress. <strong>Leave <a href="https://github.com/rossumai/university/discussions" target="_blank">your feedback</a></strong>. 🚧',
         backgroundColor: '#fff8e6',
         isCloseable: false,
       },
