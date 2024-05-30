@@ -4,9 +4,9 @@ title: 'NetSuite'
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
 
-## Webhook configuration
+## Installation
 
-:::warning[TODO]
+:::warning[Work in progress]
 
 _Describe how to create and configure the extension._
 
@@ -27,6 +27,22 @@ Export endpoints:
   eu2="https://shared-eu2.rossum.app/svc/netsuite-v3/api/v1/export"
   us="https://us.app.rossum.ai/svc/netsuite-v3/api/v1/export"
 />
+
+## Basic usage
+
+:::warning[Work in progress]
+
+_Describe how to quickly use the extension._
+
+:::
+
+## Available configuration options
+
+:::warning[Work in progress]
+
+_Describe all relevant configuration options._
+
+:::
 
 ## Useful links
 

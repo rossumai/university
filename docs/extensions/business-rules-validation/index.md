@@ -11,7 +11,7 @@ Business Rules Validation allows users to perform validations of the extracted a
 Business Rules Validation extension is available in the Rossum store. To install the extension, follow these steps:
 
 1. Login to your Rossum account.
-1. Navigate to **Extensions > Rossum Store**.
+1. Navigate to **Extensions → Rossum Store**.
 1. Search for **Business Rules Validation** extension and "Add" it.
 
 A default "Rossum Store extension settings" page will open where you can configure the extension to your liking.

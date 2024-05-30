@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Import configuration
 
-Notice that each configuration has `concurrency_limit` configured. The best way how to determine the right number is to visit **Setup > Integration > Integration Governance** where you can see (and configure) not only the concurrency limits but also peak concurrency of all integrations allowing you to choose the best number.
+Notice that each configuration has `concurrency_limit` configured. The best way how to determine the right number is to visit **Setup → Integration → Integration Governance** where you can see (and configure) not only the concurrency limits but also peak concurrency of all integrations allowing you to choose the best number.
 
 ## Differential data imports (daily)
 
