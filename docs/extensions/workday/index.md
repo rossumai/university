@@ -12,7 +12,9 @@ _Describe how to create and configure the extension._
 
 :::
 
-<WebhookEndpoints />
+<WebhookEndpoints
+  eu1="https://elis.rossum.ai/svc/workday/api/v1/import"
+/>
 
 ## Basic usage
 
