@@ -1,6 +1,6 @@
 ---
 title: 'NetSuite: Import configuration'
-sidebar_position: 3
+sidebar_position: 2
 sidebar_label: 'Import configuration'
 ---
 
