@@ -200,6 +200,16 @@ const config = {
         darkTheme: prismThemes.dracula,
         additionalLanguages: ['bash', 'json', 'python'],
       },
+      algolia: {
+        // See: https://docusaurus.io/docs/search#using-algolia-docsearch
+        appId: 'KUCN9RVGHJ',
+        apiKey: '6e2abd4bca7442bb8e7bce44cee801ec', // Public API key: it is safe to commit it
+        indexName: 'rossum-university',
+        contextualSearch: true,
+        searchParameters: {},
+        searchPagePath: 'search',
+        insights: false,
+      },
     }),
 };
 
