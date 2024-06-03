@@ -3,15 +3,43 @@ sidebar_position: 1
 title: 'Configuration examples'
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Examples of common formula fields.
 
 ## Copy fields conditionally
 
 Copy `order_id` into another field but prioritize `order_id_manual` datapoint if it exists:
 
+<Tabs groupId="formula-flavor" queryString>
+    <TabItem value="formula" label="Formula Fields" default>
+
+New formula field `order_id_normalized`:
+
 ```py
 field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 ```
+
+    </TabItem>
+    <TabItem value="python" label="Rossum Python" default>
+
+Write into `order_id_normalized` data field:
+
+```py
+from rossum_python import RossumPython, is_empty
+
+def rossum_hook_request_handler(payload: dict) -> dict:
+    r = RossumPython.from_payload(payload)
+
+    # Very similar to Formula Fields (notice the `r.` prefixes):
+    r.field.order_id_normalized = r.field.order_id_manual if not is_empty(r.field.order_id_manual) else r.field.order_id
+
+    return r.hook_response()
+```
+
+    </TabItem>
+</Tabs>
 
 ## Generate NetSuite external IDs
 

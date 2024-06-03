@@ -18,7 +18,7 @@ This page showcases the most common configurations. The final configuration depe
 
 The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases.
 
-Visit [Formula fields](../formula-fields/configuration-examples#generate-netsuite-external-ids) page to learn how to create external NetSuite IDs.
+Visit [Rossum Formulas](../rossum-formulas/configuration-examples#generate-netsuite-external-ids) page to learn how to create external NetSuite IDs.
 
 ```json
 {
