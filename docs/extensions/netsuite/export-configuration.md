@@ -1,6 +1,6 @@
 ---
 title: 'NetSuite: Export configuration'
-sidebar_position: 4
+sidebar_position: 3
 sidebar_label: 'Export configuration'
 ---
 
