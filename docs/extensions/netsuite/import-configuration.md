@@ -714,8 +714,8 @@ It is necessary to observe whether all the partitions were imported successfully
     {
       "$match": {
         "createdDate": {
-          "$gte": { "$date": "2024-01-01T00:00:01Z" },
-          "$lte": { "$date": "2025-01-01T00:00:01Z" }
+          "$gte": { "$date": "2024-01-01T00:00:00Z" },
+          "$lte": { "$date": "2025-01-01T00:00:00Z" }
         }
       }
     },
