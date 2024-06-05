@@ -19,6 +19,34 @@ _How to + examples_
 
 :::
 
+## XML: Document splitting
+
+XML documents can be split into multiple documents using the `split_selectors` configuration:
+
+```json
+{
+  "configurations": [
+    {
+      "trigger_condition": {
+        "file_type": "xml"
+      },
+      // highlight-start
+      "split_selectors": ["/RecordLabel/Productions/Production"],
+      // highlight-end
+      "fields": [
+        {
+          "schema_id": "document_id",
+          "selectors": ["./Metadata/ID"]
+        }
+        // …
+      ]
+    }
+  ]
+}
+```
+
+The field selectors are then relative to the newly split document.
+
 ## XML: PEPPOL BIS Billing 3.0
 
 Basic configuration (works with the default Rossum.ai schema for invoices) and the following PEPPOL BIS Billing 3.0 example: https://github.com/OpenPEPPOL/peppol-bis-invoice-3/blob/0f63848fc46fe4ab87d1860a18bfe381c41e01ff/rules/examples/base-example.xml
