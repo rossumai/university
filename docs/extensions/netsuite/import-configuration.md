@@ -489,11 +489,11 @@ Using `TransactionSearchAdvanced` can be beneficial if we want to select which f
 
 :::info
 
-Advanced transaction search requires 'Transactions -> Find Transaction' permission.
+Advanced transaction search requires 'Transactions → Find Transaction' permission.
 
 :::
 
-`TransactionSearchAdvanced` requires two main fields: `criteria` (to specify the actual search) and `columns` (to specify what columns should be returned). It is also important to set `returnSearchColumns` to `true`:
+`TransactionSearchAdvanced` requires two main fields: `criteria` (to specify the actual search) and `columns` (to specify what columns should be returned). It is also important to set `returnSearchColumns` to `true` and finally `advanced_search_internal_id_jmespath` to define unique identifier for the basic record:
 
 ```json
 {
@@ -551,7 +551,10 @@ Advanced transaction search requires 'Transactions -> Find Transaction' permissi
           }
         }
       },
-      "master_data_name": "NS_SB1_PurchaseOrder_v1"
+      "master_data_name": "NS_SB1_PurchaseOrder_v1",
+      // highlight-start
+      "advanced_search_internal_id_jmespath": "basic.internalId[0].searchValue.internalId"
+      // highlight-end
     }
   ],
   "netsuite_settings": {
