@@ -37,7 +37,7 @@ Visit the following link when trying to figure out how should the import searche
   "import_configs": [
     {
       // Currencies
-      "master_data_name": "sandbox_NS_Currency_v1",
+      "master_data_name": "NS_SB1_Currency_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -54,7 +54,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Inventory items
-      "master_data_name": "sandbox_NS_InventoryItem_v1",
+      "master_data_name": "NS_SB1_InventoryItem_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -84,7 +84,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Item Receipts (GRNs)
-      "master_data_name": "sandbox_NS_ItemReceipt_v1",
+      "master_data_name": "NS_SB1_ItemReceipt_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -115,7 +115,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Locations
-      "master_data_name": "sandbox_NS_Location_v1",
+      "master_data_name": "NS_SB1_Location_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -138,7 +138,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Purchase Orders
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      "master_data_name": "NS_SB1_PurchaseOrder_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -169,7 +169,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Subsidiaries
-      "master_data_name": "sandbox_NS_Subsidiary_v1",
+      "master_data_name": "NS_SB1_Subsidiary_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -195,7 +195,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Vendors
-      "master_data_name": "sandbox_NS_Vendor_v1",
+      "master_data_name": "NS_SB1_Vendor_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -225,7 +225,7 @@ Visit the following link when trying to figure out how should the import searche
     },
     {
       // Vendor Bills (Invoices)
-      "master_data_name": "sandbox_NS_VendorBill_v1",
+      "master_data_name": "NS_SB1_VendorBill_v1",
       "async_settings": {
         "retries": 5,
         "max_run_time_s": 36000
@@ -275,13 +275,13 @@ The following "original" configuration is **deprecated**. Consider using the "mo
       // Currencies
       "ns_type": "Currency",
       "search_type": "getAll",
-      "master_data_name": "sandbox_NS_Currency_v1"
+      "master_data_name": "NS_SB1_Currency_v1"
     },
     {
       // Inventory items
       "ns_type": "Item",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_InventoryItem_v1",
+      "master_data_name": "NS_SB1_InventoryItem_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -308,7 +308,7 @@ The following "original" configuration is **deprecated**. Consider using the "mo
       // Item Receipts (GRNs)
       "ns_type": "Transaction",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_ItemReceipt_v1",
+      "master_data_name": "NS_SB1_ItemReceipt_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -330,13 +330,13 @@ The following "original" configuration is **deprecated**. Consider using the "mo
       // Locations
       "ns_type": "Location",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_Location_v1"
+      "master_data_name": "NS_SB1_Location_v1"
     },
     {
       // Purchase Orders
       "ns_type": "Transaction",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      "master_data_name": "NS_SB1_PurchaseOrder_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -358,19 +358,19 @@ The following "original" configuration is **deprecated**. Consider using the "mo
       // Subsidiaries
       "ns_type": "Subsidiary",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_Subsidiary_v1"
+      "master_data_name": "NS_SB1_Subsidiary_v1"
     },
     {
       // Vendors
       "ns_type": "Vendor",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_Vendor_v1"
+      "master_data_name": "NS_SB1_Vendor_v1"
     },
     {
       // Vendor Bills (Invoices)
       "ns_type": "Transaction",
       "search_type": "search",
-      "master_data_name": "sandbox_NS_VendorBill_v1",
+      "master_data_name": "NS_SB1_VendorBill_v1",
       "basic_search_config": {
         "attributes": [
           {
@@ -413,7 +413,7 @@ If you'd like to modify the async settings, you can do so using the following `a
   "run_async": true,
   "import_configs": [
     {
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1",
+      "master_data_name": "NS_SB1_PurchaseOrder_v1",
       // highlight-start
       "async_settings": {
         "retries": 2, // max: 10
@@ -474,7 +474,7 @@ Sometimes, it can be handy to import just one specific record:
       "async_settings": {
         "retries": 5
       },
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+      "master_data_name": "NS_SB1_PurchaseOrder_v1"
     }
   ],
   "netsuite_settings": {
@@ -517,7 +517,7 @@ Advanced transaction search requires 'Transactions -> Find Transaction' permissi
                 },
                 "dateCreated": {
                   "operator": "onOrAfter",
-                  "searchValue": "2024-01-01T00:00:01Z"
+                  "searchValue": "2024-01-01T00:00:00Z"
                 }
               }
             },
@@ -551,7 +551,7 @@ Advanced transaction search requires 'Transactions -> Find Transaction' permissi
           }
         }
       },
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+      "master_data_name": "NS_SB1_PurchaseOrder_v1"
     }
   ],
   "netsuite_settings": {
@@ -627,8 +627,8 @@ We can leverage this default sorting and partition the initial imports to years 
             "dateCreated": {
               // highlight-start
               "operator": "within",
-              "searchValue": "2022-01-01T00:00:01Z",
-              "searchValue2": "2023-01-01T00:00:01Z"
+              "searchValue": "2022-01-01T00:00:00Z",
+              "searchValue2": "2023-01-01T00:00:00Z"
               // highlight-end
             }
           }
@@ -641,7 +641,7 @@ We can leverage this default sorting and partition the initial imports to years 
           }
         }
       },
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+      "master_data_name": "NS_SB1_PurchaseOrder_v1"
     },
     {
       // Download Purchase Orders for year 2023:
@@ -657,8 +657,8 @@ We can leverage this default sorting and partition the initial imports to years 
             "dateCreated": {
               // highlight-start
               "operator": "within",
-              "searchValue": "2023-01-01T00:00:01Z",
-              "searchValue2": "2024-01-01T00:00:01Z"
+              "searchValue": "2023-01-01T00:00:00Z",
+              "searchValue2": "2024-01-01T00:00:00Z"
               // highlight-end
             }
           }
@@ -671,7 +671,7 @@ We can leverage this default sorting and partition the initial imports to years 
           }
         }
       },
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+      "master_data_name": "NS_SB1_PurchaseOrder_v1"
     },
     {
       // Download Purchase Orders for the rest of the years:
@@ -687,7 +687,7 @@ We can leverage this default sorting and partition the initial imports to years 
             "dateCreated": {
               // highlight-start
               "operator": "onOrAfter",
-              "searchValue": "2024-01-01T00:00:01Z"
+              "searchValue": "2024-01-01T00:00:00Z"
               // highlight-end
             }
           }
@@ -700,7 +700,7 @@ We can leverage this default sorting and partition the initial imports to years 
           }
         }
       },
-      "master_data_name": "sandbox_NS_PurchaseOrder_v1"
+      "master_data_name": "NS_SB1_PurchaseOrder_v1"
     }
   ]
 }
@@ -714,8 +714,8 @@ It is necessary to observe whether all the partitions were imported successfully
     {
       "$match": {
         "createdDate": {
-          "$gte": { "$date": "2024-01-01T00:00:01Z" },
-          "$lte": { "$date": "2025-01-01T00:00:01Z" }
+          "$gte": { "$date": "2024-01-01T00:00:00Z" },
+          "$lte": { "$date": "2025-01-01T00:00:00Z" }
         }
       }
     },
