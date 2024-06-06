@@ -530,13 +530,20 @@ Advanced transaction search requires 'Transactions → Find Transaction' permiss
                 "tranId": {},
                 "tranDate": {},
                 "internalId": {},
-                "recordType": {}
+                "externalId": {},
+                "recordType": {},
+                "dateCreated": {},
+                "lastModifiedDate": {}
               },
-              "createdFromJoin": {
+              "applyingTransactionJoin": {
                 "_ns_type": "TransactionSearchRowBasic",
                 "tranId": {},
+                "tranDate": {},
                 "internalId": {},
-                "recordType": {}
+                "externalId": {},
+                "recordType": {},
+                "dateCreated": {},
+                "lastModifiedDate": {}
               }
             }
           }
