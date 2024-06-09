@@ -13,7 +13,7 @@ Notice that each configuration has `concurrency_limit` configured. The best way 
 
 ## Differential data imports (daily)
 
-Recommended schedule: `0 0 * * *`
+Recommended schedule: `0 22 * * *`
 
 <Tabs groupId="netsuite-flavor" queryString>
   <TabItem value="modern" label="Modern" default>
@@ -711,6 +711,15 @@ We can leverage this default sorting and partition the initial imports to years 
 
 It is necessary to observe whether all the partitions were imported successfully. In case they were not (for example some network issue cause the import jobs to fail), we can adjust the `within` window to ignore the already imported dates and restart the import. To check the latest available date in the partition, you can use the following MongoDB query:
 
+<Tabs>
+  <TabItem value="basic" label="Basic search" default>
+
+:::warning
+
+Confusingly, NetSuite returns `createdDate` field but the SOAP API exposes `dateCreated` search argument instead!
+
+:::
+
 ```json
 {
   "aggregate": [
@@ -723,17 +732,35 @@ It is necessary to observe whether all the partitions were imported successfully
       }
     },
     { "$sort": { "createdDate": -1 } },
-    { "$limit": 10 },
+    { "$limit": 3 },
     { "$project": { "createdDate": 1, "itemList": 1 } }
   ]
 }
 ```
 
-:::warning
+  </TabItem>
+  <TabItem value="advanced" label="Advanced search" default>
 
-Confusingly, NetSuite returns `createdDate` field but the SOAP API exposes `dateCreated` search argument instead!
+```json
+{
+  "aggregate": [
+    {
+      "$match": {
+        "basic.dateCreated.searchValue": {
+          "$gte": { "$date": "2024-01-01T00:00:00Z" },
+          "$lte": { "$date": "2025-01-01T00:00:00Z" }
+        }
+      }
+    },
+    { "$sort": { "basic.dateCreated.searchValue": -1 } },
+    { "$limit": 3 },
+    { "$project": { "__basic_dateCreated": { "$first": "$basic.dateCreated.searchValue" } } }
+  ]
+}
+```
 
-:::
+  </TabItem>
+</Tabs>
 
 After the successful import, it is a good idea to run differential import (using `lastModifiedDate`) for the period during which we were performing the initial migration (to synchronize records that were updated in the meantime):
 
