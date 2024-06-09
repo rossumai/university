@@ -74,11 +74,7 @@ const config = {
           sidebarPath: './sidebars.js',
           editUrl: 'https://github.com/rossumai/university/tree/master/',
         },
-        blog: {
-          // Will be passed to @docusaurus/plugin-content-blog (false to disable)
-          showReadingTime: true,
-          editUrl: 'https://github.com/rossumai/university/tree/master/',
-        },
+        blog: false,
         theme: {
           // Will be passed to @docusaurus/theme-classic.
           customCss: './src/css/custom.css',
