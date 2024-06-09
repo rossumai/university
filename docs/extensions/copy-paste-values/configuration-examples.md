@@ -1,7 +1,10 @@
 ---
 sidebar_position: 1
-title: 'Configuration examples'
+sidebar_label: 'Configuration examples'
+title: 'Copy & Paste Values: Configuration examples'
 ---
+
+# Configuration examples
 
 ## Copy header fields to line items conditionally
 

@@ -1,10 +1,13 @@
 ---
 sidebar_position: 1
-title: 'Configuration examples'
+title: 'SFTP and S3 imports/exports: Configuration examples'
+sidebar_label: 'Configuration examples'
 ---
 
 import ConfigurationSshKey from './\_configuration_ssh_key.md';
 import ConfigurationUsernamePassword from './\_configuration_username_password.md';
+
+# Configuration examples
 
 Here you can find examples of the most common real-world use cases for exports and imports to/from SFTP and S3 extension.
 

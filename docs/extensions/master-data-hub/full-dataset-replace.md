@@ -1,7 +1,10 @@
 ---
-title: 'Full dataset replace'
+title: 'Master data hub: Full dataset replace'
+sidebar_label: 'Full dataset replace'
 sidebar_position: 5
 ---
+
+# Full dataset replace
 
 This page describes a procedure for full replacement (the old data is fully replaced by the content of uploaded file) of the data in Master Data Hub dataset using file upload and the web UI.
 

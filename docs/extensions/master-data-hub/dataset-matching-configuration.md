@@ -1,7 +1,10 @@
 ---
-title: 'Dataset matching configuration'
+title: 'Master data hub: Dataset matching configuration'
+sidebar_label: 'Dataset matching configuration'
 sidebar_position: 3
 ---
+
+# Dataset matching configuration
 
 ## How to set up matching configuration
 

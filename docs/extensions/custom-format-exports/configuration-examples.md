@@ -1,7 +1,10 @@
 ---
 sidebar_position: 1
-title: 'Configuration examples'
+sidebar_label: 'Configuration examples'
+title: 'Custom format exports: Configuration examples'
 ---
+
+# Configuration examples
 
 :::warning
 

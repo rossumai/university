@@ -1,7 +1,10 @@
 ---
 sidebar_position: 1
-title: 'Configuration examples'
+sidebar_label: 'Configuration examples'
+title: 'Find & Replace Values: Configuration examples'
 ---
+
+# Configuration examples
 
 The following examples are showing commonly used configurations when building applications using Rossum.ai platform.
 

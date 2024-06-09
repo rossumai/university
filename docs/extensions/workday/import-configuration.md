@@ -1,7 +1,10 @@
 ---
-title: 'Import configuration'
+title: 'Workday: Import configuration'
+sidebar_label: 'Import configuration'
 sidebar_position: 1
 ---
+
+# Import configuration
 
 All the necessary import configurations can be part of one large config:
 
