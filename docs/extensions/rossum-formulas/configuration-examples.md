@@ -1,10 +1,13 @@
 ---
 sidebar_position: 1
-title: 'Configuration examples'
+sidebar_label: 'Configuration examples'
+title: 'Rossum Formulas: Configuration examples'
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+
+# Configuration examples
 
 Examples of common formula fields.
 

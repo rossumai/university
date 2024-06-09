@@ -1,7 +1,10 @@
 ---
-title: 'Export configuration'
+title: 'Workday: Export configuration'
+sidebar_label: 'Export configuration'
 sidebar_position: 2
 ---
+
+# Export configuration
 
 ## PO-backed invoice
 

@@ -1,7 +1,10 @@
 ---
-title: 'Dataset management'
+title: 'Master data hub: Dataset management'
+sidebar_label: 'Dataset management'
 sidebar_position: 2
 ---
+
+# Dataset management
 
 ## How to prepare your dataset
 

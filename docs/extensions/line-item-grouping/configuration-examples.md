@@ -1,7 +1,10 @@
 ---
 sidebar_position: 2
-title: 'Configuration examples'
+sidebar_label: 'Configuration examples'
+title: 'Line item grouping: Configuration examples'
 ---
+
+# Configuration examples
 
 ## Group line items by item code
 

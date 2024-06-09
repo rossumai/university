@@ -1,7 +1,10 @@
 ---
-title: 'Configuration examples'
+title: 'Master data hub: Configuration examples'
+sidebar_label: 'Configuration examples'
 sidebar_position: 4
 ---
+
+# Configuration examples
 
 The following examples are showing commonly used configurations of the Rossum.ai Master Data Hub matching. All of these examples are typically nested in the following config:
 

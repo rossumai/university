@@ -1,7 +1,10 @@
 ---
-title: 'Using API'
+title: 'Master data hub: Using API'
+sidebar_label: 'Using API'
 sidebar_position: 6
 ---
+
+# Using API
 
 ## Dataset Differential Update using API
 

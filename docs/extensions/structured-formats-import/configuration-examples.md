@@ -1,7 +1,10 @@
 ---
+title: 'Structured formats import: Configuration examples'
+sidebar_label: 'Configuration examples'
 sidebar_position: 2
-title: 'Configuration examples'
 ---
+
+# Configuration examples
 
 ## Generic XML import
 
