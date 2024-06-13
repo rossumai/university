@@ -16,6 +16,7 @@ Import webhook:
 
 <WebhookEndpoints
   eu1="https://elis.rossum.ai/svc/scheduled-imports/api/coupa/v1/import"
+  eu2="https://shared-eu2.rossum.app/svc/scheduled-imports/api/coupa/v1/import"
 />
 
 Export webhook:
