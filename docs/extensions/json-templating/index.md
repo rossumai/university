@@ -208,9 +208,9 @@ Note that if you don't specify the `fallback_mapping`, it will skip the whole pa
 | `mapping`            | Mapping template that will be rendered if `schema_id` exists.                                                                                                                       | YES      |         |
 | `fallback_mapping`   | Mapping template that will be rendered if no element with the given `schema_id` is found. Note that if you don't specify the `fallback_mapping`, it will skip the whole parent key! | no       |         |
 
-## Jinja2 Capabilities
+## Advanced templating capabilities
 
-The JSON Templating uses the Python `jinja2` templating engine for rendering. You can use its full capabilities. For example, the following template:
+The JSON Templating uses the Python `jinja2` templating engine for rendering. You can use its full capabilities. For example, given the following JSON template:
 
 ```json
 {
@@ -222,7 +222,14 @@ The JSON Templating uses the Python `jinja2` templating engine for rendering. Yo
 }
 ```
 
-Will render (assuming `my_value = 1`, and `my_string = "123"`):
+And the following variables (schema datapoints):
+
+```text
+my_value = 1
+my_string = "123"
+```
+
+Will together render as:
 
 ```json
 {
