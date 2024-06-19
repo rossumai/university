@@ -11,9 +11,7 @@ test('homepage', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.getByRole('heading')).toContainText('Rossum.ai University');
-  await expect(page.getByRole('paragraph')).toContainText(
-    'Build something meaningful with Rossum.ai',
-  );
+  await expect(page.getByRole('paragraph')).toContainText('Build something cool with Rossum.ai');
 });
 
 test('main navigation (Extensions)', async ({ page }) => {

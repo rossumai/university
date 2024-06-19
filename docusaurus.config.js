@@ -9,7 +9,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Rossum.ai University',
-  tagline: 'Build something meaningful with Rossum.ai',
+  tagline: 'Build something cool with Rossum.ai',
   favicon: 'img/128-blue-crunch.png',
 
   // Set the production url of your site here
