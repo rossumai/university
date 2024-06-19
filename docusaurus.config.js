@@ -105,12 +105,6 @@ const config = {
             label: 'Extensions',
           },
           {
-            type: 'docSidebar',
-            sidebarId: 'guidesSidebar',
-            position: 'left',
-            label: 'Guides',
-          },
-          {
             href: 'https://elis.rossum.ai/api/docs/',
             label: 'API Reference',
             position: 'left',

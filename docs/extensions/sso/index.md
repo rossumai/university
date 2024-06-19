@@ -30,7 +30,7 @@ When SSO is enabled on the organization, older users that were still using passw
 
 Note that if you do not see this section, it means that SSO is not enabled for your account.
 
-![SSO settings](./_img/sso/sso-settings.png)
+![SSO settings](./_img/sso-settings.png)
 
 The **External user ID** can be used to connect the user to your system (Azure, Google). It is a unique identifier that is used to match the user in your system with the user in Rossum.ai. In most cases, this ID is the same as user email.
 
