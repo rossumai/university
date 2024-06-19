@@ -127,3 +127,97 @@ sidebar_label: 'Import configurations'
   }
 }
 ```
+
+## Lookup values
+```json
+{
+  "credentials": {
+    "client_id": "...",
+    "base_api_url": "....coupacloud.com/",
+    "client_scope": "core.common.read"
+  },
+  "import_config": {
+    "query": {
+      "fields": [
+        "id",
+        "name",
+        "external-ref-num",
+        "external-ref-code",
+        "active",
+        {
+          "parent": [
+            "id",
+            "name",
+            "active",
+            {
+              "custom_fields": {}
+            },
+            {
+              "parent": [
+                "id",
+                "name",
+                "active",
+                {
+                  "custom_fields": {}
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lookup": [
+            "id",
+            "name",
+            "active"
+          ]
+        },
+        {
+          "custom_fields": {}
+        }
+      ],
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+    },
+    "method": "update",
+    "id_keys": [
+      "id"
+    ],
+    "endpoint": "api/lookup_values",
+    "dataset_name": "lookup_values",
+    "records_per_request": 50
+  }
+}
+```
+
+## Units of measure(ment)
+```json
+{
+  "credentials": {
+    "client_id": "...",
+    "base_api_url": "...coupacloud.com/",
+    "client_scope": "core.common.read"
+  },
+  "import_config": {
+    "query": {
+      "fields": [
+        "id",
+        "name",
+        "code",
+        "allowable-precession",
+        "active",
+        "updated-at",
+        "created-at"
+      ],
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+    },
+    "method": "update",
+    "id_keys": [
+      "id"
+    ],
+    "endpoint": "api/uoms",
+    "dataset_name": "uoms",
+    "records_per_request": 50
+  }
+}
+```
