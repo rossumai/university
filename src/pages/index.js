@@ -22,9 +22,9 @@ function HomepageHeader() {
           >
             Extensions
           </Link>
-          <Link className="button button--secondary button--lg" to="/docs/guides/getting-started">
-            Guides
-          </Link>
+          {/*<Link className="button button--secondary button--lg" to="/docs/guides/getting-started">*/}
+          {/*  Guides*/}
+          {/*</Link>*/}
         </div>
       </div>
     </header>

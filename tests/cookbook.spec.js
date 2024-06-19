@@ -22,10 +22,3 @@ test('main navigation (Extensions)', async ({ page }) => {
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Extensions' }).click();
   await expect(page.locator('h1')).toContainText('Business Rules Validation');
 });
-
-test('main navigation (Guides)', async ({ page }) => {
-  await page.goto('/');
-
-  await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Guides' }).click();
-  await expect(page.locator('h1')).toContainText('Getting Started with Rossum');
-});
