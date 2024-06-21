@@ -11,6 +11,8 @@ import TabItem from '@theme/TabItem';
 
 This page showcases the most common configurations. The final configuration depends heavily on the NetSuite instance configuration and might need to be adjusted as needed.
 
+When building the configuration, consult the [methods documentation](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_N3478008.html#Web-Services-Standard-Operations) and [schema browser](https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2022_2/script/record/vendor.html).
+
 ## Vendor Bills (Invoices)
 
 <Tabs groupId="netsuite-flavor" queryString>
@@ -19,6 +21,8 @@ This page showcases the most common configurations. The final configuration depe
 The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases.
 
 Visit [Rossum Formulas](../rossum-formulas/configuration-examples#generate-netsuite-external-ids) page to learn how to create external NetSuite IDs.
+
+
 
 ```json
 {
