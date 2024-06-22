@@ -86,7 +86,7 @@ Identical to:
 }
 ```
 
-While the later might seem unnecessary, it is needed when we want to cast the value to a certain type. For example:
+While the latter might seem unnecessary, it is needed when we want to cast the value to a certain type. For example:
 
 ```json
 {
