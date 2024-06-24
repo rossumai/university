@@ -34,7 +34,7 @@ sidebar_label: 'Import configurations'
   "credentials": {
     "client_id": "…",
     "base_api_url": "…",
-      "client_scope": "core.accounting.read, core.common.read, core.invoice.create, core.invoice.read, core.invoice.write, core.purchase_order.read, core.supplier.read"
+    "client_scope": "core.accounting.read, core.common.read, core.invoice.create, core.invoice.read, core.invoice.write, core.purchase_order.read, core.supplier.read"
   },
   "import_config": {
     "query": {
@@ -129,6 +129,7 @@ sidebar_label: 'Import configurations'
 ```
 
 ## Lookup values
+
 ```json
 {
   "credentials": {
@@ -165,11 +166,7 @@ sidebar_label: 'Import configurations'
           ]
         },
         {
-          "lookup": [
-            "id",
-            "name",
-            "active"
-          ]
+          "lookup": ["id", "name", "active"]
         },
         {
           "custom_fields": {}
@@ -179,9 +176,7 @@ sidebar_label: 'Import configurations'
       "updated-at[gt_or_eq]": "${last_modified_date}"
     },
     "method": "update",
-    "id_keys": [
-      "id"
-    ],
+    "id_keys": ["id"],
     "endpoint": "api/lookup_values",
     "dataset_name": "lookup_values",
     "records_per_request": 50
@@ -190,6 +185,7 @@ sidebar_label: 'Import configurations'
 ```
 
 ## Units of measure(ment)
+
 ```json
 {
   "credentials": {
@@ -212,9 +208,7 @@ sidebar_label: 'Import configurations'
       "updated-at[gt_or_eq]": "${last_modified_date}"
     },
     "method": "update",
-    "id_keys": [
-      "id"
-    ],
+    "id_keys": ["id"],
     "endpoint": "api/uoms",
     "dataset_name": "uoms",
     "records_per_request": 50
