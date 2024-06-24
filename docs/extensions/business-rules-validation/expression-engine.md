@@ -82,33 +82,33 @@ For headers, the skip procedure works accordingly - because there's only "one" l
 Table column with following values `[1,2,"",2]`:
 
 ```text
-sum({item_amount]})=5
-sum({item_amount, default=0})=5
-unique_len({item_amount]})=2
-len({item_amount]})=3
-len(filter(({item_amount]}),""))=3
-len({item_amount, default=0})=4
+sum({item_amount})==5
+sum({item_amount, default=0})==5
+unique_len({item_amount})==2
+len({item_amount})==3
+len(filter(({item_amount}),""))==3
+len({item_amount, default=0})==4
 ```
 
 Table column with empty values `["","",""]`:
 
 ```text
-sum({item_amount]})=None
-unique_len({item_amount]})=None
-len({item_amount]})=None
-len(filter(({item_amount]}),""))=None
-len({item_amount, default=0})=3
+sum({item_amount})==None
+unique_len({item_amount})==None
+len({item_amount})==None
+len(filter(({item_amount}),""))==None
+len({item_amount, default=0})==3
 ```
 
 Not annotated table (defined in schema):
 
 ```text
-sum({item_amount]})=None
-sum({item_amount, default=0})=None
-unique_len({item_amount]})=None
-len({item_amount]})=None
-len(filter(({item_amount]}),""))=None
-len({item_amount, default=0})=None
+sum({item_amount})==None
+sum({item_amount, default=0})==None
+unique_len({item_amount})==None
+len({item_amount})==None
+len(filter(({item_amount}),""))==None
+len({item_amount, default=0})==None
 ```
 
 ## Allowed functions
