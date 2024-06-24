@@ -1,22 +1,16 @@
 ---
 sidebar_position: 1
-sidebar_label: 'Configuration examples'
-title: 'Rossum Formulas: Configuration examples'
+sidebar_label: 'Formula fields'
+title: 'Rossum Formulas: Formula fields'
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Formula fields
 
-# Configuration examples
-
-Examples of common formula fields.
+Examples of common formula fields (using Formula Fields flavor).
 
 ## Copy fields conditionally
 
 Copy `order_id` into another field but prioritize `order_id_manual` datapoint if it exists:
-
-<Tabs groupId="formula-flavor" queryString>
-    <TabItem value="formula" label="Formula Fields" default>
 
 New formula field `order_id_normalized`:
 
@@ -24,33 +18,9 @@ New formula field `order_id_normalized`:
 field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 ```
 
-    </TabItem>
-    <TabItem value="python" label="Rossum Python" default>
-
-Write into `order_id_normalized` data field:
-
-```py
-from rossum_python import RossumPython, is_empty
-
-def rossum_hook_request_handler(payload: dict) -> dict:
-    r = RossumPython.from_payload(payload)
-
-    # Very similar to Formula Fields (notice the `r.` prefixes):
-    r.field.order_id_normalized = r.field.order_id_manual if not is_empty(r.field.order_id_manual) else r.field.order_id
-
-    return r.hook_response()
-```
-
-    </TabItem>
-
-</Tabs>
-
 ## Generate NetSuite external IDs
 
 Create external ID needed by NetSuite for _VendorBill_ and _VendorCredit_ records:
-
-<Tabs groupId="formula-flavor" queryString>
-    <TabItem value="formula" label="Formula Fields" default>
 
 ```py
 # Convert document type to lower case for standardization
@@ -74,49 +44,17 @@ result = f"{prefix}{external_id}"
 result
 ```
 
-    </TabItem>
-    <TabItem value="python" label="Rossum Python" default>
-
-:::warning[todo]
-
-TODO (please, consider submitting PR to improve this page)
-
-:::
-
-    </TabItem>
-
-</Tabs>
-
 This is typically necessary when [exporting records into NetSuite](../netsuite/export-configuration#vendor-bills-invoices).
 
 ## Normalize field value
 
 Remove non-alphanumeric characters (except "-" and "\_"):
 
-<Tabs groupId="formula-flavor" queryString>
-    <TabItem value="formula" label="Formula Fields" default>
-
 ```py
 substitute(r"[^a-zA-Z\d\-_]", "", field.order_id)
 ```
 
-    </TabItem>
-    <TabItem value="python" label="Rossum Python" default>
-
-:::warning[todo]
-
-TODO (please, consider submitting PR to improve this page)
-
-:::
-
-    </TabItem>
-
-</Tabs>
-
 ## Validations
-
-<Tabs groupId="formula-flavor" queryString>
-    <TabItem value="formula" label="Formula Fields" default>
 
 To validate line items, create `item_validator` formula field with the following code:
 
@@ -135,16 +73,3 @@ if not math.isclose(item_total_base_calculated, field.item_total_base, rel_tol=0
     show_error(message, field.item_amount_base)
     show_error(message, field.item_total_base)
 ```
-
-    </TabItem>
-    <TabItem value="python" label="Rossum Python" default>
-
-:::warning[todo]
-
-TODO (please, consider submitting PR to improve this page)
-
-:::
-
-    </TabItem>
-
-</Tabs>
