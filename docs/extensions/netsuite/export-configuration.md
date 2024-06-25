@@ -4,19 +4,17 @@ sidebar_position: 3
 sidebar_label: 'Export configuration'
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Export configuration
 
 This page showcases the most common configurations. The final configuration depends heavily on the NetSuite instance configuration and might need to be adjusted as needed.
 
+:::tip
+
 When building the configuration, consult the [methods documentation](https://docs.oracle.com/en/cloud/saas/netsuite/ns-online-help/section_N3478008.html#Web-Services-Standard-Operations) and [schema browser](https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2022_2/script/record/vendor.html).
 
-## Vendor Bills (Invoices)
+:::
 
-<Tabs groupId="netsuite-flavor" queryString>
-  <TabItem value="modern" label="Modern" default>
+## Vendor Bills (Invoices)
 
 The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases.
 
@@ -129,116 +127,6 @@ Visit [Rossum Formulas](../rossum-formulas/formula-fields#generate-netsuite-exte
   ]
 }
 ```
-
-  </TabItem>
-  <TabItem value="original" label="Original">
-
-:::warning
-
-The following "original" configuration is **deprecated**. Consider using the "modern" version instead.
-
-:::
-
-```json
-{
-  "export_config": {
-    "mapping": {
-      "VendorBill": {
-        "entity": {
-          "_schema_id": "ns_vendor_match",
-          "_value_type": "string",
-          "_record_type": "RecordRef$vendor"
-        },
-        "tranId": {
-          "_schema_id": "document_id",
-          "_value_type": "string",
-          "_record_type": "simple"
-        },
-        "dueDate": {
-          "_schema_id": "date_due",
-          "_value_type": "datetime",
-          "_record_type": "simple"
-        },
-        "currency": {
-          "_schema_id": "ns_currency_match",
-          "_value_type": "string",
-          "_record_type": "RecordRef$currency"
-        },
-        "itemList": {
-          "item": {
-            "item": {
-              "_schema_id": "item_ns_item_match",
-              "_value_type": "string",
-              "_record_type": "RecordRef$inventoryItem"
-            },
-            "rate": {
-              "_schema_id": "item_amount",
-              "_value_type": "double",
-              "_record_type": "simple"
-            },
-            "location": {
-              "_schema_id": "item_ns_location_match",
-              "_value_type": "string",
-              "_record_type": "RecordRef$location"
-            },
-            "quantity": {
-              "_schema_id": "item_quantity",
-              "_value_type": "double",
-              "_record_type": "simple"
-            },
-            "_record_type": "VendorBillItem"
-          },
-          "_schema_id": "line_items",
-          "_record_type": "VendorBillItemList",
-          "_filter_values": ["inventory_item"],
-          "_filter_schema_id": "item_ns_type_manual"
-        },
-        "externalId": {
-          "_schema_id": "ns_vb_external_id_generated",
-          "_value_type": "string",
-          "_record_type": "simple"
-        },
-        "subsidiary": {
-          "_schema_id": "ns_subsidiary_match",
-          "_value_type": "string",
-          "_record_type": "RecordRef$subsidiary"
-        },
-        "expenseList": {
-          "expense": {
-            "memo": {
-              "_schema_id": "item_description",
-              "_value_type": "string",
-              "_record_type": "simple"
-            },
-            "amount": {
-              "_schema_id": "item_amount_total",
-              "_value_type": "float",
-              "_record_type": "simple"
-            },
-            "account": {
-              "_schema_id": "item_gl_code_match",
-              "_value_type": "string",
-              "_record_type": "RecordRef$account"
-            },
-            "_record_type": "VendorBillExpense"
-          },
-          "_schema_id": "line_items",
-          "_record_type": "VendorBillExpenseList",
-          "_filter_values": ["expense"],
-          "_filter_schema_id": "item_ns_type_manual"
-        },
-        "_record_type": "VendorBill",
-        "_export_condition": "{document_type} == 'tax_invoice'"
-      }
-    },
-    "objects": {},
-    "file_cabinet": []
-  }
-}
-```
-
-  </TabItem>
-</Tabs>
 
 ### Linking Vendor Bills with Purchase Orders
 

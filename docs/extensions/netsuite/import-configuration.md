@@ -11,18 +11,15 @@ import TabItem from '@theme/TabItem';
 
 Notice that each configuration has `concurrency_limit` configured. The best way how to determine the right number is to visit **Setup → Integration → Integration Governance** where you can see (and configure) not only the concurrency limits but also peak concurrency of all integrations allowing you to choose the best number.
 
-## Differential data imports (daily)
-
-Recommended schedule: `0 22 * * *`
-
-<Tabs groupId="netsuite-flavor" queryString>
-  <TabItem value="modern" label="Modern" default>
-
 :::tip
 
 Visit the following link when trying to figure out how should the import searches be configured (drill down to the required fields): https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2022_2/schema/search/transactionsearch.html?mode=package
 
 :::
+
+## Differential data imports (daily)
+
+Recommended schedule: `0 22 * * *`
 
 ```json
 {
@@ -257,144 +254,6 @@ Visit the following link when trying to figure out how should the import searche
   ]
 }
 ```
-
-  </TabItem>
-  <TabItem value="original" label="Original">
-
-:::warning
-
-The following "original" configuration is **deprecated**. Consider using the "modern" version instead.
-
-:::
-
-```json
-{
-  "run_async": true,
-  "import_config": [
-    {
-      // Currencies
-      "ns_type": "Currency",
-      "search_type": "getAll",
-      "master_data_name": "NS_SB1_Currency_v1"
-    },
-    {
-      // Inventory items
-      "ns_type": "Item",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_InventoryItem_v1",
-      "basic_search_config": {
-        "attributes": [
-          {
-            "ns_type": "SearchEnumMultiSelectField",
-            "operator": "anyOf",
-            "searchValue": "_inventoryItem",
-            "attribute_name": "type"
-          },
-          {
-            "ns_type": "SearchBooleanField",
-            "searchValue": "false",
-            "attribute_name": "isInactive"
-          },
-          {
-            "ns_type": "SearchDateField",
-            "operator": "onOrAfter",
-            "searchValue": "${last_modified_date}",
-            "attribute_name": "lastModifiedDate"
-          }
-        ]
-      }
-    },
-    {
-      // Item Receipts (GRNs)
-      "ns_type": "Transaction",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_ItemReceipt_v1",
-      "basic_search_config": {
-        "attributes": [
-          {
-            "ns_type": "SearchEnumMultiSelectField",
-            "operator": "anyOf",
-            "searchValue": "_itemReceipt",
-            "attribute_name": "type"
-          },
-          {
-            "ns_type": "SearchDateField",
-            "operator": "onOrAfter",
-            "searchValue": "${last_modified_date}",
-            "attribute_name": "lastModifiedDate"
-          }
-        ]
-      }
-    },
-    {
-      // Locations
-      "ns_type": "Location",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_Location_v1"
-    },
-    {
-      // Purchase Orders
-      "ns_type": "Transaction",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_PurchaseOrder_v1",
-      "basic_search_config": {
-        "attributes": [
-          {
-            "ns_type": "SearchEnumMultiSelectField",
-            "operator": "anyOf",
-            "searchValue": "_purchaseOrder",
-            "attribute_name": "type"
-          },
-          {
-            "ns_type": "SearchDateField",
-            "operator": "onOrAfter",
-            "searchValue": "${last_modified_date}",
-            "attribute_name": "lastModifiedDate"
-          }
-        ]
-      }
-    },
-    {
-      // Subsidiaries
-      "ns_type": "Subsidiary",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_Subsidiary_v1"
-    },
-    {
-      // Vendors
-      "ns_type": "Vendor",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_Vendor_v1"
-    },
-    {
-      // Vendor Bills (Invoices)
-      "ns_type": "Transaction",
-      "search_type": "search",
-      "master_data_name": "NS_SB1_VendorBill_v1",
-      "basic_search_config": {
-        "attributes": [
-          {
-            "ns_type": "SearchEnumMultiSelectField",
-            "operator": "anyOf",
-            "searchValue": "_vendorBill",
-            "attribute_name": "type"
-          },
-          {
-            "ns_type": "SearchDateField",
-            "operator": "onOrAfter",
-            "searchValue": "${last_modified_date}",
-            "attribute_name": "lastModifiedDate"
-          }
-        ]
-      }
-    }
-  ],
-  "concurrency_limit": 4
-}
-```
-
-  </TabItem>
-</Tabs>
 
 ### Async settings
 
