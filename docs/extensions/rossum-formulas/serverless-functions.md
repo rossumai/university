@@ -23,3 +23,18 @@ def rossum_hook_request_handler(payload: dict) -> dict:
 
     return r.hook_response()
 ```
+
+## Get original file name
+
+Write into `original_file_name` data field:
+
+```py
+from rossum_python import RossumPython
+
+def rossum_hook_request_handler(payload: dict) -> dict:
+    r = RossumPython.from_payload(payload)
+
+    r.field.original_file_name = payload["document"]["original_file_name"]
+
+    return r.hook_response()
+```
