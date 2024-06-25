@@ -134,6 +134,36 @@ Recommended schedule: `0 22 * * *`
       }
     },
     {
+      // Non-inventory items
+      "master_data_name": "NS_SB1_NonInventoryItem_v1",
+      "async_settings": {
+        "retries": 5,
+        "max_run_time_s": 36000
+      },
+      "payload": {
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "ItemSearchBasic",
+            "type": {
+              "searchValue": "_nonInventoryItem",
+              "operator": "anyOf"
+            },
+            "isInactive": {
+              "searchValue": false
+            }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 100,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
+          }
+        }
+      }
+    },
+    {
       // Purchase Orders
       "master_data_name": "NS_SB1_PurchaseOrder_v1",
       "async_settings": {
@@ -153,6 +183,29 @@ Recommended schedule: `0 22 * * *`
               "operator": "onOrAfter",
               "searchValue": "{last_modified_date}"
             }
+          }
+        ],
+        "method_headers": {
+          "searchPreferences": {
+            "pageSize": 100,
+            "bodyFieldsOnly": false,
+            "returnSearchColumns": false
+          }
+        }
+      }
+    },
+    {
+      // Sales tax items
+      "master_data_name": "NS_SB1_SalesTaxItem_v1",
+      "async_settings": {
+        "retries": 5,
+        "max_run_time_s": 36000
+      },
+      "payload": {
+        "method_name": "search",
+        "method_args": [
+          {
+            "_ns_type": "SalesTaxItemSearchBasic"
           }
         ],
         "method_headers": {
