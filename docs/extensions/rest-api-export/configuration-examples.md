@@ -1,14 +1,14 @@
 ---
 sidebar_position: 1
 sidebar_label: 'Configuration examples'
-title: 'Generic REST API export: Configuration examples'
+title: 'REST API export: Configuration examples'
 ---
 
 # Configuration examples
 
 :::warning
 
-This extension currently expects file to be generated using [Custom format exports extension](../custom-format-exports).
+This extension currently expects file to be generated using [Custom format templating extension](../custom-format-templating).
 
 :::
 
