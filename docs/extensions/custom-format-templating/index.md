@@ -1,5 +1,5 @@
 ---
-title: 'Generic REST API export'
+title: 'Custom format templating'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
@@ -13,7 +13,7 @@ _Describe how to create and configure the extension._
 :::
 
 <WebhookEndpoints
-  eu1="https://elis.rest-api-export.rossum-ext.app/"
+  eu1="https://elis.custom-format-templating.rossum-ext.app/"
 />
 
 ## Basic usage

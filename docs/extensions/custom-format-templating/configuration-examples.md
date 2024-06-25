@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: 'Configuration examples'
-title: 'Custom format exports: Configuration examples'
+title: 'Custom format templating: Configuration examples'
 ---
 
 # Configuration examples
@@ -95,7 +95,7 @@ Note that such created CSV is not available anywhere in the UI, but it's rather 
 }
 ```
 
-This extension is typically to be used in combination with [REST API Export extension](../generic-rest-api-export) which knows how to work with it.
+This extension is typically to be used in combination with [REST API Export extension](../rest-api-export) which knows how to work with it.
 
 :::
 
