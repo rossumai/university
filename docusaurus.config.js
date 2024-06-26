@@ -100,9 +100,9 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'extensionsSidebar',
+            sidebarId: 'extensionsSidebar', // TODO: migrate to "learnSidebar"
             position: 'left',
-            label: 'Extensions',
+            label: 'Learn',
           },
           {
             href: 'https://elis.rossum.ai/api/docs/',

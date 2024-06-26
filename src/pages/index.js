@@ -20,11 +20,8 @@ function HomepageHeader() {
             className="button button--secondary button--lg"
             to="/docs/extensions/business-rules-validation"
           >
-            Extensions
+            Learn
           </Link>
-          {/*<Link className="button button--secondary button--lg" to="/docs/guides/getting-started">*/}
-          {/*  Guides*/}
-          {/*</Link>*/}
         </div>
       </div>
     </header>
