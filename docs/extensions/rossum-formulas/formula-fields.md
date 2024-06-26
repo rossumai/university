@@ -18,6 +18,12 @@ New formula field `order_id_normalized`:
 field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 ```
 
+## Find first non-empty line item value
+
+```py
+next((item for item in field.item_code.all_values if item), "")
+```
+
 ## Generate NetSuite external IDs
 
 Create external ID needed by NetSuite for _VendorBill_ and _VendorCredit_ records:
