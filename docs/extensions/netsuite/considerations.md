@@ -33,7 +33,7 @@ Request payload example:
 curl --location --request PATCH 'https://[EAMPLE].rossum.app/api/v1/hooks/[HOOK_ID]' \
 --header 'Authorization: Bearer [API_TOKEN]' \
 --header 'Content-Type: application/json' \
---data '{"token_lifetime_s": 120}'
+--data '{"timeout_s": 120}'
 ```
 
 See API reference for more details: https://elis.rossum.ai/api/docs/#update-part-of-a-hook
