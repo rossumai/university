@@ -31,7 +31,7 @@ Request payload example:
 ### CURL version example
 ```bash
 curl --location --request PATCH 'https://[EAMPLE].rossum.app/api/v1/hooks/[HOOK_ID]' \
---header 'Authorization: token [API_TOKEN]' \
+--header 'Authorization: Bearer [API_TOKEN]' \
 --header 'Content-Type: application/json' \
 --data '{"token_lifetime_s": 120}'
 ```
