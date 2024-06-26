@@ -6,20 +6,27 @@ import WebhookEndpoints from '../\_webhook_endpoints.md';
 
 ## Installation
 
-:::warning[Work in progress]
+Coupa service (integration) is provided by Rossum.ai in the form of webhook. To start using Coupa (either imports or exports), follow these steps:
 
-_Describe how to create and configure the extension._
+1. Login to your Rossum account.
+1. Navigate to **Extensions → My extensions**.
+1. Click on **Create extension**.
+1. Fill the following fields:
+   1. Name: `Coupa: Import/Export`
+   1. Trigger events: `Manual` (later also `Scheduled`)
+   1. Extension type: `Webhook`
+   1. URL (see below)
+1. Click **Create the webhook**.
+1. Fill `Configuration` and `Secrets` fields.
 
-:::
-
-Import webhook:
+### Import endpoints
 
 <WebhookEndpoints
   eu1="https://elis.rossum.ai/svc/scheduled-imports/api/coupa/v1/import"
   eu2="https://shared-eu2.rossum.app/svc/scheduled-imports/api/coupa/v1/import"
 />
 
-Export webhook:
+### Export endpoints
 
 <WebhookEndpoints />
 
