@@ -33,7 +33,7 @@ This message could be accompanied by an explanation of why the page is archived:
 
 :::tip
 
-A successor to this extension is [Rossum Formulas](../extensions/rossum-formulas/index.md).
+A successor to this extension is [Rossum Formulas](../learn/rossum-formulas/index.md).
 
 Consider contacting [Rossum.ai Sales](https://rossum.ai/form/contact/) if you need assistance migrating your legacy extensions.
 
@@ -42,7 +42,7 @@ Consider contacting [Rossum.ai Sales](https://rossum.ai/form/contact/) if you ne
 ```markdown
 :::tip
 
-A successor to this extension is [Rossum Formulas](../extensions/rossum-formulas/index.md).
+A successor to this extension is [Rossum Formulas](../learn/rossum-formulas/index.md).
 
 Consider contacting [Rossum.ai Sales](https://rossum.ai/form/contact/) if you need assistance migrating your legacy extensions.
 
