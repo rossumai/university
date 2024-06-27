@@ -13,13 +13,26 @@ Examples of common serverless functions (using Rossum Python flavor).
 Write into `order_id_normalized` data field:
 
 ```py
-from rossum_python import RossumPython, is_empty
+from rossum_python import RossumPython, is_set
 
-def rossum_hook_request_handler(payload: dict) -> dict:
+def rossum_hook_request_handler(payload):
     r = RossumPython.from_payload(payload)
 
     # Very similar to Formula Fields (notice the `r.` prefixes):
-    r.field.order_id_normalized = r.field.order_id_manual if not is_empty(r.field.order_id_manual) else r.field.order_id
+    r.field.order_id_normalized = r.field.order_id_manual if is_set(r.field.order_id_manual) else r.field.order_id
+
+    return r.hook_response()
+```
+
+## Get document arrival date
+
+```py
+from rossum_python import RossumPython
+
+def rossum_hook_request_handler(payload):
+    r = RossumPython.from_payload(payload)
+
+    r.field.document_arrived_at = payload.get("document").get("arrived_at")
 
     return r.hook_response()
 ```
@@ -31,10 +44,10 @@ Write into `original_file_name` data field:
 ```py
 from rossum_python import RossumPython
 
-def rossum_hook_request_handler(payload: dict) -> dict:
+def rossum_hook_request_handler(payload):
     r = RossumPython.from_payload(payload)
 
-    r.field.original_file_name = payload["document"]["original_file_name"]
+    r.field.original_file_name = payload.get("document").get("original_file_name")
 
     return r.hook_response()
 ```
