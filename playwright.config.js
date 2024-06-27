@@ -70,7 +70,7 @@ module.exports = defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'yarn run start',
+    command: process.env.CI ? 'yarn build && yarn serve' : 'yarn start',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },

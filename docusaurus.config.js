@@ -41,25 +41,22 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        // fromExtensions: ['html', 'htm'], // /myPage.html -> /myPage
-        // toExtensions: ['exe', 'zip'], // /myAsset -> /myAsset.zip (if latter exists)
         redirects: [
           // Redirect from multiple old paths to the new path
           {
             from: ['/docs/extensions/netsuite/common-errors'],
-            to: '/docs/extensions/netsuite',
+            to: '/docs/learn/netsuite',
           },
         ],
-        // createRedirects(existingPath) {
-        //   if (existingPath.includes('/community')) {
-        //     // Redirect from /docs/team/X to /community/X and /docs/support/X to /community/X
-        //     return [
-        //       existingPath.replace('/community', '/docs/team'),
-        //       existingPath.replace('/community', '/docs/support'),
-        //     ];
-        //   }
-        //   return undefined; // Return a falsy value: no redirect created
-        // },
+        createRedirects(existingPath) {
+          if (existingPath.includes('/docs/learn/')) {
+            return [
+              // /docs/extensions/coupa → /docs/learn/coupa
+              existingPath.replace('/docs/learn/', '/docs/extensions/'),
+            ];
+          }
+          return undefined; // Return a falsy value: no redirect created
+        },
       },
     ],
   ],
@@ -100,7 +97,7 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'extensionsSidebar', // TODO: migrate to "learnSidebar"
+            sidebarId: 'learnSidebar',
             position: 'left',
             label: 'Learn',
           },
