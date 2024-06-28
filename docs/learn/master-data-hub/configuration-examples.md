@@ -128,78 +128,6 @@ Compound queries are very useful when we need to match against multiple attribut
 }
 ```
 
-## Fuzzy match score normalization
-
-Score returned normalized to interval between 0-1.
-
-```json
-{
-  "$addFields": {
-    "__score": {
-      "$meta": "searchScore"
-    }
-  }
-},
-{
-  "$addFields": {
-    "new_score": {
-      "$divide": [
-        "$__score",
-        {
-          "$add": [
-            1,
-            {
-              "$abs": {
-                "$subtract": [
-                  1,
-                  {
-                    "$divide": [
-                      {
-                        "$strLenCP": "$Name"
-                      },
-                      {
-                        "$strLenCP": "{sender_name}"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    }
-  }
-},
-{
-  "$addFields": {
-    "__normalized_score": {
-      "$divide": [
-        "$new_score",
-        {
-          "$add": [
-            1,
-            "$new_score"
-          ]
-        }
-      ]
-    }
-  }
-},
-{
-  "$sort": {
-    "__normalized_score": -1
-  }
-},
-{
-  "$match": {
-    "__normalized_score": {
-      "$gt": 0.7
-    }
-  }
-}
-```
-
 ## Dummy object
 
 Creating dummy objects can be handy when we need to create some dummy (empty) record on the fly:
@@ -322,6 +250,116 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
   ]
 }
 ```
+
+## Fuzzy match score normalization
+
+By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 to any number (defined by MongoDB). This makes it challenging to filter only relevant results. It is therefore a good idea to normalize the score. The following snippet normalizes the score to a value between 0 and 1:
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "new_score": {
+          "$divide": [
+            "$__score",
+            {
+              "$add": [
+                1,
+                {
+                  "$abs": {
+                    "$subtract": [
+                      1,
+                      {
+                        "$divide": [
+                          {
+                            "$strLenCP": "$Name"
+                          },
+                          {
+                            "$strLenCP": "{sender_name}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": [
+            "$new_score",
+            {
+              "$add": [1, "$new_score"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$sort": {
+        "__normalized_score": -1
+      }
+    },
+    {
+      "$match": {
+        "__normalized_score": {
+          "$gt": 0.7
+        }
+      }
+    }
+  ]
+}
+```
+
+Naiver (and less recommended) solution would be the following:
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$setWindowFields": {
+        "output": {
+          "__max_score": {
+            "$max": "$__score"
+          }
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": ["$__score", "$__max_score"]
+        }
+      }
+    }
+    // …
+  ]
+}
+```
+
+Note that one disadvantage of this second normalization approach is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
 
 ## HTTP requests
 
@@ -616,39 +654,3 @@ This can be achieved by first searching and returning records with their respect
   ]
 }
 ```
-
-## Score normalization
-
-```json
-{
-  "aggregate": [
-    // … (fuzzy search)
-    {
-      "$addFields": {
-        "__score": {
-          "$meta": "searchScore"
-        }
-      }
-    },
-    {
-      "$setWindowFields": {
-        "output": {
-          "__max_score": {
-            "$max": "$__score"
-          }
-        }
-      }
-    },
-    {
-      "$addFields": {
-        "__normalized_score": {
-          "$divide": ["$__score", "$__max_score"]
-        }
-      }
-    }
-    // …
-  ]
-}
-```
-
-Note that one disadvantage of this normalization is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
