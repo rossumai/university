@@ -514,7 +514,7 @@ By default, the advanced search returns one record for each line item. In case w
 
 :::warning
 
-Rossum's team of Solution Architects is typically needed for large NetSuite imports and recoveries. Consider contacting [Rossum Sales](https://rossum.ai/form/contact/) department or Rossum Support team.
+Rossum's team of Solution Architects is typically needed for large NetSuite imports and recoveries. Consider contacting [Rossum Sales](https://rossum.ai/form/contact/) or Rossum Support team if you need help.
 
 :::
 
