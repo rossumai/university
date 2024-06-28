@@ -128,6 +128,78 @@ Compound queries are very useful when we need to match against multiple attribut
 }
 ```
 
+## Fuzzy match score normalization
+
+Score returned normalized to interval between 0-1.
+
+```json
+{
+  "$addFields": {
+    "__score": {
+      "$meta": "searchScore"
+    }
+  }
+},
+{
+  "$addFields": {
+    "new_score": {
+      "$divide": [
+        "$__score",
+        {
+          "$add": [
+            1,
+            {
+              "$abs": {
+                "$subtract": [
+                  1,
+                  {
+                    "$divide": [
+                      {
+                        "$strLenCP": "$Name"
+                      },
+                      {
+                        "$strLenCP": "{sender_name}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+},
+{
+  "$addFields": {
+    "__normalized_score": {
+      "$divide": [
+        "$new_score",
+        {
+          "$add": [
+            1,
+            "$new_score"
+          ]
+        }
+      ]
+    }
+  }
+},
+{
+  "$sort": {
+    "__normalized_score": -1
+  }
+},
+{
+  "$match": {
+    "__normalized_score": {
+      "$gt": 0.7
+    }
+  }
+}
+```
+
 ## Dummy object
 
 Creating dummy objects can be handy when we need to create some dummy (empty) record on the fly:
