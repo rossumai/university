@@ -200,6 +200,8 @@ Even though exact match can be achieved using `find` method instead of `aggregat
 }
 ```
 
+The `… | re` filter escapes all regex-special characters with a backslash (`\`). It is highly recommended to use the filter when using the MongoDB's [`$regex`](https://www.mongodb.com/docs/manual/reference/operator/query/regex/). Filters `re` and `regex` are equivalent.
+
 ## Exact submatch
 
 Sometimes it is necessary to match an exact substring. This can easily be achieved by using `$regex` like so:
@@ -208,11 +210,13 @@ Sometimes it is necessary to match an exact substring. This can easily be achiev
 {
   "find": {
     "role_code": {
-      "$regex": "^.*{item_role | re}.*$"
+      "$regex": "^.*{item_role | regex}.*$"
     }
   }
 }
 ```
+
+The `… | regex` filter escapes all regex-special characters with a backslash (`\`). It is highly recommended to use the filter when using the MongoDB's [`$regex`](https://www.mongodb.com/docs/manual/reference/operator/query/regex/). Filters `re` and `regex` are equivalent.
 
 ## Fuzzy match
 
