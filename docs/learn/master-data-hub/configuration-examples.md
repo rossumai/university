@@ -45,199 +45,10 @@ In most of the cases, the `dataset` key will be static. It can however be dynami
 }
 ```
 
-## Count all records in the collection
-
-You can quickly get a total number of records in the whole collection by calling `$count`:
-
-```json
-{
-  "aggregate": [
-    {
-      "$count": "total"
-    }
-  ]
-}
-```
-
-## Compound queries
-
-Compound queries are very useful when we need to match against multiple attributes and give to each match a different importance. In the following example we use Fibonacci Sequence boosts to [fuzzy match](#fuzzy-match) against XXX, YYY and ZZZ:
-
-```json
-{
-  "aggregate": [
-    {
-      "$search": {
-        "index": "default",
-        "compound": {
-          "must": [
-            {
-              "text": {
-                "path": "XXX",
-                "query": "{product_code} ", // notice the extra space at the end!
-                "score": {
-                  "boost": {
-                    "value": 8
-                  }
-                }
-              }
-            },
-            {
-              "text": {
-                "path": "YYY",
-                "query": "{product_name} ", // notice the extra space at the end!
-                "score": {
-                  "boost": {
-                    "value": 5
-                  }
-                }
-              }
-            }
-          ],
-          "should": [
-            {
-              "text": {
-                "path": "ZZZ",
-                "query": "{product_label} ", // notice the extra space at the end!
-                "score": {
-                  "boost": {
-                    "value": 3
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "$addFields": {
-        "__score": {
-          "$meta": "searchScore"
-        }
-      }
-    },
-    {
-      "$match": {
-        "__score": {
-          "$gt": 30 // Check the resulting `__score` to set some appropriate value
-        }
-      }
-    }
-  ]
-}
-```
-
-## Fuzzy match score normalization
-
-Score returned normalized to interval between 0-1.
-
-```json
-{
-  "$addFields": {
-    "__score": {
-      "$meta": "searchScore"
-    }
-  }
-},
-{
-  "$addFields": {
-    "new_score": {
-      "$divide": [
-        "$__score",
-        {
-          "$add": [
-            1,
-            {
-              "$abs": {
-                "$subtract": [
-                  1,
-                  {
-                    "$divide": [
-                      {
-                        "$strLenCP": "$Name"
-                      },
-                      {
-                        "$strLenCP": "{sender_name}"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    }
-  }
-},
-{
-  "$addFields": {
-    "__normalized_score": {
-      "$divide": [
-        "$new_score",
-        {
-          "$add": [
-            1,
-            "$new_score"
-          ]
-        }
-      ]
-    }
-  }
-},
-{
-  "$sort": {
-    "__normalized_score": -1
-  }
-},
-{
-  "$match": {
-    "__normalized_score": {
-      "$gt": 0.7
-    }
-  }
-}
-```
-
-## Fuzzy match score normalization - non-compound query
-
-Score returned normalized to interval between 0-1. This works only when a "compound" query is not used.
-
-```json
-{
-    "$addFields": {
-        "__score": {
-            "$meta": "searchScore"
-        },
-        "__scoreDetails": {
-            "$meta": "searchScoreDetails"
-        }
-    }
-},
-{
-    "$addFields": {
-        "__normalizedScore": {
-            "$last": {
-                "$last": {
-                    "$first": "$__scoreDetails.details.details.details.value"
-                }
-            }
-        }
-    }
-},
-{
-    "$match": {
-        "__normalizedScore": {
-            "$gt": 0.5
-        }
-    }
-}
-```
-
 ## Best match with default fallback initial match returns no records
-Preselects a record if the first $match query returns anything and keeps empty default on second position in the dropdown list, otherwise
-preselects the empty default record and appends all records returned by the last "unionWith" query.  
+
+Selects a first record (best match) if the first $match query returns any results and keeps empty ("") record on second position in the dropdown list, otherwise
+selects the empty ("") default record and appends all records returned by the last "unionWith" query. Allows to use "best_match" in all circumstances - ie condident and non-confident matching in a single query.
 
 ```json
 [
@@ -331,6 +142,89 @@ preselects the empty default record and appends all records returned by the last
     }
   }
 ]
+```
+
+## Count all records in the collection
+
+You can quickly get a total number of records in the whole collection by calling `$count`:
+
+```json
+{
+  "aggregate": [
+    {
+      "$count": "total"
+    }
+  ]
+}
+```
+
+## Compound queries
+
+Compound queries are very useful when we need to match against multiple attributes and give to each match a different importance. In the following example we use Fibonacci Sequence boosts to [fuzzy match](#fuzzy-match) against XXX, YYY and ZZZ:
+
+```json
+{
+  "aggregate": [
+    {
+      "$search": {
+        "index": "default",
+        "compound": {
+          "must": [
+            {
+              "text": {
+                "path": "XXX",
+                "query": "{product_code} ", // notice the extra space at the end!
+                "score": {
+                  "boost": {
+                    "value": 8
+                  }
+                }
+              }
+            },
+            {
+              "text": {
+                "path": "YYY",
+                "query": "{product_name} ", // notice the extra space at the end!
+                "score": {
+                  "boost": {
+                    "value": 5
+                  }
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "text": {
+                "path": "ZZZ",
+                "query": "{product_label} ", // notice the extra space at the end!
+                "score": {
+                  "boost": {
+                    "value": 3
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$match": {
+        "__score": {
+          "$gt": 30 // Check the resulting `__score` to set some appropriate value
+        }
+      }
+    }
+  ]
+}
 ```
 
 ## Dummy object
@@ -462,113 +356,110 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 
 ## Fuzzy match score normalization
 
-By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 to any number (defined by MongoDB). This makes it challenging to filter only relevant results. It is therefore a good idea to normalize the score. The following snippet normalizes the score to a value between 0 and 1:
+Score returned normalized to interval between 0-1.
 
 ```json
 {
-  "aggregate": [
-    // … (fuzzy search)
-    {
-      "$addFields": {
-        "__score": {
-          "$meta": "searchScore"
-        }
-      }
-    },
-    {
-      "$addFields": {
-        "new_score": {
-          "$divide": [
-            "$__score",
+  "$addFields": {
+    "__score": {
+      "$meta": "searchScore"
+    }
+  }
+},
+{
+  "$addFields": {
+    "new_score": {
+      "$divide": [
+        "$__score",
+        {
+          "$add": [
+            1,
             {
-              "$add": [
-                1,
-                {
-                  "$abs": {
-                    "$subtract": [
-                      1,
+              "$abs": {
+                "$subtract": [
+                  1,
+                  {
+                    "$divide": [
                       {
-                        "$divide": [
-                          {
-                            "$strLenCP": "$Name"
-                          },
-                          {
-                            "$strLenCP": "{sender_name}"
-                          }
-                        ]
+                        "$strLenCP": "$Name"
+                      },
+                      {
+                        "$strLenCP": "{sender_name}"
                       }
                     ]
                   }
-                }
-              ]
+                ]
+              }
             }
           ]
         }
-      }
-    },
-    {
-      "$addFields": {
-        "__normalized_score": {
-          "$divide": [
-            "$new_score",
-            {
-              "$add": [1, "$new_score"]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "$sort": {
-        "__normalized_score": -1
-      }
-    },
-    {
-      "$match": {
-        "__normalized_score": {
-          "$gt": 0.7
-        }
-      }
+      ]
     }
-  ]
+  }
+},
+{
+  "$addFields": {
+    "__normalized_score": {
+      "$divide": [
+        "$new_score",
+        {
+          "$add": [
+            1,
+            "$new_score"
+          ]
+        }
+      ]
+    }
+  }
+},
+{
+  "$sort": {
+    "__normalized_score": -1
+  }
+},
+{
+  "$match": {
+    "__normalized_score": {
+      "$gt": 0.7
+    }
+  }
 }
 ```
 
-Naiver (and less recommended) solution would be the following:
+## Fuzzy match score normalization - non-compound query
+
+Score returned normalized to interval between 0-1. This works only when a "compound" query is **not** used.
 
 ```json
 {
-  "aggregate": [
-    // … (fuzzy search)
-    {
-      "$addFields": {
+    "$addFields": {
         "__score": {
-          "$meta": "searchScore"
+            "$meta": "searchScore"
+        },
+        "__scoreDetails": {
+            "$meta": "searchScoreDetails"
         }
-      }
-    },
-    {
-      "$setWindowFields": {
-        "output": {
-          "__max_score": {
-            "$max": "$__score"
-          }
-        }
-      }
-    },
-    {
-      "$addFields": {
-        "__normalized_score": {
-          "$divide": ["$__score", "$__max_score"]
-        }
-      }
     }
-    // …
-  ]
+},
+{
+    "$addFields": {
+        "__normalizedScore": {
+            "$last": {
+                "$last": {
+                    "$first": "$__scoreDetails.details.details.details.value"
+                }
+            }
+        }
+    }
+},
+{
+    "$match": {
+        "__normalizedScore": {
+            "$gt": 0.5
+        }
+    }
 }
 ```
-
-Note that one disadvantage of this second normalization approach is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
 
 ## HTTP requests
 
