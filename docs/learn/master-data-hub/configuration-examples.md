@@ -48,100 +48,90 @@ In most of the cases, the `dataset` key will be static. It can however be dynami
 ## Best match with default fallback initial match returns no records
 
 Selects a first record (best match) if the first $match query returns any results and keeps empty ("") record on second position in the dropdown list, otherwise
-selects the empty ("") default record and appends all records returned by the last "unionWith" query. Allows to use "best_match" in all circumstances - ie condident and non-confident matching in a single query.
+selects the empty ("") default record and appends all records returned by the last "unionWith" query. Allows to use "best_match" in all circumstances - ie confident and non-confident matching in a single query.
 
 ```json
-[
-  {
-    "$match": {
-      "Workday_Project_ID": "{item_project}"
-    }
-  },
-  {
-    "$setWindowFields": {
-      "output": {
-        "mainMatch": {
-          "$count": {}
+{
+  "aggregate": [
+    {
+      "$match": {
+        "Workday_Project_ID": "{item_project}"
+      }
+    },
+    {
+      "$setWindowFields": {
+        "output": {
+          "mainMatch": {
+            "$count": {}
+          }
         }
       }
-    }
-  },
-  {
-    "$unionWith": {
-      "coll": "nonexistentcollection",
-      "pipeline": [
-        {
-          "$documents": [
-            {
-              "Name": "Please select",
-              "mainMatch": 0,
-              "Workday_Project_ID": ""
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "$setWindowFields": {
-      "output": {
-        "mainMatchWithDefault": {
-          "$count": {}
-        }
-      }
-    }
-  },
-  {
-    "$match": {
-      "$expr": {
-        "$cond": {
-          "if": {
-            "$and": [
+    },
+    {
+      "$unionWith": {
+        "coll": "nonexistentcollection",
+        "pipeline": [
+          {
+            "$documents": [
               {
-                "$gt": [
-                  "$mainMatchWithDefault",
-                  "$mainMatch"
-                ]
-              },
-              {
-                "$gt": [
-                  "$mainMatchWithDefault",
-                  1
-                ]
+                "Name": "Please select",
+                "mainMatch": 0,
+                "Workday_Project_ID": ""
               }
             ]
-          },
-          "else": {
-            "$eq": [
-              1,
-              1
-            ]
-          },
-          "then": {
-            "$ne": [
-              "$mainMatch",
-              0
-            ]
+          }
+        ]
+      }
+    },
+    {
+      "$setWindowFields": {
+        "output": {
+          "mainMatchWithDefault": {
+            "$count": {}
           }
         }
       }
-    }
-  },
-  {
-    "$unionWith": {
-      "coll": "workday_project",
-      "pipeline": [
-        {
-          "$match": {
-            "Workday_Project_ID": {
-              "$ne": "{item_project}"
+    },
+    {
+      "$match": {
+        "$expr": {
+          "$cond": {
+            "if": {
+              "$and": [
+                {
+                  "$gt": ["$mainMatchWithDefault", "$mainMatch"]
+                },
+                {
+                  "$gt": ["$mainMatchWithDefault", 1]
+                }
+              ]
+            },
+            "else": {
+              "$eq": [1, 1]
+            },
+            "then": {
+              "$ne": ["$mainMatch", 0]
             }
           }
         }
-      ]
+      }
+    },
+    {
+      "$unionWith": {
+        "coll": "workday_project",
+        "pipeline": [
+          {
+            "$match": {
+              "Workday_Project_ID": {
+                "$ne": "{item_project}"
+              }
+            }
+          }
+        ]
+      }
     }
-  }
-]
+  ]
+}
 ```
 
 ## Count all records in the collection
@@ -356,75 +346,113 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 
 ## Fuzzy match score normalization
 
-Score returned normalized to interval between 0-1.
+By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 to any number (defined by MongoDB). This makes it challenging to filter only relevant results. It is therefore a good idea to normalize the score. The following snippet normalizes the score to a value between 0 and 1:
 
 ```json
 {
-  "$addFields": {
-    "__score": {
-      "$meta": "searchScore"
-    }
-  }
-},
-{
-  "$addFields": {
-    "new_score": {
-      "$divide": [
-        "$__score",
-        {
-          "$add": [
-            1,
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "new_score": {
+          "$divide": [
+            "$__score",
             {
-              "$abs": {
-                "$subtract": [
-                  1,
-                  {
-                    "$divide": [
+              "$add": [
+                1,
+                {
+                  "$abs": {
+                    "$subtract": [
+                      1,
                       {
-                        "$strLenCP": "$Name"
-                      },
-                      {
-                        "$strLenCP": "{sender_name}"
+                        "$divide": [
+                          {
+                            "$strLenCP": "$Name"
+                          },
+                          {
+                            "$strLenCP": "{sender_name}"
+                          }
+                        ]
                       }
                     ]
                   }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
-      ]
-    }
-  }
-},
-{
-  "$addFields": {
-    "__normalized_score": {
-      "$divide": [
-        "$new_score",
-        {
-          "$add": [
-            1,
-            "$new_score"
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": [
+            "$new_score",
+            {
+              "$add": [1, "$new_score"]
+            }
           ]
         }
-      ]
+      }
+    },
+    {
+      "$sort": {
+        "__normalized_score": -1
+      }
+    },
+    {
+      "$match": {
+        "__normalized_score": {
+          "$gt": 0.7
+        }
+      }
     }
-  }
-},
-{
-  "$sort": {
-    "__normalized_score": -1
-  }
-},
-{
-  "$match": {
-    "__normalized_score": {
-      "$gt": 0.7
-    }
-  }
+  ]
 }
 ```
+
+Naiver (and less recommended) solution would be the following:
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$setWindowFields": {
+        "output": {
+          "__max_score": {
+            "$max": "$__score"
+          }
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": ["$__score", "$__max_score"]
+        }
+      }
+    }
+    // …
+  ]
+}
+```
+
+Note that one disadvantage of this second normalization approach is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
 
 ## Fuzzy match score normalization - non-compound query
 
@@ -432,32 +460,36 @@ Score returned normalized to interval between 0-1. This works only when a "compo
 
 ```json
 {
-    "$addFields": {
+  "aggregate": [
+    {
+      "$addFields": {
         "__score": {
-            "$meta": "searchScore"
+          "$meta": "searchScore"
         },
         "__scoreDetails": {
-            "$meta": "searchScoreDetails"
+          "$meta": "searchScoreDetails"
         }
-    }
-},
-{
-    "$addFields": {
+      }
+    },
+    {
+      "$addFields": {
         "__normalizedScore": {
+          "$last": {
             "$last": {
-                "$last": {
-                    "$first": "$__scoreDetails.details.details.details.value"
-                }
+              "$first": "$__scoreDetails.details.details.details.value"
             }
+          }
         }
-    }
-},
-{
-    "$match": {
+      }
+    },
+    {
+      "$match": {
         "__normalizedScore": {
-            "$gt": 0.5
+          "$gt": 0.5
         }
+      }
     }
+  ]
 }
 ```
 
