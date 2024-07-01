@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 sidebar_label: 'Configuration examples'
-title: 'Line item grouping: Configuration examples'
+title: 'Line items grouping: Configuration examples'
 ---
 
 # Configuration examples
