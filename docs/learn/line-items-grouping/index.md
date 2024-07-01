@@ -16,6 +16,7 @@ _Describe how to create and configure the extension._
 
 <WebhookEndpoints
   eu1="https://elis.line-items-grouping.rossum-ext.app/"
+  eu2="https://shared-eu2.line-items-grouping.rossum-ext.app/"
 />
 
 ## Basic usage
