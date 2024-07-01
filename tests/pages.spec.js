@@ -61,6 +61,10 @@ test('main navigation (Learn button)', async ({ page }) => {
     title: 'Rossum Formulas | Rossum.ai University',
   },
   {
+    path: '/docs/extensions/sandboxes',
+    title: 'Sandboxes | Rossum.ai University',
+  },
+  {
     path: '/docs/extensions/sftp-s3-import-export',
     title: 'SFTP and S3 imports/exports | Rossum.ai University',
   },
