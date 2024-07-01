@@ -29,6 +29,7 @@ Request payload example:
 ```
 
 ### CURL version example
+
 ```bash
 curl --location --request PATCH 'https://[EAMPLE].rossum.app/api/v1/hooks/[HOOK_ID]' \
 --header 'Authorization: Bearer [API_TOKEN]' \
@@ -40,7 +41,7 @@ See API reference for more details: https://elis.rossum.ai/api/docs/#update-part
 
 :::warning
 
-The maximum allowed timeout is 60 seconds. Consider contacting [Rossum Sales](https://rossum.ai/form/contact/) department or Rossum Support team if you need help finding alternative solutions.
+The maximum allowed timeout is 60 seconds. Consider contacting [Rossum Sales](https://rossum.ai/form/contact/) or Rossum Support team if you need help finding alternative solutions.
 
 :::
 

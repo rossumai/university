@@ -405,6 +405,8 @@ Even though exact match can be achieved using `find` method instead of `aggregat
 }
 ```
 
+The `… | re` filter escapes all regex-special characters with a backslash (`\`). It is highly recommended to use the filter when using the MongoDB's [`$regex`](https://www.mongodb.com/docs/manual/reference/operator/query/regex/). Filters `re` and `regex` are equivalent.
+
 ## Exact submatch
 
 Sometimes it is necessary to match an exact substring. This can easily be achieved by using `$regex` like so:
@@ -413,11 +415,13 @@ Sometimes it is necessary to match an exact substring. This can easily be achiev
 {
   "find": {
     "role_code": {
-      "$regex": "^.*{item_role | re}.*$"
+      "$regex": "^.*{item_role | regex}.*$"
     }
   }
 }
 ```
+
+The `… | regex` filter escapes all regex-special characters with a backslash (`\`). It is highly recommended to use the filter when using the MongoDB's [`$regex`](https://www.mongodb.com/docs/manual/reference/operator/query/regex/). Filters `re` and `regex` are equivalent.
 
 ## Fuzzy match
 
@@ -455,6 +459,116 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
   ]
 }
 ```
+
+## Fuzzy match score normalization
+
+By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 to any number (defined by MongoDB). This makes it challenging to filter only relevant results. It is therefore a good idea to normalize the score. The following snippet normalizes the score to a value between 0 and 1:
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "new_score": {
+          "$divide": [
+            "$__score",
+            {
+              "$add": [
+                1,
+                {
+                  "$abs": {
+                    "$subtract": [
+                      1,
+                      {
+                        "$divide": [
+                          {
+                            "$strLenCP": "$Name"
+                          },
+                          {
+                            "$strLenCP": "{sender_name}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": [
+            "$new_score",
+            {
+              "$add": [1, "$new_score"]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$sort": {
+        "__normalized_score": -1
+      }
+    },
+    {
+      "$match": {
+        "__normalized_score": {
+          "$gt": 0.7
+        }
+      }
+    }
+  ]
+}
+```
+
+Naiver (and less recommended) solution would be the following:
+
+```json
+{
+  "aggregate": [
+    // … (fuzzy search)
+    {
+      "$addFields": {
+        "__score": {
+          "$meta": "searchScore"
+        }
+      }
+    },
+    {
+      "$setWindowFields": {
+        "output": {
+          "__max_score": {
+            "$max": "$__score"
+          }
+        }
+      }
+    },
+    {
+      "$addFields": {
+        "__normalized_score": {
+          "$divide": ["$__score", "$__max_score"]
+        }
+      }
+    }
+    // …
+  ]
+}
+```
+
+Note that one disadvantage of this second normalization approach is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
 
 ## HTTP requests
 
@@ -749,39 +863,3 @@ This can be achieved by first searching and returning records with their respect
   ]
 }
 ```
-
-## Score normalization
-
-```json
-{
-  "aggregate": [
-    // … (fuzzy search)
-    {
-      "$addFields": {
-        "__score": {
-          "$meta": "searchScore"
-        }
-      }
-    },
-    {
-      "$setWindowFields": {
-        "output": {
-          "__max_score": {
-            "$max": "$__score"
-          }
-        }
-      }
-    },
-    {
-      "$addFields": {
-        "__normalized_score": {
-          "$divide": ["$__score", "$__max_score"]
-        }
-      }
-    }
-    // …
-  ]
-}
-```
-
-Note that one disadvantage of this normalization is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
