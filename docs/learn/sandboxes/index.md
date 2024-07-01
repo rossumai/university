@@ -35,6 +35,13 @@ pipx install .
 
 This will install the Sandboxing tool in the `~/.local/bin` folder making it available globally under command `prd`.
 
+To upgrade to the latest version, run (from the same Git directory):
+
+```bash
+git pull
+pipx install . --force
+```
+
 ## First steps
 
 :::warning[Work in progress]
