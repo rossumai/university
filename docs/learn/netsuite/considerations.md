@@ -28,10 +28,10 @@ Request payload example:
 }
 ```
 
-### CURL version example
+Example [`curl`](https://github.com/curl/curl) request:
 
 ```bash
-curl --location --request PATCH 'https://[EAMPLE].rossum.app/api/v1/hooks/[HOOK_ID]' \
+curl --location --request PATCH 'https://[EXAMPLE].rossum.app/api/v1/hooks/[HOOK_ID]' \
 --header 'Authorization: Bearer [API_TOKEN]' \
 --header 'Content-Type: application/json' \
 --data '{"timeout_s": 60}'
