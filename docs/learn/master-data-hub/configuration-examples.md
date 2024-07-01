@@ -200,6 +200,139 @@ Score returned normalized to interval between 0-1.
 }
 ```
 
+## Fuzzy match score normalization - non-compound query
+
+Score returned normalized to interval between 0-1. This works only when a "compound" query is not used.
+
+```json
+{
+    "$addFields": {
+        "__score": {
+            "$meta": "searchScore"
+        },
+        "__scoreDetails": {
+            "$meta": "searchScoreDetails"
+        }
+    }
+},
+{
+    "$addFields": {
+        "__normalizedScore": {
+            "$last": {
+                "$last": {
+                    "$first": "$__scoreDetails.details.details.details.value"
+                }
+            }
+        }
+    }
+},
+{
+    "$match": {
+        "__normalizedScore": {
+            "$gt": 0.5
+        }
+    }
+}
+```
+
+## Best match with default fallback initial match returns no records
+Preselects a record if the first $match query returns anything and keeps empty default on second position in the dropdown list, otherwise
+preselects the empty default record and appends all records returned by the last "unionWith" query.  
+
+```json
+[
+  {
+    "$match": {
+      "Workday_Project_ID": "{item_project}"
+    }
+  },
+  {
+    "$setWindowFields": {
+      "output": {
+        "mainMatch": {
+          "$count": {}
+        }
+      }
+    }
+  },
+  {
+    "$unionWith": {
+      "coll": "nonexistentcollection",
+      "pipeline": [
+        {
+          "$documents": [
+            {
+              "Name": "Please select",
+              "mainMatch": 0,
+              "Workday_Project_ID": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "$setWindowFields": {
+      "output": {
+        "mainMatchWithDefault": {
+          "$count": {}
+        }
+      }
+    }
+  },
+  {
+    "$match": {
+      "$expr": {
+        "$cond": {
+          "if": {
+            "$and": [
+              {
+                "$gt": [
+                  "$mainMatchWithDefault",
+                  "$mainMatch"
+                ]
+              },
+              {
+                "$gt": [
+                  "$mainMatchWithDefault",
+                  1
+                ]
+              }
+            ]
+          },
+          "else": {
+            "$eq": [
+              1,
+              1
+            ]
+          },
+          "then": {
+            "$ne": [
+              "$mainMatch",
+              0
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "$unionWith": {
+      "coll": "workday_project",
+      "pipeline": [
+        {
+          "$match": {
+            "Workday_Project_ID": {
+              "$ne": "{item_project}"
+            }
+          }
+        }
+      ]
+    }
+  }
+]
+```
+
 ## Dummy object
 
 Creating dummy objects can be handy when we need to create some dummy (empty) record on the fly:
