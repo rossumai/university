@@ -41,8 +41,8 @@ test('main navigation (Learn button)', async ({ page }) => {
     title: 'JSON Templating | Rossum.ai University',
   },
   {
-    path: '/docs/extensions/line-item-grouping',
-    title: 'Line item grouping | Rossum.ai University',
+    path: '/docs/extensions/line-items-grouping',
+    title: 'Line items grouping | Rossum.ai University',
   },
   {
     path: '/docs/extensions/master-data-hub',

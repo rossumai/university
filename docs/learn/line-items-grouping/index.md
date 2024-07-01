@@ -1,5 +1,5 @@
 ---
-title: 'Line item grouping'
+title: 'Line items grouping'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
