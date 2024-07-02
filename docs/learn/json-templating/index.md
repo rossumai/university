@@ -170,11 +170,55 @@ Inside the for-loop block, you can access a special variables (`schema_loop`):
 
 ### `$IF_DATAPOINT_VALUE$`
 
-:::warning[Work in progress]
+Renders the provided `mapping` template if the value of the given `schema_id` is equal to `value`. Otherwise, the whole parent key is skipped.
 
-_Work in progress_
+Note that if element with given `schema_id` is not found or multiple with the same `schema_id` is found an exception is raised.
 
-:::
+#### Example
+
+```json
+{
+  "Other_Field": 123,
+  "Company_Reference": {
+    "$IF_DATAPOINT_VALUE": {
+      "schema_id": "company_match",
+      "value": "my_company",
+      "mapping": {
+        "field_1": 456,
+        "field_2": 789
+      }
+    }
+  }
+}
+```
+
+If `company_match` has value `my_company` the output will be:
+
+```json
+{
+  "Other_Field": 123,
+  "Company_Reference": {
+    "field_1": 456,
+    "field_2": 789
+  }
+}
+```
+
+If `company_match` has value that is different from `my_company` the output will be:
+
+```json
+{
+  "Other_Field": 123
+}
+```
+
+#### Available configuration options
+
+| Configuration option | Description                                                             | Required | Default |
+| :------------------- | :---------------------------------------------------------------------- | :------- | :------ |
+| `schema_id`          | Schema ID of the relevant datapoint.                                    | YES      |         |
+| `value`              | Conditional (expected) value in `schema_id`.                            | YES      |         |
+| `fallback_mapping`   | Mapping template that will be rendered if `schema_id` contains `value`. | YES      |         |
 
 ### `$IF_SCHEMA_ID$`
 
