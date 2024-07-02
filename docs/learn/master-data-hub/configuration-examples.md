@@ -47,8 +47,9 @@ In most of the cases, the `dataset` key will be static. It can however be dynami
 
 ## Best match with default fallback initial match returns no records
 
-Selects a first record (best match) if the first $match query returns any results and keeps empty ("") record on second position in the dropdown list, otherwise
-selects the empty ("") default record and appends all records returned by the last "unionWith" query. Allows to use "best_match" in all circumstances - ie confident and non-confident matching in a single query.
+The following example selects a first record (the best match) if the first `$match` query returns any results and keeps empty (`""`) record on second position in the dropdown list. If the first `$match` query returns no results, it selects the empty (`""`) default record and appends all records returned by the last `$unionWith` query.
+
+It essentially allows using `best_match` strategy in all circumstances—i.e., confident and non-confident matching in a single query.
 
 ```json
 {
