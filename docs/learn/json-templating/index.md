@@ -106,14 +106,6 @@ While the latter might seem unnecessary, it is needed when we want to cast the v
 | `schema_id`          | Schema ID of the datapoint.                                                                                                    | YES      |          |
 | `value_type`         | Type to which the value should be converted. Supported types are: `string`, `integer`, `float`, `boolean`, and `iso_datetime`. | no       | `string` |
 
-### `$FOR_EACH$`
-
-:::warning[Work in progress]
-
-_Work in progress_
-
-:::
-
 ### `$FOR_EACH_SCHEMA_ID$`
 
 Iterates over multiline schema IDs, typically line items.
