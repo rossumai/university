@@ -118,9 +118,19 @@ selects the empty ("") default record and appends all records returned by the la
             ]
           },
           "then": {
-            "$ne": [
-              "$mainMatch",
-              0
+            "$and": [
+              {
+                "$lt": [
+                  "$bestMatchCount",
+                  "$bestMatchCountWithDefault"
+                ]
+              },
+              {
+                "$ne": [
+                  "$Productcode",
+                  ""
+                ]
+              }
             ]
           }
         }
