@@ -52,12 +52,28 @@ result
 
 This is typically necessary when [exporting records into NetSuite](../netsuite/export-configuration#vendor-bills-invoices).
 
+## Get line item index
+
+Returns line item number (indexed from 0):
+
+```py
+field._index
+```
+
 ## Normalize field value
 
 Remove non-alphanumeric characters (except "-" and "\_"):
 
 ```py
 substitute(r"[^a-zA-Z\d\-_]", "", field.order_id)
+```
+
+## Sum line item values
+
+Sum the values of `item_amount_total`. Use `0` if the field is empty.
+
+```py
+sum(default_to(field.item_amount_total.all_values, 0))
 ```
 
 ## Validations
