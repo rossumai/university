@@ -8,11 +8,21 @@ import WebhookEndpoints from '../\_webhook_endpoints.md';
 
 ## Installation
 
-:::warning[Work in progress]
+Line items grouping service is provided by Rossum.ai in the form of webhook. To start using the extension, follow these steps:
 
-_Describe how to create and configure the extension._
+1. Login to your Rossum account.
+1. Navigate to **Extensions → My extensions**.
+1. Click on **Create extension**.
+1. Fill the following fields:
+   1. Name: `Line items grouping`
+   1. Trigger events: `Document content: Initialize, Started, Updated`
+   1. Queues where the extension should be executed
+   1. Extension type: `Webhook`
+   1. URL (see [Available endpoints](#available-endpoints) below)
+1. Click **Create the webhook**.
+1. Fill `Configuration` field (visit [Configuration examples](./configuration-examples.md) page).
 
-:::
+### Available endpoints
 
 <WebhookEndpoints
   eu1="https://elis.line-items-grouping.rossum-ext.app/"
