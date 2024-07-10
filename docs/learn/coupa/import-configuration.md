@@ -27,6 +27,288 @@ sidebar_label: 'Import configurations'
 }
 ```
 
+## Lookup values
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "….coupacloud.com/",
+    "client_scope": "core.common.read"
+  },
+  "import_config": {
+    "query": {
+      "fields": [
+        "id",
+        "name",
+        "external-ref-num",
+        "external-ref-code",
+        "active",
+        {
+          "parent": [
+            "id",
+            "name",
+            "active",
+            {
+              "custom_fields": {}
+            },
+            {
+              "parent": [
+                "id",
+                "name",
+                "active",
+                {
+                  "custom_fields": {}
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "lookup": ["id", "name", "active"]
+        },
+        {
+          "custom_fields": {}
+        }
+      ],
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+    },
+    "method": "update",
+    "id_keys": ["id"],
+    "endpoint": "api/lookup_values",
+    "dataset_name": "lookup_values",
+    "records_per_request": 50
+  }
+}
+```
+
+## Purchase orders
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.purchase_order.read"
+  },
+  "import_config": {
+    "query": {
+      "dir": "desc",
+      "fields": [
+        "id",
+        "created_at",
+        "updated_at",
+        "po_number",
+        "status",
+        "version",
+        "payment_method",
+        "ship_to_attention",
+        {
+          "ship_to_address": [
+            "id",
+            "created_at",
+            "updated_at",
+            "name",
+            "location_code",
+            "street1",
+            "street2",
+            "street3",
+            "street4",
+            "city",
+            "state",
+            "postal_code",
+            "attention",
+            "active",
+            "business_group_name",
+            "vat_number",
+            "local_tax_number",
+            "type",
+            {
+              "country": ["id", "code", "name"]
+            }
+          ]
+        },
+        {
+          "supplier": ["id", "name", "display_name", "number"]
+        },
+        {
+          "order_lines": [
+            "id",
+            "created_at",
+            "updated_at",
+            "accounting_total",
+            {
+              "accounting_total_currency": ["id", "code", "decimals"]
+            },
+            {
+              "custom_fields": ["start_date", "end_date", "payment_method"]
+            },
+            "description",
+            "line_num",
+            "order_header_id",
+            "order_header_number",
+            "price",
+            "quantity",
+            "source_part_num",
+            "status",
+            "sub_line_num",
+            "total",
+            "type",
+            "version",
+            "supplier_order_number",
+            {
+              "account": [
+                "id",
+                "created_at",
+                "updated_at",
+                "name",
+                "code",
+                "active",
+                "account_type_id",
+                "segment_1",
+                "segment_2",
+                "segment_3",
+                "segment_4",
+                "segment_5",
+                "segment_6",
+                "segment_7",
+                "segment_8",
+                "segment_9",
+                "segment_10",
+                "segment_11",
+                "segment_12",
+                "segment_13",
+                "segment_14",
+                "segment_15",
+                "segment_16",
+                "segment_17",
+                "segment_18",
+                "segment_19",
+                "segment_20"
+              ]
+            },
+            {
+              "currency": ["id", "code", "decimals"]
+            },
+            {
+              "supplier": ["id", "name", "display_name", "number"]
+            },
+            {
+              "uom": [
+                "id",
+                "created_at",
+                "updated_at",
+                "code",
+                "name",
+                "allowable_precision",
+                "active"
+              ]
+            }
+          ]
+        }
+      ],
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+    },
+    "method": "update",
+    "id_keys": ["id"],
+    "endpoint": "api/purchase_orders",
+    "dataset_name": "purchase_orders",
+    "records_per_request": 50
+  }
+}
+```
+
+## Purchase order - Line items
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.purchase_order.read"
+  },
+  "import_config": {
+    "query": {
+      "dir": "desc",
+      "fields": [
+        "id",
+        "created_at",
+        "updated_at",
+        "accounting_total",
+        {
+          "accounting_total_currency": ["id", "code", "decimals"]
+        },
+        {
+          "custom_fields": ["start_date", "end_date", "payment_method"]
+        },
+        "description",
+        "line_num",
+        "order_header_id",
+        "order_header_number",
+        "price",
+        "quantity",
+        "source_part_num",
+        "status",
+        "sub_line_num",
+        "total",
+        "type",
+        "version",
+        "supplier_order_number",
+        {
+          "account": [
+            "id",
+            "created_at",
+            "updated_at",
+            "name",
+            "code",
+            "active",
+            "account_type_id",
+            "segment_1",
+            "segment_2",
+            "segment_3",
+            "segment_4",
+            "segment_5",
+            "segment_6",
+            "segment_7",
+            "segment_8",
+            "segment_9",
+            "segment_10",
+            "segment_11",
+            "segment_12",
+            "segment_13",
+            "segment_14",
+            "segment_15",
+            "segment_16",
+            "segment_17",
+            "segment_18",
+            "segment_19",
+            "segment_20"
+          ]
+        },
+        {
+          "currency": ["id", "code", "decimals"]
+        },
+        {
+          "supplier": ["id", "name", "display_name", "number"]
+        },
+        {
+          "uom": ["id", "created_at", "updated_at", "code", "name", "allowable_precision", "active"]
+        }
+      ],
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+    },
+    "method": "update",
+    "id_keys": ["id"],
+    "endpoint": "api/purchase_order_lines",
+    "dataset_name": "purchase_order_lines",
+    "records_per_request": 50
+  }
+}
+```
+
 ## Suppliers
 
 ```json
@@ -128,266 +410,13 @@ sidebar_label: 'Import configurations'
 }
 ```
 
-## Lookup values
-
-```json
-{
-  "credentials": {
-    "client_id": "...",
-    "base_api_url": "....coupacloud.com/",
-    "client_scope": "core.common.read"
-  },
-  "import_config": {
-    "query": {
-      "fields": [
-        "id",
-        "name",
-        "external-ref-num",
-        "external-ref-code",
-        "active",
-        {
-          "parent": [
-            "id",
-            "name",
-            "active",
-            {
-              "custom_fields": {}
-            },
-            {
-              "parent": [
-                "id",
-                "name",
-                "active",
-                {
-                  "custom_fields": {}
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "lookup": ["id", "name", "active"]
-        },
-        {
-          "custom_fields": {}
-        }
-      ],
-      "order_by": "created_at",
-      "updated-at[gt_or_eq]": "${last_modified_date}"
-    },
-    "method": "update",
-    "id_keys": ["id"],
-    "endpoint": "api/lookup_values",
-    "dataset_name": "lookup_values",
-    "records_per_request": 50
-  }
-}
-```
-
-## Units of measure(ment)
-
-```json
-{
-  "credentials": {
-    "client_id": "...",
-    "base_api_url": "...coupacloud.com/",
-    "client_scope": "core.common.read"
-  },
-  "import_config": {
-    "query": {
-      "fields": [
-        "id",
-        "name",
-        "code",
-        "allowable-precession",
-        "active",
-        "updated-at",
-        "created-at"
-      ],
-      "order_by": "created_at",
-      "updated-at[gt_or_eq]": "${last_modified_date}"
-    },
-    "method": "update",
-    "id_keys": ["id"],
-    "endpoint": "api/uoms",
-    "dataset_name": "uoms",
-    "records_per_request": 50
-  }
-}
-```
-
-## Purchase orders
-
-```json
-{
-  "credentials": {
-    "client_id": "...",
-    "base_api_url": "...",
-    "client_scope": "core.purchase_order.read"
-  },
-  "import_config": {
-    "query": {
-      "dir": "desc",
-      "fields": [
-        "id",
-        "created_at",
-        "updated_at",
-        "po_number",
-        "status",
-        "version",
-        "payment_method",
-        "ship_to_attention",
-        {
-          "ship_to_address": [
-            "id",
-            "created_at",
-            "updated_at",
-            "name",
-            "location_code",
-            "street1",
-            "street2",
-            "street3",
-            "street4",
-            "city",
-            "state",
-            "postal_code",
-            "attention",
-            "active",
-            "business_group_name",
-            "vat_number",
-            "local_tax_number",
-            "type",
-            {
-              "country": [
-                "id",
-                "code",
-                "name"
-              ]
-            }
-          ]
-        },
-        {
-          "supplier": [
-            "id",
-            "name",
-            "display_name",
-            "number"
-          ]
-        },
-        {
-          "order_lines": [
-            "id",
-            "created_at",
-            "updated_at",
-            "accounting_total",
-            {
-              "accounting_total_currency": [
-                "id",
-                "code",
-                "decimals"
-              ]
-            },
-            {
-              "custom_fields": [
-                "start_date",
-                "end_date",
-                "payment_method"
-              ]
-            },
-            "description",
-            "line_num",
-            "order_header_id",
-            "order_header_number",
-            "price",
-            "quantity",
-            "source_part_num",
-            "status",
-            "sub_line_num",
-            "total",
-            "type",
-            "version",
-            "supplier_order_number",
-            {
-              "account": [
-                "id",
-                "created_at",
-                "updated_at",
-                "name",
-                "code",
-                "active",
-                "account_type_id",
-                "segment_1",
-                "segment_2",
-                "segment_3",
-                "segment_4",
-                "segment_5",
-                "segment_6",
-                "segment_7",
-                "segment_8",
-                "segment_9",
-                "segment_10",
-                "segment_11",
-                "segment_12",
-                "segment_13",
-                "segment_14",
-                "segment_15",
-                "segment_16",
-                "segment_17",
-                "segment_18",
-                "segment_19",
-                "segment_20"
-              ]
-            },
-            {
-              "currency": [
-                "id",
-                "code",
-                "decimals"
-              ]
-            },
-            {
-              "supplier": [
-                "id",
-                "name",
-                "display_name",
-                "number"
-              ]
-            },
-            {
-              "uom": [
-                "id",
-                "created_at",
-                "updated_at",
-                "code",
-                "name",
-                "allowable_precision",
-                "active"
-              ]
-            }
-          ]
-        }
-      ],
-      "order_by": "created_at",
-      "updated-at[gt_or_eq]": "${last_modified_date}"
-    },
-    "method": "update",
-        "id_keys": [
-      "id"
-    ],
-    "endpoint": "api/purchase_orders",
-    "dataset_name": "purchase_orders",
-    "records_per_request": 50
-  }
-}
-```
-
 ## Supplier information
 
 ```json
 {
   "credentials": {
-    "client_id": "...",
-    "base_api_url": "...",
+    "client_id": "…",
+    "base_api_url": "…",
     "client_scope": "core.supplier.read"
   },
   "import_config": {
@@ -533,9 +562,7 @@ sidebar_label: 'Import configurations'
       "updated-at[gt_or_eq]": "${last_modified_date}"
     },
     "method": "update",
-    "id_keys": [
-      "id"
-    ],
+    "id_keys": ["id"],
     "endpoint": "api/supplier_information",
     "dataset_name": "supplier_information",
     "records_per_request": 50
@@ -548,8 +575,8 @@ sidebar_label: 'Import configurations'
 ```json
 {
   "credentials": {
-    "client_id": "...",
-    "base_api_url": "...",
+    "client_id": "…",
+    "base_api_url": "…",
     "client_scope": "core.common.read"
   },
   "import_config": {
@@ -557,128 +584,41 @@ sidebar_label: 'Import configurations'
       "updated-at[gt_or_eq]": "${last_modified_date}"
     },
     "method": "update",
-    "id_keys": [
-      "id"
-    ],
+    "id_keys": ["id"],
     "endpoint": "api/tax_codes",
     "dataset_name": "tax_codes",
     "records_per_request": 50
   }
 }
-
 ```
 
-## Purchase order - Line items
+## Units of measurement
 
 ```json
 {
   "credentials": {
-    "client_id": "...",
-    "base_api_url": "...",
-    "client_scope": "core.purchase_order.read"
+    "client_id": "…",
+    "base_api_url": "….coupacloud.com/",
+    "client_scope": "core.common.read"
   },
   "import_config": {
     "query": {
-      "dir": "desc",
       "fields": [
         "id",
-        "created_at",
-        "updated_at",
-        "accounting_total",
-        {
-          "accounting_total_currency": [
-            "id",
-            "code",
-            "decimals"
-          ]
-        },
-        {
-          "custom_fields": [
-            "start_date",
-            "end_date",
-            "payment_method"
-          ]
-        },
-        "description",
-        "line_num",
-        "order_header_id",
-        "order_header_number",
-        "price",
-        "quantity",
-        "source_part_num",
-        "status",
-        "sub_line_num",
-        "total",
-        "type",
-        "version",
-        "supplier_order_number",
-        {
-          "account": [
-            "id",
-            "created_at",
-            "updated_at",
-            "name",
-            "code",
-            "active",
-            "account_type_id",
-            "segment_1",
-            "segment_2",
-            "segment_3",
-            "segment_4",
-            "segment_5",
-            "segment_6",
-            "segment_7",
-            "segment_8",
-            "segment_9",
-            "segment_10",
-            "segment_11",
-            "segment_12",
-            "segment_13",
-            "segment_14",
-            "segment_15",
-            "segment_16",
-            "segment_17",
-            "segment_18",
-            "segment_19",
-            "segment_20"
-          ]
-        },
-        {
-          "currency": [
-            "id",
-            "code",
-            "decimals"
-          ]
-        },
-        {
-          "supplier": [
-            "id",
-            "name",
-            "display_name",
-            "number"
-          ]
-        },
-        {
-          "uom": [
-            "id",
-            "created_at",
-            "updated_at",
-            "code",
-            "name",
-            "allowable_precision",
-            "active"
-          ]
-        }
+        "name",
+        "code",
+        "allowable-precession",
+        "active",
+        "updated-at",
+        "created-at"
       ],
       "order_by": "created_at",
       "updated-at[gt_or_eq]": "${last_modified_date}"
     },
     "method": "update",
-    "id_keys": [
-      "id"
-    ],
-    "endpoint": "api/purchase_order_lines",
-    "dataset_name": "purchase_order_lines",
+    "id_keys": ["id"],
+    "endpoint": "api/uoms",
+    "dataset_name": "uoms",
     "records_per_request": 50
   }
 }
