@@ -47,11 +47,6 @@ const config = {
             from: ['/docs/extensions/netsuite/common-errors'],
             to: '/docs/learn/netsuite',
           },
-          {
-            // TODO: this is just an experimental redirect (remove once not needed)
-            from: ['/redirect/test'],
-            to: 'https://rossum.ai/aurora-advanced-ai/',
-          },
         ],
         createRedirects(existingPath) {
           if (existingPath.includes('/docs/learn/')) {
