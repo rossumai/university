@@ -2,6 +2,8 @@
 title: 'Master data hub'
 ---
 
+👉 [API documentation](https://elis.rossum.ai/svc/master-data-hub/api/docs)
+
 ## What is the Master Data Hub extension
 
 Master Data Hub is like having a helpful assistant that can match important information from your documents, such as vendor names, customer names, addresses, and payment details, with the data you already have in your system or database.
