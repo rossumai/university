@@ -41,12 +41,16 @@ def rossum_hook_request_handler(payload: dict) -> dict:
 
 Notice that it is a little bit more verbose, but it is still very similar. The main differences are that we need to wrap the functionality into `rossum_hook_request_handler` function and that we need to explicitly write into the `order_id_normalized` field.
 
-## Available configuration options
+## Available functions and features
 
-Formula fields do not require any special configuration and are available for anyone to use.
+| Formula fields                      | Rossum Python                         | Description                 |
+| ----------------------------------- | ------------------------------------- | --------------------------- |
+| `field.amount_total`                | `r.field.amount_total`                | Get datapoint value.        |
+| `field.amount_total.rir_confidence` | `r.field.amount_total.rir_confidence` |                             |
+| _return value¹_                     | `r.field.amount_total = 10`           | Write into datapoint value. |
+| `is_empty(…)`                       |                                       |                             |
+| `is_set(…)`                         |                                       |                             |
+| `default_to(…, …)`                  |                                       |                             |
+| `substitute(…, …)`                  |                                       |                             |
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options (perhaps change it to available functions?)._
-
-:::
+¹ Formula fields cannot write into any other fields. They simply return the value.
