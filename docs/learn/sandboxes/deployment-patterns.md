@@ -62,7 +62,7 @@ To use this pattern, follow the same steps as outlined in the [Simple environmen
 prd init
 ```
 
-However, now setup both `source` and `target` organizations:
+However, now setup both `source` and `target` organizations. Notice that `use_same_org_as_target` is now set to false:
 
 ```json
 {
@@ -71,7 +71,7 @@ However, now setup both `source` and `target` organizations:
     "username": "CHANGE ME",
     "password": "CHANGE ME"
   },
-  "use_same_org_as_target": true,
+  "use_same_org_as_target": false,
   "target": {
     "api_base": "https://api.elis.rossum.ai/v1",
     "username": "CHANGE ME",
@@ -92,7 +92,7 @@ And to release changes to production, run `release` command:
 prd release
 ```
 
-The local repository should always contain both `source` and `target` organization configurations. They can both be updated by calling `prd pull` command (it is not possible to pull only one organization).
+The local repository should always contain both `source` and `target` organization configurations. They can both be updated by calling `prd pull` command. You can also run `prd pull source` or `prd pull target` to update only one.
 
 ## Three environments for sandbox, UAT, and production
 
