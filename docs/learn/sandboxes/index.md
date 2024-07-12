@@ -8,21 +8,15 @@ import PaidFeature from '../\_paid_feature.md';
 
 Rossum Sandboxes allow for isolated development of the solution and easy deployments of the tested solution to production.
 
-Using Sandboxes currently requires installation of an external tooling available at: TODO
+Using Sandboxes currently requires installation of an external tooling available at: https://github.com/rossumai/prd
 
 ## Installation
-
-:::warning[Work in progress]
-
-_Work in progress._
-
-:::
 
 First, download the Sandboxing tool `prd` locally:
 
 ```bash
-git clone …
-cd …
+git clone git@github.com:rossumai/prd.git
+cd prd
 ```
 
 And install it:
