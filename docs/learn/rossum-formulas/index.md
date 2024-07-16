@@ -43,14 +43,15 @@ Notice that it is a little bit more verbose, but it is still very similar. The m
 
 ## Available functions and features
 
-| Formula fields                      | Rossum Python                         | Description                 |
-| ----------------------------------- | ------------------------------------- | --------------------------- |
-| `field.amount_total`                | `r.field.amount_total`                | Get datapoint value.        |
-| `field.amount_total.rir_confidence` | `r.field.amount_total.rir_confidence` |                             |
-| _return value¹_                     | `r.field.amount_total = 10`           | Write into datapoint value. |
-| `is_empty(…)`                       |                                       |                             |
-| `is_set(…)`                         |                                       |                             |
-| `default_to(…, …)`                  |                                       |                             |
-| `substitute(…, …)`                  |                                       |                             |
+| Formula fields                | Rossum Python                    | Description                                         |
+| ----------------------------- | -------------------------------- | --------------------------------------------------- |
+| `field.amount`                | `r.field.amount`                 | Get datapoint value.                                |
+| `field.amount.rir_confidence` | `r.field.amount.rir_confidence`  | Get datapoint confidence score.                     |
+| _return value_ ¹              | `r.field.amount = 10`            | Write into datapoint value.                         |
+| `is_empty(field.amount)`      | `is_empty(r.field.amount)`²      | Check if datapoint value is empty.                  |
+| `is_set(field.amount)`        | `is_set(r.field.amount)`²        | Check if datapoint is set (opposite of `is_empty`). |
+| `default_to(field.amount, 0)` | `default_to(r.field.amount, 0)`² | Use default value if the field is empty.            |
+| `substitute(…, …)`            |                                  |                                                     |
 
-¹ Formula fields cannot write into any other fields. They simply return the value.
+¹ Formula fields cannot write into any other fields. They simply return the value.\
+² Note that in Rossum Python functions must be explicitly imported like so: `from rossum_python import RossumPython, is_empty, is_set, …`
