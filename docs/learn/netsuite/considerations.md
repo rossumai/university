@@ -6,6 +6,16 @@ sidebar_label: 'Considerations & Limitations'
 
 # Considerations & Limitations
 
+## In general
+
+Building NetSuite integration is much more than just reading the values from documents and forwarding them to the NetSuite API. The following considerations should be taken into account:
+
+1. What document types are going to be processed? `VendorBill`, `VendorCredit`, or some other documents? Should they be in one queue or each document type or vendor in its own queue? What are the document regions? All of these questions affect the final queue structure, schemas as well as NetSuite export configuration.
+1. What data needs to be data matched? PO-backed workflows might require just POs whereas non-PO-backed workflows might require many other NetSuite records to match (required by the NetSuite export). This greatly affects what data needs to be synchronized from NetSuite. Also consider how large are the collections and how many records should be synchronized during the initial import.
+1. What system fields will be necessary? For example, `VendorCredits` must have all amounts and quantities positive. Therefore, several hidden [Formula Fields](../rossum-formulas/formula-fields) performing this conversion might be necessary for the export.
+1. Consider preparing [Line items grouping](../line-items-grouping) extension. Apart from potential business requirements, NetSuite doesn't allow line items with repeating items.
+1. Consider what all business rules and validations must be implemented.
+
 ## Default webhook timeout is 30 seconds
 
 By default, all webhooks in Rossum timeout after 30 seconds. Usually, this time is enough for most webhooks. However, some more complex documents (longer ones with more line items) can take longer than that to export.
