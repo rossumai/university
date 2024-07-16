@@ -2,11 +2,9 @@
 title: 'Single Sign-On (SSO)'
 ---
 
-:::info
+import PaidFeature from '../\_paid_feature.md';
 
-The initial configuration of SSO requires involvement of Rossum.ai technical teams. Please contact us via https://rossum.ai/form/contact/
-
-:::
+<PaidFeature />
 
 ## Creating users with SSO
 
