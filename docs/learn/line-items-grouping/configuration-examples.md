@@ -53,6 +53,8 @@ The recommended schema datapoint:
 }
 ```
 
+Additionally, the `line_items` table must exist in the schema as well. This is, however, the typical default.
+
 :::
 
 ## Group line items by item code
