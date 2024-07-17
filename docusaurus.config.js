@@ -176,12 +176,12 @@ const config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Rossum.ai`,
       },
-      announcementBar: {
-        content:
-          '🚧 Work in progress. <strong>Leave <a href="https://github.com/rossumai/university/discussions" target="_blank">your feedback</a></strong>. 🚧',
-        backgroundColor: '#fff8e6',
-        isCloseable: false,
-      },
+      // announcementBar: {
+      //   content:
+      //     '🚧 Work in progress. <strong>Leave <a href="https://github.com/rossumai/university/discussions" target="_blank">your feedback</a></strong>. 🚧',
+      //   backgroundColor: '#fff8e6',
+      //   isCloseable: false,
+      // },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
