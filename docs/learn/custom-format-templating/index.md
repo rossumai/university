@@ -3,14 +3,11 @@ title: 'Custom format templating'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
+import WIP from '../\_wip.md';
 
 ## Installation
 
-:::warning[Work in progress]
-
-_Describe how to create and configure the extension._
-
-:::
+<WIP />
 
 <WebhookEndpoints
   eu1="https://elis.custom-format-templating.rossum-ext.app/"
@@ -21,16 +18,8 @@ _Describe how to create and configure the extension._
 
 ## Basic usage
 
-:::warning[Work in progress]
-
-_Describe how to quickly use the extension._
-
-:::
+<WIP />
 
 ## Available configuration options
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options._
-
-:::
+<WIP />

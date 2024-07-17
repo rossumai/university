@@ -4,13 +4,15 @@ sidebar_position: 5
 sidebar_label: 'Postman collection'
 ---
 
+import WIP from '../\_wip.md';
+
 # Postman collection
 
-It might be useful to call NetSuite using Postman for testing purposes. Follow the guide on this page to be able to send requests directly to NetSuite.
+It might be useful to call NetSuite using [Postman](https://www.postman.com/) for testing purposes. Follow the guide on this page to be able to send requests directly to NetSuite.
 
 ## SOAP requests
 
-First, create a new Postman collection and use the following "Pre-req" script:
+First, create a new Postman collection and use the following "[Pre-req](https://learning.postman.com/docs/tests-and-scripts/write-scripts/pre-request-scripts/)" script:
 
 ```js
 const account = pm.environment.get('account');
@@ -108,3 +110,9 @@ And finally, the SOAP request body (raw XML). In this case to upsert a Vendor Bi
     </soapenv:Body>
 </soapenv:Envelope>
 ```
+
+Similar SOAP payloads can be found in NetSuite [SOAP Web Services Usage Logs](https://system.netsuite.com/app/webservices/syncstatus.nl).
+
+## REST API requests
+
+<WIP />
