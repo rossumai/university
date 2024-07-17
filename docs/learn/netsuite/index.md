@@ -3,6 +3,7 @@ title: 'NetSuite'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
+import WIP from '../\_wip.md';
 
 ## Installation
 
@@ -37,19 +38,11 @@ NetSuite service (integration) is provided by Rossum.ai in the form of webhook. 
 
 ## Basic usage
 
-:::warning[Work in progress]
-
-_Describe how to quickly use the extension._
-
-:::
+<WIP />
 
 ## Available configuration options
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options._
-
-:::
+<WIP />
 
 ## System context diagram
 

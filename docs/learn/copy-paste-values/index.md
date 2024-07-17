@@ -2,28 +2,18 @@
 title: 'Copy & Paste Values'
 ---
 
+import WIP from '../\_wip.md';
+
 _Formerly known as Value Operations_
 
 ## Installation
 
-:::warning[Work in progress]
-
-_Describe how to create and configure the extension._
-
-:::
+<WIP />
 
 ## Basic usage
 
-:::warning[Work in progress]
-
-_Describe how to quickly use the extension._
-
-:::
+<WIP />
 
 ## Available configuration options
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options._
-
-:::
+<WIP />

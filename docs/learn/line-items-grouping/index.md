@@ -3,6 +3,7 @@ title: 'Line items grouping'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
+import WIP from '../\_wip.md';
 
 **Line items grouping** extension allows for grouping line items based on given SQL criteria. This is handy when the downstream system has some restrictions such as only one unique line item per invoice.
 
@@ -33,16 +34,8 @@ Line items grouping service is provided by Rossum.ai in the form of webhook. To 
 
 ## Basic usage
 
-:::warning[Work in progress]
-
-_Describe how to quickly use the extension._
-
-:::
+<WIP />
 
 ## Available configuration options
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options._
-
-:::
+<WIP />

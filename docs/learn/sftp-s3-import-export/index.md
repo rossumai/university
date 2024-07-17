@@ -2,26 +2,16 @@
 title: 'SFTP and S3 imports/exports'
 ---
 
+import WIP from '../\_wip.md';
+
 ## Installation
 
-:::warning[Work in progress]
-
-_Describe how to create and configure the extension._
-
-:::
+<WIP />
 
 ## Basic usage
 
-:::warning[Work in progress]
-
-_Describe how to quickly use the extension._
-
-:::
+<WIP />
 
 ## Available configuration options
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options._
-
-:::
+<WIP />
