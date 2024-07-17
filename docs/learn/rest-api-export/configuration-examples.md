@@ -16,14 +16,14 @@ This extension currently expects file to be generated using [Custom format templ
 
 ```json
 {
-  "export_id": "export_annotation_to_csv",
+  "export_id": "exported_annotation_csv",
   "request": {
     "url": "https://webhook.site/XXX-ZZZ",
     "method": "POST",
     "headers": {
       "Content-Type": "text/plain"
     },
-    "content": "{file.content}"
+    "content": "{#file_content}"
   }
 }
 ```
@@ -34,16 +34,7 @@ The request can be extended to use OAuth2:
 
 ```json
 {
-  "export_id": "export_annotation_to_csv",
-  "request": {
-    "url": "https://webhook.site/XXX-ZZZ",
-    "method": "POST",
-    "headers": {
-      "Content-Type": "text/plain",
-      "Authorization": "Bearer {secret.access_token}"
-    },
-    "content": "{file.content}"
-  },
+  "export_id": "exported_annotation_csv",
   "auth": {
     "url": "http://custom.url/token",
     "method": "POST",
@@ -51,6 +42,15 @@ The request can be extended to use OAuth2:
       "username": "your_username",
       "password": "{secret.password}"
     }
+  },
+  "request": {
+    "url": "https://webhook.site/XXX-ZZZ",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "text/plain",
+      "Authorization": "Bearer {secret.access_token}"
+    },
+    "content": "{#file_content}"
   }
 }
 ```
@@ -63,7 +63,7 @@ The following config will translate in an HTTP POST request with `Content-Type: 
 
 ```json
 {
-  "export_id": "export_annotation_to_csv",
+  "export_id": "exported_annotation_csv",
   "request": {
     "url": "https://webhook.site/XXX-ZZZ",
     "method": "POST",
@@ -74,6 +74,39 @@ The following config will translate in an HTTP POST request with `Content-Type: 
     "file_key": "file",
     "request_data": {
       "other_field": "@{vendor}"
+    }
+  }
+}
+```
+
+## Sending `application/x-www-form-urlencoded`
+
+Specifically, this example is for Azure API Management:
+
+```json
+{
+  "export_id": "exported_annotation_csv",
+  "auth": {
+    "url": "",
+    "method": "POST",
+    "headers": {
+      "Ocp-Apim-Subscription-Key": "",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "data": {
+      "grant_type": "",
+      "client_id": "",
+      "client_secret": "{secret.client_secret}",
+      "scope": ""
+    }
+  },
+  "request": {
+    "url": "",
+    "method": "POST",
+    "content": "{#file_content}",
+    "headers": {
+      "Content-Type": "application/json",
+      "Ocp-Apim-Subscription-Key": ""
     }
   }
 }
