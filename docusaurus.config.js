@@ -102,6 +102,11 @@ const config = {
             label: 'Learn',
           },
           {
+            to: '/docs/watch',
+            label: 'Watch',
+            position: 'left',
+          },
+          {
             href: 'https://elis.rossum.ai/api/docs/',
             label: 'API Reference',
             position: 'left',
