@@ -6,6 +6,8 @@
 
 import { themes as prismThemes } from 'prism-react-renderer';
 
+import redirectsConfig from './docusaurus.redirects.config.js';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Rossum.ai University',
@@ -37,29 +39,7 @@ const config = {
     locales: ['en'],
   },
 
-  plugins: [
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          // Redirect from multiple old paths to the new path
-          {
-            from: ['/docs/extensions/netsuite/common-errors'],
-            to: '/docs/learn/netsuite',
-          },
-        ],
-        createRedirects(existingPath) {
-          if (existingPath.includes('/docs/learn/')) {
-            return [
-              // /docs/extensions/coupa → /docs/learn/coupa
-              existingPath.replace('/docs/learn/', '/docs/extensions/'),
-            ];
-          }
-          return undefined; // Return a falsy value: no redirect created
-        },
-      },
-    ],
-  ],
+  plugins: [['@docusaurus/plugin-client-redirects', redirectsConfig]],
 
   presets: [
     [
