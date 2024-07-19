@@ -3,7 +3,6 @@ title: 'NetSuite'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
-import WIP from '../\_wip.md';
 
 ## Installation
 
@@ -36,13 +35,59 @@ NetSuite service (integration) is provided by Rossum.ai in the form of webhook. 
   us="https://us.app.rossum.ai/svc/netsuite-v3/api/v1/export"
 />
 
-## Basic usage
+### Advanced (optional): disable retries for export webhooks
 
-<WIP />
+See: [Considerations & Limitations](./considerations.md#webhook-retries-5-on-failed-requests)
 
-## Available configuration options
+### Advanced (optional): set hook `secrets_schema` value
 
-<WIP />
+By default, all hooks have the following JSON schema of their secrets:
+
+```json
+{
+  "type": "object",
+  "additionalProperties": {
+    "type": "string"
+  }
+}
+```
+
+Consider changing it to the following value to clearly outline what values are supported:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "consumer_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "consumer_secret": {
+      "type": "string",
+      "minLength": 1
+    },
+    "token_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "token_secret": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rossum_username": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rossum_password": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": false
+}
+```
+
+Probably the easiest way to achieve this is updating the hook configuration using [`prd` tool](../sandboxes/index.md)
 
 ## System context diagram
 
