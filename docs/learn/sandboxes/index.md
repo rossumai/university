@@ -38,16 +38,14 @@ pipx install . --force
 
 ## Available CLI commands
 
-`prd` is a CLI tool and offers the following main commands (always prefixed with `prd`):
+`prd` is a CLI tool and offers the following main commands:
 
-| Command                | Description                                                                                                                                                                                  |
-| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `init`                 | Initialize a new project (creates a `credentials.json` file). When called with a project name, it also initialized an empty Git repository.                                                  |
-| `pull`                 | Pulls all objects from the `source` organization (as per `credentials.json` configuration).                                                                                                  |
-| `push`                 | Pushes the latest changes to the `source` organization. This is effectively a counterpart of the `pull` command.                                                                             |
-| `release`              | Pushes the latest changes to the `target` organization. Visit [Deployment patterns](./deployment-patterns.md#two-environments-for-sandbox-and-production) to learn more about this use-case. |
-| `purge`                | Removes all objects in the target organization.                                                                                                                                              |
-| `purge unused_schemas` | Removes old unused schemas.                                                                                                                                                                  |
+- `prd init`: Initialize a new project (creates a `credentials.json` file). When called with a project name, it also initialized an empty Git repository.
+- `prd pull`: Pulls all objects from both `source` and `target` organizations (as per `credentials.json` configuration). It is possible to explicitly specify `source`/`target` to pull only that one environment, for example: `prd pull source`
+- `prd push`: Pushes the latest changes to the `source` organization. This is effectively a counterpart of the `pull` command.
+- `prd release`: Pushes the latest changes to the `target` organization. Visit [Deployment patterns](./deployment-patterns.md#two-environments-for-sandbox-and-production) to learn more about this use-case.
+- `prd purge`: Removes all objects in the target organization.
+- `prd purge unused_schemas`: Removes old unused schemas.
 
 Complete list of commands and their parameters can be found when running `prd --help`.
 
