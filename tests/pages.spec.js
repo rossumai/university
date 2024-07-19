@@ -11,7 +11,7 @@ test('main navigation (Learn button)', async ({ page }) => {
   await page.goto('/');
 
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Learn' }).click();
-  await expect(page.locator('h1')).toContainText('Business Rules Validation');
+  await expect(page.locator('h1')).toContainText('AI training best practices');
 });
 
 [
