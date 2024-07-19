@@ -23,7 +23,7 @@ This extension currently expects file to be generated using [Custom format templ
     "headers": {
       "Content-Type": "text/plain"
     },
-    "content": "{#file_content}"
+    "content": "#{file_content}"
   }
 }
 ```
@@ -50,7 +50,7 @@ The request can be extended to use OAuth2:
       "Content-Type": "text/plain",
       "Authorization": "Bearer {secret.access_token}"
     },
-    "content": "{#file_content}"
+    "content": "#{file_content}"
   }
 }
 ```
@@ -103,7 +103,7 @@ Specifically, this example is for Azure API Management:
   "request": {
     "url": "",
     "method": "POST",
-    "content": "{#file_content}",
+    "content": "#{file_content}",
     "headers": {
       "Content-Type": "application/json",
       "Ocp-Apim-Subscription-Key": ""
