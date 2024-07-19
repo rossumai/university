@@ -16,6 +16,12 @@ To configure an access token in NetSuite for SOAP communication, especially when
 1. Check the **Token-Based Authentication** to use token-based auth along with SOAP.
 1. **Save** the integration. Note the **Consumer Key** and **Consumer Secret** presented upon saving; these are important for authentication.
 
+:::warning
+
+Remember to save the **Consumer Key** and **Consumer Secret** for later.
+
+:::
+
 ![NetSuite Integration configuration](./img/netsuite-integration.png)
 
 ## 2. Create a Role with necessary permissions
@@ -32,12 +38,23 @@ To configure an access token in NetSuite for SOAP communication, especially when
 1. Fill in the necessary information for the user. Under the **Access** tab, ensure you **Check** the **Give Access** option, set a **Password**, and **Assign the Role** you created earlier.
 1. **Save** the employee record.
 
+:::tip
+
+While it is technically possible to reuse already existing employee account, we recommend creating a new one for the integration. This way, the integration won't get broken when the employee account gets deactivated.
+
+:::
+
 ## 4. Generate the Access Token
 
-1. Log in as the user who will be the integration user, or have them log in.
 1. Navigate to **Setup → Users/Roles → Access Tokens → New**.
 1. Select the **Application Name** (the integration you created in Step 1), the **User**, and the **Role** you've assigned to this integration.
 1. **Save** to generate the Token ID and Token Secret.
+
+:::warning
+
+Remember to save the **Token ID** and **Token Secret** for later.
+
+:::
 
 ## 5. Use the Access Token in SOAP communication
 
