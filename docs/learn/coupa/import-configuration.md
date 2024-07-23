@@ -1,6 +1,6 @@
 ---
 title: 'Coupa: Import configurations'
-sidebar_position: 1
+sidebar_position: 2
 sidebar_label: 'Import configurations'
 ---
 
