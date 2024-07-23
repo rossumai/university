@@ -4,6 +4,15 @@ title: 'Coupa'
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
 
+## Note
+
+This Coupa section is about a new **Coupa API Integration**, not the older SFTP based one **Coupa Integration Service**.
+
+## High level architecture schema
+
+![Coupa API Integration architecture](img/coupa-api-integration-architecture.png)
+
+
 ## Installation
 
 Coupa service (integration) is provided by Rossum.ai in the form of webhook. To start using Coupa (either imports or exports), follow these steps:

@@ -1,6 +1,6 @@
 ---
 title: 'Coupa: OAuth 2.0 Scopes'
-sidebar_position: 4
+sidebar_position: 5
 sidebar_label: 'OAuth 2.0 Scopes'
 ---
 
