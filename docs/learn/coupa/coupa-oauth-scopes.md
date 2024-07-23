@@ -1,10 +1,10 @@
 ---
 title: 'Coupa: OAuth 2.0 Scopes'
-sidebar_position: 5
+sidebar_position: 6
 sidebar_label: 'OAuth 2.0 Scopes'
 ---
 
-# OAuth Scopes and Associated Permissions
+_OAuth Scopes and Associated Permissions_
 
 ## 1. core.accounting.read
 ### 1.1 API/Account Groups
