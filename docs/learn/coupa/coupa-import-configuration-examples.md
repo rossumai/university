@@ -1,10 +1,7 @@
 ---
-title: 'Coupa: Import configurations'
-sidebar_position: 2
-sidebar_label: 'Import configurations'
+title: 'Import configuration examples'
+sidebar_position: 3
 ---
-
-# Import configurations (API)
 
 ## Currencies
 

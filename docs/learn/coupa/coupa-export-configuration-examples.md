@@ -1,10 +1,8 @@
 ---
-title: 'Coupa: Export configurations'
-sidebar_position: 3
-sidebar_label: 'Export configurations'
+title: 'Export configuration examples'
+sidebar_position: 5
 ---
 
-# Export configurations (API)
 
 ## Invoice
 
