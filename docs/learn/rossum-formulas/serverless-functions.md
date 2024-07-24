@@ -51,3 +51,16 @@ def rossum_hook_request_handler(payload):
 
     return r.hook_response()
 ```
+
+## Get annotation ID
+
+```py
+from rossum_python import RossumPython
+
+def rossum_hook_request_handler(payload):
+    r = RossumPython.from_payload(payload)
+
+    r.field.annotation_id = payload.get("annotation").get("id")
+
+    return r.hook_response()
+```
