@@ -9,13 +9,13 @@ This Coupa section is about a new **Coupa API Integration**, not the older SFTP 
 :::
 
 
-## High level architecture schema
+## Coupa API Integration architecture
 
 ![Coupa API Integration architecture](img/coupa-api-integration-architecture.png)
 
 ## Usage
 
-1. First of all, you need to [setup the integration](./coupa-integration-setup.md)
+1. First of all, you need to [setup the integration](./coupa-integration-setup.md) with Coupa
 2. Then you probably want to create some [imports](./coupa-import-setup.md)
 3. Setup **Data Matching** (TBD)
 4. Setup **Business Rules** (TBD)

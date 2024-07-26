@@ -1,6 +1,7 @@
 ---
-title: Coupa Postman Collection
+title: 'Coupa: Postman collection'
 sidebar_position: 7
+sideba_label: 'Postman collection'
 ---
 
 ## Source

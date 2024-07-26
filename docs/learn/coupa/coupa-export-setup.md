@@ -1,6 +1,7 @@
 ---
-title: Coupa Export Setup
+title: 'Coupa: Export setup'
 sidebar_position: 4
+sidebar_label: 'Export setup'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
