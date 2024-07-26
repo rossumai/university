@@ -29,15 +29,13 @@ next((item for item in field.item_code.all_values if item), "")
 Create external ID needed by NetSuite for _VendorBill_ and _VendorCredit_ records:
 
 ```py
-document_type = field.document_type.lower()
-
 # Create an external ID by combining document ID and entity (vendor) match. This is to make sure
 # that different vendors with identical document numbering are not matched to the same NetSuite
 # record (same NetSuite external ID).
-external_id = f"{field.document_id}_{field.order_match_entity__internalId}"
+external_id = f"{field.document_id}_{field.order_match__entity_internalId}"
 
 # Construct the final result by concatenating Rossum prefix, document type, and external ID:
-f"__rossum_{document_type}_{external_id}"
+f"__rossum_{field.document_type}_{external_id}".lower()
 ```
 
 This is typically necessary when [exporting records into NetSuite](../netsuite/export-configuration#vendor-bills-invoices).
