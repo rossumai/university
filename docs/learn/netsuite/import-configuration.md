@@ -59,6 +59,12 @@ Consult the other configurations below for more real-world examples.
 
 ### Currencies
 
+:::info
+
+Requires 'Lists -> Currency' permissions.
+
+:::
+
 ```json
 {
   "master_data_name": "NS_SB1_Currency_v1",
@@ -212,7 +218,7 @@ Consult the other configurations below for more real-world examples.
 
 :::info
 
-Requires `Transactions → Purchase Order (View)` permissions.
+Requires 'Transactions → Purchase Order (View)' permissions.
 
 :::
 
@@ -307,6 +313,12 @@ Requires `Transactions → Purchase Order (View)` permissions.
 ```
 
 ### Vendors
+
+:::info
+
+Requires 'Lists -> Vendors' permissions.
+
+:::
 
 ```json
 {
