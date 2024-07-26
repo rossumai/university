@@ -1,7 +1,7 @@
 ---
 title: 'Coupa: Import configuration examples'
 sidebar_position: 3
-sideba_label: ''
+sidebar_label: 'Import configuration examples'
 ---
 
 ## Currencies
