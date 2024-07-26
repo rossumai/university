@@ -73,7 +73,7 @@ Visit [Rossum Formulas](../rossum-formulas/formula-fields#generate-netsuite-exte
               "_ns_type": "RecordRef",
               "internalId": "@{ns_vendor_match}"
             },
-            "externalId": "@{ns_external_id_generated}",
+            "externalId": "@{ns_externalId}",
             "subsidiary": {
               "type": "subsidiary",
               "_ns_type": "RecordRef",
