@@ -1,6 +1,7 @@
 ---
-title: 'Export configuration examples'
+title: 'Coupa: Export configuration examples'
 sidebar_position: 5
+sideba_label: 'Export configuration examples'
 ---
 
 

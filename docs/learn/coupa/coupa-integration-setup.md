@@ -1,7 +1,7 @@
 ---
-title: "Coupa Integration (API) Setup"
+title: "Coupa: Integration setup"
 sidebar_position: 1
-sidebar_label: 'Integration Setup'
+sidebar_label: 'Integration setup'
 ---
 
 ## 1. Coupa part
