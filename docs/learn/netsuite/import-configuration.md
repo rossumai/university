@@ -48,267 +48,334 @@ Recommended schedule: `0 22 * * *`
           }
         ]
       }
-    },
-    {
-      // Inventory items
-      "master_data_name": "NS_SB1_InventoryItem_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "ItemSearchBasic",
-            "type": {
-              "searchValue": "_inventoryItem",
-              "operator": "anyOf"
-            },
-            "isInactive": {
-              "searchValue": false
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Item Receipts (GRNs)
-      "master_data_name": "NS_SB1_ItemReceipt_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "TransactionSearchBasic",
-            "type": {
-              "operator": "anyOf",
-              "searchValue": "_itemReceipt"
-            },
-            "lastModifiedDate": {
-              "operator": "onOrAfter",
-              "searchValue": "{last_modified_date}"
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Locations
-      "master_data_name": "NS_SB1_Location_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "LocationSearchBasic"
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Non-inventory items
-      "master_data_name": "NS_SB1_NonInventoryItem_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "ItemSearchBasic",
-            "type": {
-              "searchValue": "_nonInventoryItem",
-              "operator": "anyOf"
-            },
-            "isInactive": {
-              "searchValue": false
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Purchase Orders
-      "master_data_name": "NS_SB1_PurchaseOrder_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "TransactionSearchBasic",
-            "type": {
-              "searchValue": "_purchaseOrder",
-              "operator": "anyOf"
-            },
-            "lastModifiedDate": {
-              "operator": "onOrAfter",
-              "searchValue": "{last_modified_date}"
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Sales tax items
-      "master_data_name": "NS_SB1_SalesTaxItem_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "SalesTaxItemSearchBasic"
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Subsidiaries
-      "master_data_name": "NS_SB1_Subsidiary_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "SubsidiarySearchBasic",
-            "isInactive": {
-              "searchValue": "false"
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Vendors
-      "master_data_name": "NS_SB1_Vendor_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "VendorSearchBasic",
-            "isInactive": {
-              "searchValue": "false"
-            },
-            "lastModifiedDate": {
-              "operator": "onOrAfter",
-              "searchValue": "{last_modified_date}"
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
-    },
-    {
-      // Vendor Bills (Invoices)
-      "master_data_name": "NS_SB1_VendorBill_v1",
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "payload": {
-        "method_name": "search",
-        "method_args": [
-          {
-            "_ns_type": "TransactionSearchBasic",
-            "type": {
-              "searchValue": "_vendorBill",
-              "operator": "anyOf"
-            },
-            "lastModifiedDate": {
-              "operator": "onOrAfter",
-              "searchValue": "{last_modified_date}"
-            }
-          }
-        ],
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
-        }
-      }
     }
+
+    // … see below for all import config examples
   ]
 }
 ```
 
-### Async settings
+Consult the other configurations below for more real-world examples.
+
+### Currencies
+
+```json
+{
+  "master_data_name": "NS_SB1_Currency_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "getAll",
+    "method_args": [
+      {
+        "_ns_type": "GetAllRecord",
+        "recordType": "currency"
+      }
+    ]
+  }
+}
+```
+
+### Inventory items
+
+```json
+{
+  "master_data_name": "NS_SB1_InventoryItem_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "ItemSearchBasic",
+        "type": {
+          "searchValue": "_inventoryItem",
+          "operator": "anyOf"
+        },
+        "isInactive": {
+          "searchValue": false
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Item Receipts (GRNs)
+
+```json
+{
+  "master_data_name": "NS_SB1_ItemReceipt_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "TransactionSearchBasic",
+        "type": {
+          "operator": "anyOf",
+          "searchValue": "_itemReceipt"
+        },
+        "lastModifiedDate": {
+          "operator": "onOrAfter",
+          "searchValue": "{last_modified_date}"
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Locations
+
+```json
+{
+  "master_data_name": "NS_SB1_Location_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "LocationSearchBasic"
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Non-inventory items
+
+```json
+{
+  "master_data_name": "NS_SB1_NonInventoryItem_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "ItemSearchBasic",
+        "type": {
+          "searchValue": "_nonInventoryItem",
+          "operator": "anyOf"
+        },
+        "isInactive": {
+          "searchValue": false
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Purchase Orders
+
+:::info
+
+Requires `Transactions → Purchase Order (View)` permissions.
+
+:::
+
+```json
+{
+  "master_data_name": "NS_SB1_PurchaseOrder_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "TransactionSearchBasic",
+        "type": {
+          "searchValue": "_purchaseOrder",
+          "operator": "anyOf"
+        },
+        "lastModifiedDate": {
+          "operator": "onOrAfter",
+          "searchValue": "{last_modified_date}"
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Sales tax items
+
+```json
+{
+  "master_data_name": "NS_SB1_SalesTaxItem_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "SalesTaxItemSearchBasic"
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Subsidiaries
+
+```json
+{
+  "master_data_name": "NS_SB1_Subsidiary_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "SubsidiarySearchBasic",
+        "isInactive": {
+          "searchValue": "false"
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Vendors
+
+```json
+{
+  "master_data_name": "NS_SB1_Vendor_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "VendorSearchBasic",
+        "isInactive": {
+          "searchValue": "false"
+        },
+        "lastModifiedDate": {
+          "operator": "onOrAfter",
+          "searchValue": "{last_modified_date}"
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+### Vendor Bills (Invoices)
+
+```json
+{
+  "master_data_name": "NS_SB1_VendorBill_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "TransactionSearchBasic",
+        "type": {
+          "searchValue": "_vendorBill",
+          "operator": "anyOf"
+        },
+        "lastModifiedDate": {
+          "operator": "onOrAfter",
+          "searchValue": "{last_modified_date}"
+        }
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
+## Async settings
 
 Usually, all imports (as well as exports) will run in asynchronous mode, see:
 
@@ -352,7 +419,7 @@ If you'd like to modify the async settings, you can do so using the following `a
 
 Note that this configuration must be applied to all relevant import configs. Each config can even have a different timeouts and retries.
 
-### Importing individual records
+## Importing individual records
 
 Sometimes, it can be handy to import just one specific record:
 
