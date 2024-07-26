@@ -46,12 +46,18 @@ Notice that it is a little bit more verbose, but it is still very similar. The m
 | Formula fields                | Rossum Python                    | Description                                         |
 | ----------------------------- | -------------------------------- | --------------------------------------------------- |
 | `field.amount`                | `r.field.amount`                 | Get datapoint value.                                |
+| `field.amount.id`             | `r.field.amount.id`              | Get datapoint system ID.                            |
 | `field.amount.rir_confidence` | `r.field.amount.rir_confidence`  | Get datapoint confidence score.                     |
 | _return value_ ¹              | `r.field.amount = 10`            | Write into datapoint value.                         |
 | `is_empty(field.amount)`      | `is_empty(r.field.amount)`²      | Check if datapoint value is empty.                  |
 | `is_set(field.amount)`        | `is_set(r.field.amount)`²        | Check if datapoint is set (opposite of `is_empty`). |
 | `default_to(field.amount, 0)` | `default_to(r.field.amount, 0)`² | Use default value if the field is empty.            |
 | `substitute(…, …)`            |                                  |                                                     |
+| `show_info(…, …)`             | `r.show_info(…, …)`              |                                                     |
+| `show_warning(…, …)`          | `r.show_warning(…, …)`           |                                                     |
+| `show_error(…, …)`            | `r.show_error(…, …)`             |                                                     |
+| TODO: automation blockers     |                                  |                                                     |
+| TODO: annotation actions      |                                  |                                                     |
 
 ¹ Formula fields cannot write into any other fields. They simply return the value.\
 ² Note that in Rossum Python functions must be explicitly imported like so: `from rossum_python import RossumPython, is_empty, is_set, …`
