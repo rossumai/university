@@ -7,11 +7,7 @@ import WIP from '../\_wip.md';
 
 ## Installation
 
-:::warning[Work in progress]
-
-_Describe how to create and configure the extension._
-
-:::
+<WIP />
 
 <WebhookEndpoints
   eu1="https://elis.rest-api-export.rossum-ext.app/"

@@ -16,7 +16,7 @@ This extension currently expects file to be generated using [Custom format templ
 
 ```json
 {
-  "export_id": "exported_annotation_csv",
+  "export_reference_key": "exported_annotation_csv",
   "request": {
     "url": "https://webhook.site/XXX-ZZZ",
     "method": "POST",
@@ -34,7 +34,7 @@ The request can be extended to use OAuth2:
 
 ```json
 {
-  "export_id": "exported_annotation_csv",
+  "export_reference_key": "exported_annotation_csv",
   "auth": {
     "url": "http://custom.url/token",
     "method": "POST",
@@ -63,7 +63,7 @@ The following config will translate in an HTTP POST request with `Content-Type: 
 
 ```json
 {
-  "export_id": "exported_annotation_csv",
+  "export_reference_key": "exported_annotation_csv",
   "request": {
     "url": "https://webhook.site/XXX-ZZZ",
     "method": "POST",
@@ -85,7 +85,7 @@ Specifically, this example is for Azure API Management:
 
 ```json
 {
-  "export_id": "exported_annotation_csv",
+  "export_reference_key": "exported_annotation_csv",
   "auth": {
     "url": "",
     "method": "POST",
