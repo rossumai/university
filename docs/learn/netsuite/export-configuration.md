@@ -14,6 +14,85 @@ When building the configuration, consult the [methods documentation](https://doc
 
 :::
 
+## Customer Payment
+
+```json
+{
+  "run_async": false,
+  "export_configs": [
+    {
+      "payload": [
+        {
+          "method_args": [
+            {
+              "_ns_type": "CustomerPayment",
+              "arAcct": {
+                "type": "account",
+                "_ns_type": "RecordRef",
+                "internalId": 123
+              },
+              "account": {
+                "type": "account",
+                "_ns_type": "RecordRef",
+                "internalId": "@{ns_account}"
+              },
+              "payment": "@{amount_due}",
+              "customer": {
+                "type": "customer",
+                "_ns_type": "RecordRef",
+                "internalId": "@{sender_match}"
+              },
+              "tranDate": {
+                "$IF_SCHEMA_ID$": {
+                  "mapping": {
+                    "$DATAPOINT_VALUE$": {
+                      "schema_id": "date_issue",
+                      "value_type": "iso_datetime"
+                    }
+                  },
+                  "schema_id": "date_issue"
+                }
+              },
+              "applyList": {
+                "apply": {
+                  "$FOR_EACH_SCHEMA_ID$": {
+                    "mapping": {
+                      "doc": "@{ns_item_internal_id}",
+                      "due": "@{item_amount_to_apply}",
+                      "apply": true,
+                      "total": "@{item_amount_to_apply}",
+                      "amount": "@{item_amount_to_apply}",
+                      "refNum": "@{item_invoice_number}",
+                      "_ns_type": "CustomerPaymentApply"
+                    },
+                    "schema_id": "line_item"
+                  }
+                },
+                "_ns_type": "CustomerPaymentApplyList"
+              },
+              "undepFunds": false,
+              "paymentOption": {
+                "type": "paymentMethod",
+                "_ns_type": "RecordRef",
+                "internalId": "@{ns_payment_option}"
+              }
+            }
+          ],
+          "method_name": "add"
+        }
+      ]
+    }
+  ],
+  "netsuite_settings": {
+    "account": "XXX_SB1",
+    "wsdl_url": "https://XXX-sb1.suitetalk.api.netsuite.com/wsdl/v2024_1_0/netsuite.wsdl",
+    "service_url": "https://XXX-sb1.suitetalk.api.netsuite.com/services/NetSuitePort_2024_1",
+    "concurrency_limit": 4,
+    "service_binding_name": "{urn:platform_2024_1.webservices.netsuite.com}NetSuiteBinding"
+  }
+}
+```
+
 ## Vendor Bills (Invoices)
 
 The following shows a Vendor Bill export that (perhaps with some small tweaks) should work for most of the cases.
