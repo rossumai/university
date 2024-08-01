@@ -4,6 +4,8 @@ sidebar_position: 3
 sidebar_label: 'Export configuration'
 ---
 
+import WIP from '../\_wip.md';
+
 # Export configuration
 
 This page showcases the most common configurations. The final configuration depends heavily on the NetSuite instance configuration and might need to be adjusted as needed.
@@ -350,3 +352,39 @@ You can reference earlier export stages by accessing `pipeline_context` variable
 ```
 
 Notice also the highlighted `$GET_DOCUMENT_CONTENT$` which returns the content of the original file.
+
+## Vendor Credits (credit notes)
+
+<WIP />
+
+### Linking Vendor Credits with Vendor Bills
+
+Vendor credits can be linked to vendor bills via `applyList` configuration. Note that the credits can be applied only "Open" vendor bills and always to VB line `0`. The lines also need to be grouped by vendor bill (there cannot be multiple credit lines applied to the same VB). Configuration example:
+
+```json
+{
+  "applyList": {
+    "apply": {
+      "$FOR_EACH_SCHEMA_ID$": {
+        "mapping": {
+          "doc": "@{item_invoice_match_grouped_by_invoice}",
+          "line": "0",
+          "apply": {
+            "$DATAPOINT_MAPPING$": {
+              "mapping": {
+                "Open": true
+              },
+              "schema_id": "ns_invoice_status_grouped_by_invoice",
+              "fallback_mapping": false
+            }
+          },
+          "amount": "@{ns_amount_grouped_by_invoice}",
+          "_ns_type": "VendorCreditApply"
+        },
+        "schema_id": "line_item_grouped_by_invoice"
+      }
+    },
+    "_ns_type": "VendorCreditApplyList"
+  }
+}
+```
