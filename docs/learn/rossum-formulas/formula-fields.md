@@ -66,6 +66,12 @@ sum(default_to(field.item_amount_total.all_values, 0))
 
 ## Validations
 
+:::warning
+
+Consider using a [Serverless function](./serverless-functions.md) as a better place to perform such validations. Internally, we consider this technique deprecated, albeit still valid. Formula fields should not affect behavior of other fields indirectly as it makes the overall solution less readable and predictable.
+
+:::
+
 To validate line items, create `item_validator` formula field with the following code:
 
 ```py
