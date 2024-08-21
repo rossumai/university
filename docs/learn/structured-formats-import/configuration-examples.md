@@ -141,3 +141,32 @@ Basic configuration (works with the default Rossum.ai schema for invoices) and t
   ]
 }
 ```
+
+## XML with base64 encoded PDF
+
+It is common that the actual PDF file is embedded in the XML document in base64 encoded format. It can be used instead of rendering the default minimal PDF representation:
+
+```json
+{
+  "configurations": [
+    {
+      "fields": [
+        // …
+      ],
+      "trigger_condition": {
+        "file_type": "xml"
+      },
+      // highlight-start
+      "pdf_file": {
+        "name_selectors": [
+          "cac:AdditionalDocumentReference/cac:Attachment/cbc:EmbeddedDocumentBinaryObject/@filename"
+        ],
+        "content_selectors": [
+          "cac:AdditionalDocumentReference/cac:Attachment/cbc:EmbeddedDocumentBinaryObject"
+        ]
+      }
+      // highlight-end
+    }
+  ]
+}
+```
