@@ -1,5 +1,5 @@
 ---
-title: 'AI training best practices'
+title: 'AI Training Best Practices'
 ---
 Rossum’s AI-powered document processing doesn’t need complex templates to be built for each vendor layout to be able to predict where the values should be.
 
@@ -11,7 +11,12 @@ Please review these resources before starting:
 - [Annotations Guide](https://rossum.ai/help/article/annotations-guide-and-rules-to-follow/)
 - [Interactive Bounding Boxes](https://rossum.ai/help/article/interactive-bounding-boxes-in-rossum/)
 
-## Three key concepts to maintain good AI performance
+:::info
+When you first start using our product, it may not be clear what triggers AI learning. You upload your documents and apply corrections, but when will you start seeing improvements? It's simple. Every document must be `confirmed` or `exported`, depending on your settings. The entity confirming the document must be a real person, not an automated process or external script.  
+Depending on your AI engine, you will be able to see changes in newly uploaded documents either immediately or after an agreed-upon time.   
+:::
+
+## 🚀 Three key concepts to maintain good AI performance
 - ✅ **Precision**
 - ✅ **Accuracy**
 - ✅ **Consistency**
@@ -42,7 +47,7 @@ In case multiple values are on the same level (on the righ and left of the botto
 For in detail explanation please reach out to [Annoations Guide](https://rossum.ai/help/article/annotations-guide-and-rules-to-follow/).
 
 
-## Common Issues
+## 🛟 Common Issues
 1. The AI has predicted the correct value, but the reading of the text is incorrect
 - Re-adjust the Bounding Box so that the OCR is applied again
 - If, after a couple of attempts the value is not corrected, change the value manually
@@ -55,26 +60,11 @@ For in detail explanation please reach out to [Annoations Guide](https://rossum.
 - Re-adjust the bounding box or ask your Admin to adjust the field to the correct date format, if the formatting is consistently not correct
 
 
-## When should I use multiple queues for my documents?
-1. Different queues should be used if there is a different set of fields to capture from the documents (e.g., if in one case you are capturing tables, and in another, you are not, the documents should be separated into different queues).
-
-:::note
-
-✅ One queue - no need to separate: You have **Document X** with line items and **Document Y** without line items. You capture line items in **Document X** and skip them in **Document Y**. You can have one queue because you train the AI to capture line items where they are present and do not attempt to capture them where they do not exist. This way, you differentiate various layouts and achieve better training.
-
-⛔ Two queues are required: You have **Document Z** and **Document W**. Both have line items. You capture line items in **Document Z**, and for some reason, you do not want to spend time correcting/extracting line items from **Document W**. Then, you can't have one unified queue for data capture. Load these documents in two different queues to maximize extraction performance.
-
-⛔ Multiple queues are required when you have small overlaps in the extracted fields across different document types.
-:::
-
-2. Documents in unique scripts should be in separate queues (e.g., documents in Latin script should be in one queue, and documents in Cyrillic script in another).
-3. Documents from different regions should be sent to separate queues to ensure correct date and number parsing.
-
-## Considerations
+## 🤔 Considerations
 1. Always try to annotate text for names. Avoid logos or visual representations of data.
 2. Handwritten data is not currently supported, even though it may be partially recognized.
 
-## Priority of Rules
+## 🏆 Priority of Rules
 
 Your text is mostly clear but could benefit from some revisions for clarity, grammar, and flow. Here’s an improved version:
 
@@ -83,3 +73,19 @@ It may happen that some of the recommendations contradict each other in particul
 - The principles of Precision and Accuracy should take priority.
 - When applying the Consistency principle, be reasonable. For example, if there is a logo at the top of the first page and a written sender name in the footer of the document, choose the footer, even if the recommendation is to prefer the header.
 - - Another example is when two values always appear together in the footer, but one of them is also present in the header section (e.g., Sender Name and Sender Address). In this case, you can choose to annotate both together in the footer, but be consistent and do not occasionally switch to another location. In the end, consistency itself is more important 
+
+## 🙋 FAQ
+
+### 1. When should I use multiple queues for my documents?
+1. Different queues should be used if there is a different set of fields to capture from the documents (e.g., if in one case you are capturing tables, and in another, you are not, the documents should be separated into different queues).
+
+:::tip
+✅ One queue - no need to separate: You have `Document X` with line items and `Document Y` without line items. You capture line items in `Document X` and skip them in `Document Y`. You can have one queue because you train the AI to capture line items where they are present and do not attempt to capture them where they do not exist. This way, you differentiate various layouts and achieve better training.
+
+⛔ Two queues are required: You have `Document Z` and `Document W`. Both have line items. You capture line items in `Document Z`, and for some reason, you do not want to spend time correcting/extracting line items from `Document W`. Then, you can't have one unified queue for data capture. Load these documents in two different queues to maximize extraction performance.
+
+⛔ Multiple queues are required when you have small overlaps in the extracted fields across different document types.
+:::
+
+2. Documents in unique scripts should be in separate queues (e.g., documents in Latin script should be in one queue, and documents in Cyrillic script in another).
+3. Documents from different regions should be sent to separate queues to ensure correct date and number parsing.
