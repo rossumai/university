@@ -787,3 +787,70 @@ This can be achieved by first searching and returning records with their respect
   ]
 }
 ```
+
+## VAT ID checker against **external** API (VIES)
+It is possible to query not only internal datasets, but also external (RESTful) API. 
+
+For example, you could query the VIES API for the VAT ID validation. More info about VIES here: https://ec.europa.eu/taxation_customs/vies/#/vat-validation
+
+The following configuration requires to work two [Formula Fields](/docs/learn/rossum-formulas/formula-fields) with this regex:
+1. `sender_vat_id_country_code_calculated` contains (only this one line) `re.sub(r'\s', '', field.sender_vat_id)[:2]`
+2. `sender_vat_id_vat_number_calculated` contains `re.sub(r'\s', '', field.sender_vat_id)[2:]`
+
+and also some additional custom field in the annotation schema to present the result in the UI (for example `vies_is_valid`)
+
+![VIES check result example](./img/mdh-vies-example.png)
+
+```json
+ "configurations": [
+      {
+        "name": "VIES",
+        "source": {
+          "queries": [
+            {
+                      // highlight-start
+              "url": "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
+              "body": {
+                "vatNumber": "{sender_vat_id_vat_number_calculated}",
+                "countryCode": "{sender_vat_id_country_code_calculated}"
+              },
+                      // highlight-end
+              "method": "POST",
+              "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              "result_path": ""
+            }
+          ]
+        },
+        "default": {
+          "label": "Not checked",
+          "value": "not-checked"
+        },
+        "mapping": {
+          "dataset_key": "valid",
+          "label_template": "{valid}",
+          "target_schema_id": "vies_is_valid"
+        },
+        "result_actions": {
+          "no_match_found": {
+            "message": {
+              "type": "error",
+              "content": "No match found"
+            }
+          },
+          "one_match_found": {
+            "select": "best_match"
+          },
+          "multiple_matches_found": {
+            "select": "default",
+            "message": {
+              "type": "warning",
+              "content": "Multiple matches found"
+            }
+          }
+        }
+      }
+    ]
+```
