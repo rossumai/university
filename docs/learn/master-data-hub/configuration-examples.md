@@ -791,15 +791,22 @@ This can be achieved by first searching and returning records with their respect
 ## VAT ID checker against **external** API (VIES)
 It is possible to query not only internal datasets, but also external (RESTful) API. 
 
-For example, you could query the VIES API for the VAT ID validation. More info about VIES here: https://ec.europa.eu/taxation_customs/vies/#/vat-validation
+For example, you could query the VIES API for the VAT ID validation. 
 
-The following configuration requires to work two [Formula Fields](/docs/learn/rossum-formulas/formula-fields) with this regex:
+:::info
+More info about VIES here: https://ec.europa.eu/taxation_customs/vies/#/vat-validation
+:::
+
+:::tip
+The following configuration requires the existence of two [Formula Fields](/docs/learn/rossum-formulas/formula-fields) with this regex:
 1. `sender_vat_id_country_code_calculated` contains (only this one line) `re.sub(r'\s', '', field.sender_vat_id)[:2]`
 2. `sender_vat_id_vat_number_calculated` contains `re.sub(r'\s', '', field.sender_vat_id)[2:]`
 
 and also some additional custom field in the annotation schema to present the result in the UI (for example `vies_is_valid`)
+:::
 
 ![VIES check result example](./img/mdh-vies-example.png)
+
 
 ```json
  "configurations": [
