@@ -61,12 +61,12 @@ In serverless functions, it is necessary to iterate the individual line items an
 ```py
 from rossum_python import RossumPython, is_empty
 
-def rossum_hook_request_handler(payload: dict) -> dict:
+def rossum_hook_request_handler(payload):
     r = RossumPython.from_payload(payload)
 
     for row in r.field.line_items:
         if is_empty(row.item_code):
-            show_error("Item code is required on line items.", row.item_code)
+            r.show_error("Item code is required on line items.", row.item_code)
 
     return r.hook_response()
 ```
