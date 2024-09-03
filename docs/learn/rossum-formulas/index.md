@@ -31,7 +31,7 @@ Alternatively, you can create a new serverless (Python) function with the follow
 ```py
 from rossum_python import RossumPython
 
-def rossum_hook_request_handler(payload: dict) -> dict:
+def rossum_hook_request_handler(payload):
     r = RossumPython.from_payload(payload)
 
     r.field.order_id_normalized = r.field.order_id # ←
