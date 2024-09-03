@@ -24,7 +24,7 @@ def rossum_hook_request_handler(payload):
     return r.hook_response()
 ```
 
-## Get document arrival date
+## Get document information
 
 ```py
 from rossum_python import RossumPython
@@ -32,22 +32,11 @@ from rossum_python import RossumPython
 def rossum_hook_request_handler(payload):
     r = RossumPython.from_payload(payload)
 
+    # Arrival date:
     r.field.document_arrived_at = payload.get("document").get("arrived_at")
 
-    return r.hook_response()
-```
-
-## Get original file name
-
-Write into `original_file_name` data field:
-
-```py
-from rossum_python import RossumPython
-
-def rossum_hook_request_handler(payload):
-    r = RossumPython.from_payload(payload)
-
-    r.field.original_file_name = payload.get("document").get("original_file_name")
+    # Original file name:
+    r.field.document_original_file_name = payload.get("document").get("original_file_name")
 
     return r.hook_response()
 ```
@@ -61,6 +50,23 @@ def rossum_hook_request_handler(payload):
     r = RossumPython.from_payload(payload)
 
     r.field.annotation_id = payload.get("annotation").get("id")
+
+    return r.hook_response()
+```
+
+## Validate line items
+
+In serverless functions, it is necessary to iterate the individual line items and perform the validations on row level:
+
+```py
+from rossum_python import RossumPython, is_empty
+
+def rossum_hook_request_handler(payload: dict) -> dict:
+    r = RossumPython.from_payload(payload)
+
+    for row in r.field.line_items:
+        if is_empty(row.item_code):
+            show_error("Item code is required on line items.", row.item_code)
 
     return r.hook_response()
 ```
