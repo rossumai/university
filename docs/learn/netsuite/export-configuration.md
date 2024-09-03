@@ -118,6 +118,10 @@ Visit [Rossum Formulas](../rossum-formulas/formula-fields#generate-netsuite-exte
         "method_args": [
           {
             "_ns_type": "VendorBill",
+            "approvalStatus": {
+              "_ns_type": "RecordRef",
+              "internalId": "2" // 1 = Pending, 2 = Approved
+            },
             "class": {
               "type": "classification",
               "_ns_type": "RecordRef",
