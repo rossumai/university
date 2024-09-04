@@ -14,4 +14,18 @@ import WIP from '../\_wip.md';
 
 ## Available configuration options
 
-<WIP />
+Available configuration options are described in the API documentation of the [Scheduled Imports - File storage](https://elis.rossum.ai/svc/scheduled-imports/api/docs#tag/File-Storage/operation/import_dataset_from_file_storage_api_file_storage_v1_dataset_import_post) 
+
+## Logging and observability
+
+### Extensions Logs
+
+- URL `https://[org].rossum.app/settings/extensions/logs`
+- The import job is not triggered directly, but using scheduler. Thus successfull record (type `INFO`) in the Extensions Logs does not necessary means the downstream import job was sucessfull, but it is a good start for observation
+
+### Master Data Hub 
+- URL: `https://[org].rossum.app/svc/master-data-hub/web/management`
+- Directly in the MDH, there is status screen "Upload Status", regardles the orgigin of "upload".
+- There is also note with the more detailed info in case of some error.
+
+![Upload Status](./img/upload-status.png)
