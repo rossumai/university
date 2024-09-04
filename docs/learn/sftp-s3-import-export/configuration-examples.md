@@ -143,3 +143,63 @@ Configuration:
 ### Using username and password
 
 <ConfigurationUsernamePassword />
+
+
+## Import from S3
+
+There are few diferences from the SFTP, but it is very similar.
+
+### S3 Credentials
+
+There is only one credential option for the `s3`. It consist of `Access Key ID` and `Secret Access Key`. For more information about these credentials and how to obtain it, see the official AWS documentation here: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
+
+#### Secret Schema
+
+```json
+{
+  "type": "__change_me__",
+  "access_key_id": "__change_me__",
+  "secret_access_key": "__change_me__"
+}
+```
+
+##### Import configuration for S3
+
+:::warning
+Please not, that the attribute `path` **starts without slash** (as the opposite from SFTP configuration)
+:::
+```json
+{
+  "credentials": {
+    "type": "s3",
+    "bucket_name": "s3-master-data-bucket"
+  },
+  "import_rules": [
+    {
+      "dataset_name": "suppliers",
+      "import_methods": {
+        "replace_method": {
+          "path": "datasets/inbox",
+          "file_format": "csv",
+          "file_match_regex": "suppliers\\.csv",
+          "encoding": "windows-1250"
+        }
+      },
+      "result_actions": {
+        "failure": [
+          {
+            "path": "datasets/failed_imports",
+            "type": "move"
+          }
+        ],
+        "success": [
+          {
+            "path": "datasets/archive",
+            "type": "move"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
