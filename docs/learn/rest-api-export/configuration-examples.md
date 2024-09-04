@@ -16,7 +16,7 @@ This extension currently expects file to be generated using [Custom format templ
 
 ```json
 {
-  "export_reference_key": "exported_annotation_csv",
+  "export_reference_key": "export_annotation_to_csv",
   "request": {
     "url": "https://webhook.site/XXX-ZZZ",
     "method": "POST",
@@ -34,7 +34,7 @@ The request can be extended to use OAuth2:
 
 ```json
 {
-  "export_reference_key": "exported_annotation_csv",
+  "export_reference_key": "export_annotation_to_csv",
   "auth": {
     "url": "http://custom.url/token",
     "method": "POST",
@@ -54,8 +54,44 @@ The request can be extended to use OAuth2:
   }
 }
 ```
+The `access_token` is automatically retrieved using given credentials and saved to hook secrets for later reuse. A more complex OAuth2 setup:
 
-The `access_token` is automatically retrieved using given credentials and saved to hook secrets for later reuse.
+```json
+{
+  "export_reference_key": "export_annotation_to_csv",
+  "request": {
+    "url": "https://webhook.site/XXX-ZZZ",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "text/json"
+    },
+    "content": "#{file_content}"
+  },
+  "auth": {
+    "url": "http://custom.url/token",
+    "method": "POST",
+    "data": {
+      "scope": "invoice.create invoice.read",
+      "client_id": "{secret.client_id}",
+      "grant_type": "client_credentials",
+      "client_secret": "{secret.client_secret}"
+    },
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  },
+  "condition": "@{api_gate}",
+  "response_headers_reference_key": "export_reply_headers",
+  "response_payload_reference_key": "export_reply_payload"
+}
+```
+
+Please note the `response_headers_reference_key` and `response_payload_reference_key`. The first stores the headers of the reply (with added `status_code`), the later stores the full body from the reply. Both of them can be retrieved via api (the link to the received data is stored with the desired key in annotation's metadata). There is an extension prepared for you, that will extract key values (Extract data). 
+
+For original file use `#{original_file}`.
+
+You can use condition that controls whether the export is triggered. If the refered field is non-empty (!="") it will start export and skip it if it is empty (=="").
+
 
 ## Sending `multipart/form-data`
 
