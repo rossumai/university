@@ -1,10 +1,14 @@
 ---
-title: "Coupa: Integration setup"
+title: 'Coupa: Integration setup'
 sidebar_position: 1
 sidebar_label: 'Integration setup'
 ---
 
-## 1. Coupa part
+import WIP from '../\_wip.md';
+
+The following article guides you through the Coupa integration setup. It consists of two mandatory parts: Coupa configuration and Rossum hook configuration.
+
+## Configuring Coupa
 
 The main prerequisite is to have a valid Coupa user with needed permissions (see [OAuth 2.0 scopes](./coupa-oauth-scopes.md)). If you don't have a user with needed permission, ask your admin to create it.
 
@@ -18,17 +22,19 @@ You can always (also) check the official documentation [OAuth 2.0 Getting Starte
 2. Go to the Setup, search for keyword `oauth` and click the one result **OAuth2/OpenID Connect Clients**
 
 ![Coupa Setup User](img/coupa-setup-1.png)
+
 3. Find the user prepared for the integration and note the values `Identifier` and `Secrets`. You will need it for every hook setup later
 
 ![alt text](img/coupa-setup-2.png)
 
 4. For the start, this scopes should works for basic integration `core.accounting.read, core.common.read, core.invoice.create, core.invoice.read, core.invoice.write, core.purchase_order.read, core.supplier.read` - you can copy and paste it exactly like this when using the Postman collection provided by Coupa
 
-## 2. Rossum part
+## Configuring Rossum
 
 Coupa service (integration) is provided by Rossum.ai in the form of webhook. To start using Coupa (either imports or exports), follow these steps:
 
 ### Webhook in UI
+
 1. Login to your Rossum account.
 1. Navigate to **Extensions → My extensions**.
 1. Click on **Create extension**.
@@ -36,19 +42,33 @@ Coupa service (integration) is provided by Rossum.ai in the form of webhook. To 
    1. Name: `Coupa: Import/Export [what]`
    1. Trigger events: `Manual` (later also `Scheduled`)
    1. Extension type: `Webhook`
-   1. URL (see below)
+   1. URL (see [Import setup](./coupa-import-setup.md) and [Export setup](./coupa-export-setup.md))
 1. Click **Create the webhook**.
-1. Fill `Configuration` (see [Import Examples](./coupa-import-configuration-examples.md) or [Export Examples](./coupa-export-configuration-examples.md)) 
-1. (Optional): if you have access to the "Django", you can update secret schema so it will be easily updated. See the JSON snippet below
-1. Fill `Secrets` fields. 
+1. Fill `Configuration` (see [Import Examples](./coupa-import-configuration-examples.md) or [Export Examples](./coupa-export-configuration-examples.md))
+1. Fill `Secrets` fields.
 
-### Hook secret schema
+### Patch token lifetime
+
+Patch the token lifetime to 2 minutes:
+
+```bash
+curl --location --request PATCH 'https://[company-example].rossum.app/api/v1/hooks/[hook-id]' \
+--header 'Authorization: Bearer [token] \
+--header 'Content-Type: application/json' \
+--data '{"token_lifetime_s": 120}'
+```
+
+### Setting hook secrets schema (optional):
+
+Optional step is it cannot be done via UI (but can be done either via API or via [`prd` deployment tool](../sandboxes/index.md))
+
 ```json
 {
   "type": "object",
   "properties": {
     "client_secret": {
       "type": "string",
+      "minLength": 1,
       "description": "API OAuth Client secret"
     }
   },
@@ -56,19 +76,12 @@ Coupa service (integration) is provided by Rossum.ai in the form of webhook. To 
 }
 ```
 
-As a result of this change, it is somehow easy to update `client_secret`
+As a result of this change, it is easier to update the hook secrets (and to know what is in the secrets). You will see the following value in the hook secrets that can be easily modified:
 
-![Client Secret](img/hook-schema-update.png)
-
-
-### Patch token lifetime
-Patch the token lifetime to 2 minutes
-
-```bash
-curl --location --request PATCH 'https://[company-example].rossum.app/api/v1/hooks/[hook-id]' \
---header 'Authorization: Bearer [token] \
---header 'Content-Type: application/json' \
---data '{"token_lifetime_s": 120}'
+```json
+{
+  "client_secret": "__change_me__"
+}
 ```
 
 ## Initial test
@@ -83,18 +96,6 @@ curl --location --request POST 'https://[company-example].rossum.app/api/v1/hook
 
 Then go to the Rossum Extension Logs and observe the content
 
-## Debugging
-
-When the Extension logs don't provide enough information for the proper debugging, it is needed to lookup the ES for logs using corresponding `request_id` (taken from the Extensions logs).
-
-![alt text](img/debug-logs.png)
-
-x![alt text](img/debug-elastic.png)
-
 ## Available configuration options
 
-:::warning[Work in progress]
-
-_Describe all relevant configuration options._
-
-:::
+<WIP />
