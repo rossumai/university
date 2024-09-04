@@ -38,11 +38,12 @@ Coupa service (integration) is provided by Rossum.ai in the form of webhook. To 
 1. Login to your Rossum account.
 1. Navigate to **Extensions → My extensions**.
 1. Click on **Create extension**.
-1. Fill the following fields:
+1. Set the following fields:
    1. Name: `Coupa: Import/Export [what]`
    1. Trigger events: `Manual` (later also `Scheduled`)
    1. Extension type: `Webhook`
    1. URL (see [Import setup](./coupa-import-setup.md) and [Export setup](./coupa-export-setup.md))
+   1. Token owner of the extension (typically a system user)
 1. Click **Create the webhook**.
 1. Fill `Configuration` (see [Import Examples](./coupa-import-configuration-examples.md) or [Export Examples](./coupa-export-configuration-examples.md))
 1. Fill `Secrets` fields.
