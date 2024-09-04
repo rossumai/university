@@ -166,7 +166,7 @@ There is only one credential option for the `s3`. It consist of `Access Key ID` 
 ##### Import configuration for S3
 
 :::warning
-Please not, that the attribute `path` **starts without slash** (as the opposite from SFTP configuration)
+Please note, that the attribute `path` **starts without slash** (as the opposite from SFTP configuration)
 :::
 ```json
 {
