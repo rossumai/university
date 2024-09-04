@@ -68,7 +68,7 @@ x = r.field.amount
 #### Formula field
 
 ```py
-field.amount.id               # Datapooint system ID
+field.amount.id               # Datapoint system ID
 field.amount.rir_confidence   # Confidence score
 ```
 
