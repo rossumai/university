@@ -25,7 +25,7 @@ Available configuration options are described in the API documentation of the [S
 
 ### Master Data Hub 
 - URL: `https://[org].rossum.app/svc/master-data-hub/web/management`
-- Directly in the MDH, there is status screen "Upload Status", regardles the orgigin of "upload".
+- Directly in the MDH, there is a status screen "Upload Status", regardless of the origin of "upload".
 - There is also note with the more detailed info in case of some error.
 
 ![Upload Status](./img/upload-status.png)
