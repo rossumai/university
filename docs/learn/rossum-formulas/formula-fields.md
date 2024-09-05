@@ -32,10 +32,10 @@ Create external ID needed by NetSuite for _VendorBill_ and _VendorCredit_ record
 # Create an external ID by combining document ID and entity (vendor) match. This is to make sure
 # that different vendors with identical document numbering are not matched to the same NetSuite
 # record (same NetSuite external ID).
-external_id = f"{field.document_id}_{field.order_match__entity_internalId}"
+external_id = f"{field.document_id}__{field.order_match__entity_internalId}"
 
-# Construct the final result by concatenating Rossum prefix, document type, and external ID:
-f"__rossum_{field.document_type}_{external_id}".lower()
+# Construct the final result by concatenating (and normalizing) Rossum prefix, document type, and external ID:
+substitute(r"[^a-zA-Z\d\-_]", "", f"__rossum__{field.document_type}__{external_id}".lower())
 ```
 
 This is typically necessary when [exporting records into NetSuite](../netsuite/export-configuration#vendor-bills-invoices).
