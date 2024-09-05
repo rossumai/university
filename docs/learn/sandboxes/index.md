@@ -51,53 +51,56 @@ Complete list of commands and their parameters can be found when running `prd --
 
 ## Available configuration options
 
-The only necessary configuration is in the `credentials.json` file right after running `prd init`.
+The only necessary configuration is in the `credentials.json` and ini the `prd_config.yaml` files right after running `prd init`.
+First, we will setup izr credentials to the `credentials.json` file, where we can work with `username` + `password` combination (Example 1), or there is alternative with the `token` in the Example 2.
 
-Default configuration using username and password:
-
+#### Example 1
+Authentication using username and password.
 ```json
 {
   // Source organization (typically the only one needed).
   "source": {
-    // API base URL. Consult with your support team (SA) in case you are not sure what
-    // the value should be.
-    "api_base": "https://api.elis.rossum.ai/v1",
-
     // Username under which `prd` will be calling the API.
     "username": "...",
-
     // Password for the user under which `prd` will be calling the API.
     "password": "..."
   },
 
-  // Configures whether source organization should be used as a target organization or not.
-  "use_same_org_as_target": true,
-
   // Target organization in case it is necessary to release into a different organization
   // from source. The configuration is identical with `source` parameter.
   "target": {
-    "api_base": "...",
     "username": "...",
     "password": "..."
   }
 }
 ```
-
+#### Example 2
 Alternatively, you can use API token instead of username and password if you have it:
 
 ```json
 {
   "source": {
-    "api_base": "https://api.elis.rossum.ai/v1",
     // highlight-start
     "token": "..." // use API token instead of username/password
     // highlight-end
   },
-  "use_same_org_as_target": true,
   "target": {
-    "api_base": "...",
     "token": "..."
   }
+}
+```
+
+Secondly, to set up the organization's URL, we need to edit the `prd_config.yaml` file, where we specify the source API URL. If the target API URL is different from the source, we can also specify `target_api_base`.
+
+If the URLs are identical, you can add the `use_same_org_as_target` parameter with the value `true`. In this case, you can remove `target_api_base`.
+
+```yaml
+{
+  source_api_base: "https://...",
+  // you can specify source and target API URL
+  target_api_base: "https://...",
+  // or add this to your yaml file in case the source and target are identical
+  use_same_org_as_target: true
 }
 ```
 
