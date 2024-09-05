@@ -51,8 +51,8 @@ Complete list of commands and their parameters can be found when running `prd --
 
 ## Available configuration options
 
-The only necessary configuration is in the `credentials.json` and ini the `prd_config.yaml` files right after running `prd init`.
-First, we will setup izr credentials to the `credentials.json` file, where we can work with `username` + `password` combination (Example 1), or there is alternative with the `token` in the Example 2.
+The only necessary configuration is in the `credentials.json` and in the `prd_config.yaml` files right after running `prd init`.
+First, we will setup credentials in the `credentials.json` file, where we can work with `username` + `password` combination (Example 1), or there is alternative with the `token` in the Example 2.
 
 #### Example 1
 Authentication using username and password.
@@ -62,6 +62,7 @@ Authentication using username and password.
   "source": {
     // Username under which `prd` will be calling the API.
     "username": "...",
+
     // Password for the user under which `prd` will be calling the API.
     "password": "..."
   },
@@ -70,6 +71,7 @@ Authentication using username and password.
   // from source. The configuration is identical with `source` parameter.
   "target": {
     "username": "...",
+
     "password": "..."
   }
 }
@@ -94,14 +96,12 @@ Secondly, to set up the organization's URL, we need to edit the `prd_config.yaml
 
 If the URLs are identical, you can add the `use_same_org_as_target` parameter with the value `true`. In this case, you can remove `target_api_base`.
 
-```yaml
-{
-  source_api_base: "https://...",
+```YAML
+  source_api_base: "https://api.elis.rossum.ai/v1"
   // you can specify source and target API URL
-  target_api_base: "https://...",
+  target_api_base: "https://api.elis.rossum.ai/v1"
   // or add this to your yaml file in case the source and target are identical
   use_same_org_as_target: true
-}
 ```
 
 ## Configuring `mapping.yaml` file
