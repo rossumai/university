@@ -55,7 +55,9 @@ The only necessary configuration is in the `credentials.json` and in the `prd_co
 First, we will setup credentials in the `credentials.json` file, where we can work with `username` + `password` combination (Example 1), or there is alternative with the `token` in the Example 2.
 
 #### Example 1
+
 Authentication using username and password.
+
 ```json
 {
   // Source organization (typically the only one needed).
@@ -76,7 +78,9 @@ Authentication using username and password.
   }
 }
 ```
+
 #### Example 2
+
 Alternatively, you can use API token instead of username and password if you have it:
 
 ```json
@@ -97,11 +101,12 @@ Secondly, to set up the organization's URL, we need to edit the `prd_config.yaml
 If the URLs are identical, you can add the `use_same_org_as_target` parameter with the value `true`. In this case, you can remove `target_api_base`.
 
 ```YAML
-  source_api_base: "https://api.elis.rossum.ai/v1"
-  // you can specify source and target API URL
-  target_api_base: "https://api.elis.rossum.ai/v1"
-  // or add this to your yaml file in case the source and target are identical
-  use_same_org_as_target: true
+# You can specify source and target API URL:
+source_api_base: "https://api.elis.rossum.ai/v1"
+target_api_base: "https://api.elis.rossum.ai/v1"
+
+# Or add this to your YAML file in case the source and target are identical:
+use_same_org_as_target: true
 ```
 
 ## Configuring `mapping.yaml` file
