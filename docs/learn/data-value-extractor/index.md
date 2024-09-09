@@ -3,14 +3,11 @@ title: 'Data Value Extractor'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
+import WIP from '../\_wip.md';
 
 ## Installation
 
-:::warning[Work in progress]
-
-_Describe how to create and configure the extension._
-
-:::
+<WIP />
 
 <WebhookEndpoints
   eu1="https://elis.data-value-extractor.rossum-ext.app/"
@@ -52,7 +49,8 @@ The Data Value Extractor serves to extract data from a document that is linked i
 }
 ```
 
-Currently only `json` format is supported. 
+Currently only `json` format is supported.
+
 - `value_path` is the jmespath to the desired place of the response (be it headers or body). Headers are stored in `json` format.
 - `target_schema_id` is the schema_id of the annotation you are exporting, where the data will be stored and thus available for further extensions in the export pipeline (reference).
 - `source_reference_key` is the reference key for the stored data in annotation's metadata
