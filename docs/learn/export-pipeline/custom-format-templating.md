@@ -1,10 +1,34 @@
 ---
+title: 'Export pipelines: Custom format templating'
+sidebar_label: '2. Custom format templating'
 sidebar_position: 1
-sidebar_label: 'Configuration examples'
-title: 'Custom format templating: Configuration examples'
 ---
 
-# Configuration examples
+import WebhookEndpoints from '../\_webhook_endpoints.md';
+import WIP from '../\_wip.md';
+
+# Custom format templating
+
+## Installation
+
+<WIP />
+
+<WebhookEndpoints
+  eu1="https://elis.custom-format-templating.rossum-ext.app/"
+  eu2="https://shared-eu2.custom-format-templating.rossum-ext.app/"
+  us="https://us.custom-format-templating.rossum-ext.app/"
+  jp="https://shared-jp.custom-format-templating.rossum-ext.app/"
+/>
+
+## Basic usage
+
+<WIP />
+
+## Available configuration options
+
+<WIP />
+
+## Configuration examples
 
 :::warning
 
@@ -12,7 +36,7 @@ Maximum five export configs can be defined per annotation export.
 
 :::
 
-## Custom CSV
+### Custom CSV
 
 Define CSV header fields as well as the actual datapoints to be exported:
 
@@ -95,11 +119,11 @@ Note that such created CSV is not available anywhere in the UI, but it's rather 
 }
 ```
 
-This extension is typically to be used in combination with [REST API Export extension](../rest-api-export) which knows how to work with it.
+This extension is typically to be used in combination with [REST API Export extension](./rest-api-export.md) which knows how to work with it.
 
 :::
 
-## Custom XML
+### Custom XML
 
 Similarly to other formats, custom XML can be defined using the following template:
 
@@ -130,7 +154,7 @@ Similarly to other formats, custom XML can be defined using the following templa
 }
 ```
 
-## Custom JSON
+### Custom JSON
 
 ```json
 {

@@ -1,18 +1,55 @@
 ---
-sidebar_position: 1
-sidebar_label: 'Configuration examples'
-title: 'REST API export: Configuration examples'
+title: 'Export pipelines: REST API export'
+sidebar_label: '3. REST API export'
+sidebar_position: 2
 ---
 
-# Configuration examples
+import WebhookEndpoints from '../\_webhook_endpoints.md';
+import WIP from '../\_wip.md';
+
+# REST API export
+
+## Installation
+
+REST API export extension is provided and maintained by Rossum.ai in the form of webhook. To start using it, follow these steps:
+
+1. Login to your Rossum account.
+1. Navigate to **Extensions → My extensions**.
+1. Click on **Create extension**.
+1. Fill the following fields:
+   1. Name: `REST API export`
+   1. Trigger events: `Export`
+   1. Extension type: `Webhook`
+   1. URL (see below)
+1. Click **Create the webhook**.
+1. Fill in the `Configuration` field (see [Configuration examples](#configuration-examples) for some examples).
+
+Webhook URL endpoints:
+
+<WebhookEndpoints
+  eu1="https://elis.rest-api-export.rossum-ext.app/"
+  eu2="https://shared-eu2.rest-api-export.rossum-ext.app/"
+  us="https://us.rest-api-export.rossum-ext.app/"
+  jp="https://shared-jp.rest-api-export.rossum-ext.app/"
+/>
+
+## Basic usage
+
+<WIP />
+
+## Available configuration options
+
+<WIP />
+
+## Configuration examples
 
 :::warning
 
-This extension currently expects file to be generated using [Custom format templating extension](../custom-format-templating).
+This extension currently expects file to be generated using [Custom format templating extension](./custom-format-templating.md).
 
 :::
 
-## Simple REST API call
+### Simple REST API call
 
 ```json
 {
@@ -28,7 +65,7 @@ This extension currently expects file to be generated using [Custom format templ
 }
 ```
 
-## REST API call with OAuth2
+### REST API call with OAuth2
 
 The request can be extended to use OAuth2:
 
@@ -93,7 +130,7 @@ For original file use `#{original_file}`.
 
 You can use condition that controls whether the export is triggered. If the referred field is non-empty (`!= ""`) it will start export and skip it if it is empty (`== ""`).
 
-## Sending `multipart/form-data`
+### Sending `multipart/form-data`
 
 The following config will translate in an HTTP POST request with `Content-Type: multipart/form-data`. Both file and additional data will be sent. For sending the file, the `file_key` is used as a form-data `name; filename` and content type are taken from the saved document.
 
@@ -117,7 +154,7 @@ The following config will translate in an HTTP POST request with `Content-Type: 
 
 See also [JSON templating](../json-templating/index.md).
 
-## Sending `application/x-www-form-urlencoded`
+### Sending `application/x-www-form-urlencoded`
 
 Specifically, this example is for Azure API Management:
 
