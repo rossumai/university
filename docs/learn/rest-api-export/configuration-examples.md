@@ -54,6 +54,7 @@ The request can be extended to use OAuth2:
   }
 }
 ```
+
 The `access_token` is automatically retrieved using given credentials and saved to hook secrets for later reuse. A more complex OAuth2 setup:
 
 ```json
@@ -86,12 +87,11 @@ The `access_token` is automatically retrieved using given credentials and saved 
 }
 ```
 
-Please note the `response_headers_reference_key` and `response_payload_reference_key`. The first stores the headers of the reply (with added `status_code`), the later stores the full body from the reply. Both of them can be retrieved via api (the link to the received data is stored with the desired key in annotation's metadata). There is an extension prepared for you, that will extract key values (Extract data). 
+Please note the `response_headers_reference_key` and `response_payload_reference_key`. The first stores the headers of the reply (with added `status_code`), the later stores the full body from the reply. Both of them can be retrieved via API (the link to the received data is stored with the desired key in annotation's metadata). There is an extension prepared for you, that will extract key values (Extract data).
 
 For original file use `#{original_file}`.
 
-You can use condition that controls whether the export is triggered. If the refered field is non-empty (!="") it will start export and skip it if it is empty (=="").
-
+You can use condition that controls whether the export is triggered. If the referred field is non-empty (`!= ""`) it will start export and skip it if it is empty (`== ""`).
 
 ## Sending `multipart/form-data`
 
@@ -114,6 +114,8 @@ The following config will translate in an HTTP POST request with `Content-Type: 
   }
 }
 ```
+
+See also [JSON templating](../json-templating/index.md).
 
 ## Sending `application/x-www-form-urlencoded`
 
