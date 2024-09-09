@@ -75,8 +75,6 @@ For in detail explanation please reach out to [Annotations Guide](https://rossum
 
 ## 🏆 Priority of rules {#priority-of-rules}
 
-Your text is mostly clear but could benefit from some revisions for clarity, grammar, and flow. Here’s an improved version:
-
 It may happen that some of the recommendations contradict each other in particular cases.
 
 - The principles of Precision and Accuracy should take priority.
