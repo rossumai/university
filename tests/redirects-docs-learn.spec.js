@@ -19,10 +19,6 @@ const { test, expect } = require('@playwright/test');
     title: 'Coupa | Rossum.ai University',
   },
   {
-    path: '/docs/learn/custom-format-templating',
-    title: 'Custom format templating | Rossum.ai University',
-  },
-  {
     path: '/docs/learn/find-replace-values',
     title: 'Find & Replace Values | Rossum.ai University',
   },
@@ -41,10 +37,6 @@ const { test, expect } = require('@playwright/test');
   {
     path: '/docs/learn/netsuite',
     title: 'NetSuite | Rossum.ai University',
-  },
-  {
-    path: '/docs/learn/rest-api-export',
-    title: 'REST API export | Rossum.ai University',
   },
   {
     path: '/docs/learn/rossum-formulas',
