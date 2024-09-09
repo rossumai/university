@@ -1,9 +1,12 @@
 ---
-title: 'Data Value Extractor'
+title: 'Export pipelines: Data value extractor'
+sidebar_label: 'Data value extractor'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
 import WIP from '../\_wip.md';
+
+# Data value extractor
 
 ## Installation
 

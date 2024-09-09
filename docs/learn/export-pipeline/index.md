@@ -17,7 +17,7 @@ The export pipeline has the following components:
 1. Cleaning mechanism that prepares the pipeline for export. The use is not mandatory, it is very useful for debugging. See Pipeline cleaning page.
 1. Custom format templating, prepares the desired format for an export. See Custom format templating.
 1. Rest API Export, exports the prepared data to REST API and stores the reply. See REST API export.
-1. Extract data, extracts important data from API reply and stores them in the annotation object, e.g. downstream document ID, HTTP status codes. See Extract data.
+1. Extract data, extracts important data from API reply and stores them in the annotation object, e.g. downstream document ID, HTTP status codes. See [Data value extractor](./data-value-extractor.md).
 1. Export evaluator, decides whether the export is successful or it has failed. See Export evaluator.
 1. SFTP Export, upload the prepared data to SFTP or S3 file storage. See SFTP Export.
 1. Workday Export, Workday specific export. See Workday Export.
