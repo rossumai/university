@@ -861,3 +861,20 @@ and also some additional custom field in the annotation schema to present the re
       }
     ]
 ```
+:::tip
+Some APIs, such as VIES, will return an error if the APIs input data are empty. You can avoid the error by adding action condition for the particular matching in configuration json. When defined, the matching will be performed only if the condition is evaluated to True, otherwise the matching targets will be reset. 
+
+Example: 
+
+`"action_condition": "'{sender_vat_id}' != ''"` 
+
+I also recommend creating [Formula Field](/docs/learn/rossum-formulas/formula-fields) that will clear your matching output field if action_condition is used.
+
+Example:
+
+`None if is_empty(field.sender_vat_id) else field.vies_is_valid`
+
+You can use additional_mappings to get more infromation from API
+
+https://elis.rossum.ai/svc/master-data-hub/api/docs#tag/Matching-configuration
+:::
