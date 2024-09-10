@@ -104,6 +104,10 @@ Requires 'Lists -> Currency' permissions.
         },
         "isInactive": {
           "searchValue": false
+        },
+        "lastModifiedDate": {
+          "operator": "onOrAfter",
+          "searchValue": "{last_modified_date}"
         }
       }
     ],
@@ -200,6 +204,10 @@ Requires 'Lists -> Currency' permissions.
         },
         "isInactive": {
           "searchValue": false
+        },
+        "lastModifiedDate": {
+          "operator": "onOrAfter",
+          "searchValue": "{last_modified_date}"
         }
       }
     ],
