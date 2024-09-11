@@ -325,6 +325,12 @@ Requires 'Transactions → Purchase Order (View)' permissions.
 
 ### Subsidiaries
 
+:::info
+
+Requires 'Lists -> Subsidiaries' permissions.
+
+:::
+
 ```json
 {
   "master_data_name": "NS_SB1_Subsidiary_v1",
