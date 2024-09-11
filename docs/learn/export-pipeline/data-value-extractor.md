@@ -1,7 +1,7 @@
 ---
 title: 'Export pipelines: Data value extractor'
 sidebar_label: '4. Data value extractor'
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';

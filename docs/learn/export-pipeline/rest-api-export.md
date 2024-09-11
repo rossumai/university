@@ -1,7 +1,7 @@
 ---
 title: 'Export pipelines: REST API export'
 sidebar_label: '3. REST API export'
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
