@@ -202,15 +202,15 @@ Compound queries are very useful when we need to match against multiple attribut
     },
     {
       "$addFields": {
-        "__score": {
+        "__searchScore": {
           "$meta": "searchScore"
         }
       }
     },
     {
       "$match": {
-        "__score": {
-          "$gt": 30 // Check the resulting `__score` to set some appropriate value
+        "__searchScore": {
+          "$gt": 30 // Check the resulting `__searchScore` to set some appropriate value
         }
       }
     }
@@ -232,7 +232,7 @@ Creating dummy objects can be handy when we need to create some dummy (empty) re
           {
             "$documents": [
               {
-                "__score": -1,
+                "__searchScore": -1,
                 "zip": "",
                 "companyName": "Company Unknown",
                 "contactName": ""
@@ -329,14 +329,14 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
     },
     {
       "$addFields": {
-        "__score": {
+        "__searchScore": {
           "$meta": "searchScore"
         }
       }
     },
     {
       "$match": {
-        "__score": {
+        "__searchScore": {
           "$gt": 0.1 // configure as needed based on the results
         }
       }
@@ -355,7 +355,7 @@ By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 t
     // … (fuzzy search)
     {
       "$addFields": {
-        "__score": {
+        "__searchScore": {
           "$meta": "searchScore"
         }
       }
@@ -364,7 +364,7 @@ By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 t
       "$addFields": {
         "new_score": {
           "$divide": [
-            "$__score",
+            "$__searchScore",
             {
               "$add": [
                 1,
@@ -427,7 +427,7 @@ Naiver (and less recommended) solution would be the following:
     // … (fuzzy search)
     {
       "$addFields": {
-        "__score": {
+        "__searchScore": {
           "$meta": "searchScore"
         }
       }
@@ -435,16 +435,16 @@ Naiver (and less recommended) solution would be the following:
     {
       "$setWindowFields": {
         "output": {
-          "__max_score": {
-            "$max": "$__score"
+          "__maxSearchScore": {
+            "$max": "$__searchScore"
           }
         }
       }
     },
     {
       "$addFields": {
-        "__normalized_score": {
-          "$divide": ["$__score", "$__max_score"]
+        "__normalizedSearchScore": {
+          "$divide": ["$__searchScore", "$__maxSearchScore"]
         }
       }
     }
@@ -453,7 +453,7 @@ Naiver (and less recommended) solution would be the following:
 }
 ```
 
-Note that one disadvantage of this second normalization approach is that `__normalized_score` can be exactly "1" even when `__score` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
+Note that one disadvantage of this second normalization approach is that `__normalizedSearchScore` can be exactly "1" even when `__searchScore` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
 
 ## Fuzzy match score normalization - non-compound query
 
@@ -464,10 +464,10 @@ Score returned normalized to interval between 0-1. This works only when a "compo
   "aggregate": [
     {
       "$addFields": {
-        "__score": {
+        "__searchScore": {
           "$meta": "searchScore"
         },
-        "__scoreDetails": {
+        "__searchScoreDetails": {
           "$meta": "searchScoreDetails"
         }
       }
@@ -477,7 +477,7 @@ Score returned normalized to interval between 0-1. This works only when a "compo
         "__normalizedScore": {
           "$last": {
             "$last": {
-              "$first": "$__scoreDetails.details.details.details.value"
+              "$first": "$__searchScoreDetails.details.details.details.value"
             }
           }
         }
@@ -587,7 +587,7 @@ Even though using JavaScript can be easier in some scenarios, it is typically le
     // …
     {
       "$sort": {
-        "__score": -1 // it is important to sort the results correctly after using $group
+        "__searchScore": -1 // it is important to sort the results correctly after using $group
       }
     }
   ]
@@ -598,7 +598,7 @@ Even though using JavaScript can be easier in some scenarios, it is typically le
 
 Sometimes it might be useful to always return all records and perhaps sort them by matching score. That is, always return everything but on put the best results on top.
 
-This can be achieved by first searching and returning records with their respective `__score` (see [fuzzy match](#fuzzy-match), for example) and later appending all records with zero `__score` using `$unionWith`. Finally, all the results are grouped to remove duplicates and sorted by the score:
+This can be achieved by first searching and returning records with their respective `__searchScore` (see [fuzzy match](#fuzzy-match), for example) and later appending all records with zero `__searchScore` using `$unionWith`. Finally, all the results are grouped to remove duplicates and sorted by the score:
 
 ```json
 {
@@ -611,7 +611,7 @@ This can be achieved by first searching and returning records with their respect
         "pipeline": [
           {
             "$addFields": {
-              "__score": 0
+              "__searchScore": 0
             }
           }
         ]
@@ -633,7 +633,7 @@ This can be achieved by first searching and returning records with their respect
     },
     {
       "$sort": {
-        "__score": -1
+        "__searchScore": -1
       }
     }
   ]
