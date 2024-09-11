@@ -40,8 +40,8 @@ pipx install . --force
 
 `prd` is a CLI tool and offers the following main commands:
 
-- `prd init`: Initialize a new project (creates a `credentials.json` file). When called with a project name, it also initialized an empty Git repository.
-- `prd pull`: Pulls all objects from both `source` and `target` organizations (as per `credentials.json` configuration). It is possible to explicitly specify `source`/`target` to pull only that one environment, for example: `prd pull source`
+- `prd init`: Initialize a new project (creates mainly `credentials.json` and `prd_config.yaml` files). When called with a project name, it also initialized an empty Git repository.
+- `prd pull`: Pulls all objects from both `source` and `target` organizations (as per your configuration). It is possible to explicitly specify `source`/`target` to pull only that one environment, for example: `prd pull source`
 - `prd push`: Pushes the latest changes to the `source` organization. This is effectively a counterpart of the `pull` command.
 - `prd release`: Pushes the latest changes to the `target` organization. Visit [Deployment patterns](./deployment-patterns.md#two-environments-for-sandbox-and-production) to learn more about this use-case.
 - `prd purge`: Removes all objects in the target organization.
@@ -52,13 +52,14 @@ Complete list of commands and their parameters can be found when running `prd --
 ## Available configuration options
 
 The only necessary configuration is in the `credentials.json` and in the `prd_config.yaml` files right after running `prd init`.
-First, we will setup credentials in the `credentials.json` file, where we can work with `username` + `password` combination (Example 1), or there is alternative with the `token` in the Example 2.
+
+First, we will setup credentials in the `credentials.json` file, where we can work with username and password combination ([Example 1](#example-1)), or alternatively we can use `token` ([Example 2](#example-2)).
 
 #### Example 1
 
 Authentication using username and password.
 
-```json
+```json title="credentials.json"
 {
   // Source organization (typically the only one needed).
   "source": {
@@ -81,9 +82,9 @@ Authentication using username and password.
 
 #### Example 2
 
-Alternatively, you can use API token instead of username and password if you have it:
+Alternatively, you can use API token instead of username and password (if you have it):
 
-```json
+```json title="credentials.json"
 {
   "source": {
     // highlight-start
@@ -96,16 +97,16 @@ Alternatively, you can use API token instead of username and password if you hav
 }
 ```
 
-Secondly, to set up the organization's URL, we need to edit the `prd_config.yaml` file, where we specify the source API URL. If the target API URL is different from the source, we can also specify `target_api_base`.
+Finally, to set up the organization's URL, we need to edit the `prd_config.yaml` file, where we specify the source API URL. If the target API URL is different from the source, we can also specify `target_api_base`.
 
 If the URLs are identical, you can add the `use_same_org_as_target` parameter with the value `true`. In this case, you can remove `target_api_base`.
 
-```YAML
+```yaml title="prd_config.yaml"
 # You can specify source and target API URL:
-source_api_base: "https://api.elis.rossum.ai/v1"
-target_api_base: "https://api.elis.rossum.ai/v1"
+source_api_base: 'https://api.elis.rossum.ai/v1'
+target_api_base: 'https://api.elis.rossum.ai/v1'
 
-# Or add this to your YAML file in case the source and target are identical:
+# Or add this to your YAML file in case the source and target are identical (and omit the target_api_base):
 use_same_org_as_target: true
 ```
 
