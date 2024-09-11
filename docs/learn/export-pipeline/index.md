@@ -3,8 +3,11 @@ title: 'Export pipelines'
 ---
 
 import WIP from '../\_wip.md';
+import RossumInternalOnly from '../\_rossum_internal_only.md';
 
 <WIP />
+
+<RossumInternalOnly url="https://rossumai.atlassian.net/l/cp/t2we9106" />
 
 ## How to export extracted data from Rossum
 
