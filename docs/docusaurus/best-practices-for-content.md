@@ -1,19 +1,13 @@
 ---
 unlisted: true
-sidebar_position: 4
+sidebar_position: 5
 ---
-
-<!-- /docs/docusaurus/best-practices-for-content -->
 
 # Best practices for content
 
-## Structure of Extensions pages
-
-TODO
-
 ### Index page
 
-There should always be an index page in `index.md` with the following sections for fast and easy onboarding:
+There should almost always be an index page in `index.md` with the following sections for fast and easy onboarding:
 
 1. A section shortly explaining what does the extensions do.
 2. **Installation** section. If it's a webhook, it should also contain `<WebhookEndpoint />` component.
