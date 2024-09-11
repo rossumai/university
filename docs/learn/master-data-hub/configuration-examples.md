@@ -788,93 +788,91 @@ This can be achieved by first searching and returning records with their respect
 }
 ```
 
-## VAT ID checker against **external** API (VIES)
-It is possible to query not only internal datasets, but also external (RESTful) API. 
+## VAT ID checker against external API (VIES)
 
-For example, you could query the VIES API for the VAT ID validation. 
+It is possible to query not only internal datasets, but also external (RESTful) API. For example, you could query the [VIES API for the VAT ID validation](https://ec.europa.eu/taxation_customs/vies/#/vat-validation).
 
-:::info
-More info about VIES here: https://ec.europa.eu/taxation_customs/vies/#/vat-validation
-:::
+Note that the following configuration requires the existence of two [Formula Fields](../rossum-formulas/formula-fields.md), both to be used in the VIES request body:
 
-:::tip
-The following configuration requires the existence of two [Formula Fields](/docs/learn/rossum-formulas/formula-fields) with this regex:
-1. `sender_vat_id_country_code_calculated` contains (only this one line) `re.sub(r'\s', '', field.sender_vat_id)[:2]`
-2. `sender_vat_id_vat_number_calculated` contains `re.sub(r'\s', '', field.sender_vat_id)[2:]`
+1. `sender_vat_id_country_code_calculated` with formula `re.sub(r'\s', '', field.sender_vat_id)[:2]`
+1. `sender_vat_id_vat_number_calculated` with formula `re.sub(r'\s', '', field.sender_vat_id)[2:]`
 
-and also some additional custom field in the annotation schema to present the result in the UI (for example `vies_is_valid`)
-:::
+Additional custom fields in the queue schema (such as `vies_is_valid`) to present the result in the UI might also be needed.
 
 ![VIES check result example](./img/mdh-vies-example.png)
 
+Complete data matching configuration example (notice the highlighted part showing the actual VIES API request):
 
 ```json
- "configurations": [
-      {
-        "name": "VIES",
-        "source": {
-          "queries": [
-            {
-                      // highlight-start
-              "url": "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
-              "body": {
-                "vatNumber": "{sender_vat_id_vat_number_calculated}",
-                "countryCode": "{sender_vat_id_country_code_calculated}"
-              },
-                      // highlight-end
-              "method": "POST",
-              "headers": {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-              },
-              "result_path": ""
-            }
-          ]
+{
+  "configurations": [
+    {
+      "name": "VIES API validation",
+      "source": {
+        "queries": [
+          {
+            // highlight-start
+            "url": "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
+            "body": {
+              "vatNumber": "{sender_vat_id_vat_number_calculated}",
+              "countryCode": "{sender_vat_id_country_code_calculated}"
+            },
+            // highlight-end
+            "method": "POST",
+            "headers": {
+              "Accept": "application/json",
+              "Content-Type": "application/json"
+            },
+            "result_path": ""
+          }
+        ]
+      },
+      "default": {
+        "label": "Not checked",
+        "value": "not-checked"
+      },
+      "mapping": {
+        "dataset_key": "valid",
+        "label_template": "{valid}",
+        "target_schema_id": "vies_is_valid"
+      },
+      "result_actions": {
+        "no_match_found": {
+          "message": {
+            "type": "error",
+            "content": "No match found"
+          }
         },
-        "default": {
-          "label": "Not checked",
-          "value": "not-checked"
+        "one_match_found": {
+          "select": "best_match"
         },
-        "mapping": {
-          "dataset_key": "valid",
-          "label_template": "{valid}",
-          "target_schema_id": "vies_is_valid"
-        },
-        "result_actions": {
-          "no_match_found": {
-            "message": {
-              "type": "error",
-              "content": "No match found"
-            }
-          },
-          "one_match_found": {
-            "select": "best_match"
-          },
-          "multiple_matches_found": {
-            "select": "default",
-            "message": {
-              "type": "warning",
-              "content": "Multiple matches found"
-            }
+        "multiple_matches_found": {
+          "select": "default",
+          "message": {
+            "type": "warning",
+            "content": "Multiple matches found"
           }
         }
       }
-    ]
+    }
+  ]
+}
 ```
-:::tip
-Some APIs, such as VIES, will return an error if the APIs input data are empty. You can avoid the error by adding action condition for the particular matching in configuration json. When defined, the matching will be performed only if the condition is evaluated to True, otherwise the matching targets will be reset. 
 
-Example: 
+Some APIs, such as VIES, will return an error if the APIs input data are empty. You can avoid the error by adding an action condition for the particular data matching in configuration. When defined, the matching will be performed only if the condition is evaluated to `true`, otherwise the matching targets will be reset:
 
-`"action_condition": "'{sender_vat_id}' != ''"` 
+```json
+{
+  // …
+  "action_condition": "'{sender_vat_id}' != ''"
+  // …
+}
+```
 
-I also recommend creating [Formula Field](/docs/learn/rossum-formulas/formula-fields) that will clear your matching output field if action_condition is used.
+It is also recommend creating additional [Formula Field](../rossum-formulas/formula-fields.md) that will clear the matching output field if `action_condition` is used with the following formula:
 
-Example:
+```py
+None if is_empty(field.sender_vat_id) else field.vies_is_valid
+```
 
-`None if is_empty(field.sender_vat_id) else field.vies_is_valid`
-
-You can use additional_mappings to get more infromation from API
-
-https://elis.rossum.ai/svc/master-data-hub/api/docs#tag/Matching-configuration
-:::
+More information about the `additional_mappings` can be found in the Master Data Hub API documentation: https://elis.rossum.ai/svc/master-data-hub/api/docs#tag/Matching-configuration
