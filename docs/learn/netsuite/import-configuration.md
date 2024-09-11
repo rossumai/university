@@ -57,6 +57,39 @@ Recommended schedule: `0 22 * * *`
 
 Consult the other configurations below for more real-world examples.
 
+### Accounts
+
+:::info
+
+Requires 'Lists -> Accounts' permissions.
+
+:::
+
+```json
+{
+  "master_data_name": "NS_SB1_Account_v1",
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "payload": {
+    "method_name": "search",
+    "method_args": [
+      {
+        "_ns_type": "AccountSearchBasic"
+      }
+    ],
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
+    }
+  }
+}
+```
+
 ### Currencies
 
 :::info
