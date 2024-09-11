@@ -22,20 +22,24 @@ prd init
 
 This command will create a new `credentials.json` file. Fill in your username and password for `source` (you can leave `target` section as is for this simple setup):
 
-```json
+```json title="credentials.json"
 {
   "source": {
-    "api_base": "https://api.elis.rossum.ai/v1",
     "username": "CHANGE ME",
     "password": "CHANGE ME"
   },
-  "use_same_org_as_target": true,
   "target": {
-    "api_base": "...",
     "username": "...",
     "password": "..."
   }
 }
+```
+
+Also configure the `source_api_base` in `prd_config.yaml` file. By default, it would be:
+
+```yaml title="prd_config.yaml"
+source_api_base: 'https://api.elis.rossum.ai/v1'
+use_same_org_as_target: true
 ```
 
 Now you can pull (and eventually commit into Git) your whole organization configuration:
@@ -62,22 +66,27 @@ To use this pattern, follow the same steps as outlined in the [Simple environmen
 prd init
 ```
 
-However, now setup both `source` and `target` organizations. Notice that `use_same_org_as_target` is now set to false:
+However, now setup both `source` and `target` organizations:
 
-```json
+```json title="credentials.json"
 {
   "source": {
-    "api_base": "https://api.elis.rossum.ai/v1",
     "username": "CHANGE ME",
     "password": "CHANGE ME"
   },
-  "use_same_org_as_target": false,
   "target": {
-    "api_base": "https://api.elis.rossum.ai/v1",
     "username": "CHANGE ME",
     "password": "CHANGE ME"
   }
 }
+```
+
+Notice that `use_same_org_as_target` is now set to false:
+
+```yaml title="prd_config.yaml"
+source_api_base: 'https://api.elis.rossum.ai/v1'
+target_api_base: 'https://api.elis.rossum.ai/v1'
+use_same_org_as_target: false
 ```
 
 To push local changes to the sandbox, run `push` command:
