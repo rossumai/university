@@ -1,7 +1,7 @@
 ---
 title: 'Export pipelines: Custom format templating'
 sidebar_label: '2. Custom format templating'
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
