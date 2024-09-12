@@ -158,3 +158,7 @@ The following configuration options are available:
   ]
 }
 ```
+
+## API documentation 
+
+<https://elis.rossum.ai/svc/netsuite-v3/api/redoc>
