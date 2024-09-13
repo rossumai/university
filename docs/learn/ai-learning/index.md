@@ -123,3 +123,17 @@ Ensure that exporting again or making changes to a confirmed document does not c
 For example, if you have an integration with a downstream system triggered every time you export data, re-exporting may cause duplicates or errors in that system.
 
 :::
+
+### The field does not learn from annotations.
+1. Check your version of the AI engine. While one version learns almost instantly, another requires some agreed-upon time to pick up confirmed or exported documents. If you are unsure which AI engine you are using, contact a Rossum representative.
+2. Ensure that you are teaching the AI to extract data into a field that is supposed to capture data directly from the document, rather than one that is calculated or matched from another data source.<br />
+A common example is fields used for matching data from a document with another data source. These fields use programmatic logic, not AI. If you want to modify the logic of this matching, contact your development team or consult a Rossum representative.
+3. Ensure that the field has the correct "Value Source." For AI-driven extraction, the "Value Source" must be set to "Captured." You can find this setting in the "Queue Settings -> Fields" section.
+![value-source](img/value-source.png)
+Any other type of "Value Source" will prevent AI learning.
+4. For "Captured" fields, ensure that a representative set of annotated documents has been confirmed or exported.
+
+If none of the above steps help, contact a Rossum representative.
+
+### The field does not capture more than one line of data.
+If you are using a custom field to capture multiple lines of data, please consult a Rossum representative. By default, the AI learns from a single line, except for out-of-the-box address fields.
