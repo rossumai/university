@@ -4,6 +4,12 @@ title: 'NetSuite'
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
 
+:::info[API documentation]
+
+👉 https://elis.rossum.ai/svc/netsuite-v3/api/redoc
+
+:::
+
 ## Installation
 
 NetSuite service (integration) is provided by Rossum.ai in the form of webhook. To start using NetSuite (either imports or exports), follow these steps:
@@ -158,7 +164,3 @@ The following configuration options are available:
   ]
 }
 ```
-
-## API documentation 
-
-https://elis.rossum.ai/svc/netsuite-v3/api/redoc
