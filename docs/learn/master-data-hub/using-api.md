@@ -6,9 +6,9 @@ sidebar_position: 6
 
 # Using API
 
-## Dataset Differential Update using API
+## Dataset differential update using API
 
-The part describes best practices for implementation of the differential updates of the dataset stored in the Rossum's Master Data Hub (MDH) using the API.
+This part describes best practices for implementation of the differential updates of the dataset stored in the Rossum's Master Data Hub (MDH) using the API.
 
 ### Recommended implementation
 
@@ -26,3 +26,108 @@ The MDS's API for the replication of the datasets is file based and asynchronous
 1. If the operation finishes successfully the job ends.
 1. If the operation fails or takes longer than 30 minutes the API call should be retried (3 retries are recommended).
 1. If all retries fail the whole job can be considered failed and should produce an alert in the monitoring system.
+
+## Downloading whole collections using API
+
+It might be useful to download the whole collection to update it locally or to analyze its structure. This is currently not possible via UI but can be achieved using simple [Node.js](https://nodejs.org/en) script. Download it locally, change the token and collection name in the script and run it (no external libraries are needed):
+
+```bash
+node download_collection.js
+```
+
+Source code:
+
+```js
+const fs = require('fs');
+
+const ROSSUM_TOKEN = '__CHANGE_ME__';
+const COLLECTION_NAME = '__CHANGE_ME__';
+const BASE_URL = 'https://elis.rossum.ai/svc/data-storage/api/v1';
+const FIND_ENDPOINT = `${BASE_URL}/data/find`;
+
+async function* downloadCollection(collectionName, token) {
+  let startIndex = 0;
+  const batchSize = 2500;
+  const maxRetries = 5;
+  const retryDelay = 5000; // Delay between retries in milliseconds
+
+  while (true) {
+    const payload = {
+      collectionName: collectionName,
+      query: {},
+      projection: { _id: 0 },
+      skip: startIndex,
+      limit: batchSize,
+      sort: { _id: -1 },
+    };
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+
+    let attempts = 0;
+    let success = false;
+    let data;
+
+    // Retry logic
+    while (attempts < maxRetries && !success) {
+      try {
+        console.log(FIND_ENDPOINT, JSON.stringify(payload));
+        const response = await fetch(FIND_ENDPOINT, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Fetch failed with status ${response.status}`);
+        }
+
+        data = await response.json();
+        success = true;
+      } catch (error) {
+        attempts++;
+        console.error(`Attempt ${attempts} failed: ${error.message}`);
+        if (attempts < maxRetries) {
+          await new Promise((resolve) => setTimeout(resolve, retryDelay)); // Wait before retrying
+        } else {
+          throw new Error('Max retries reached. Aborting.');
+        }
+      }
+    }
+
+    const documents = data.result;
+
+    // Break the loop if no more documents are returned
+    if (!documents || documents.length === 0) {
+      break;
+    }
+
+    // Yield the documents as they are fetched
+    yield documents;
+
+    // Update the start index for the next batch
+    startIndex += batchSize;
+  }
+}
+
+(async () => {
+  const fileStream = fs.createWriteStream(`${COLLECTION_NAME}.json`);
+  fileStream.write('['); // Start the array
+
+  let firstBatch = true;
+
+  for await (const documents of downloadCollection(COLLECTION_NAME, ROSSUM_TOKEN)) {
+    if (!firstBatch) {
+      fileStream.write(','); // Separate batches with commas
+    }
+    fileStream.write(JSON.stringify(documents).slice(1, -1)); // Remove the array brackets from each batch
+    firstBatch = false;
+  }
+
+  fileStream.write(']'); // End the array
+  fileStream.end();
+})();
+```
