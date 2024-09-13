@@ -2,7 +2,11 @@
 title: 'Master data hub'
 ---
 
-👉 [API documentation](https://elis.rossum.ai/svc/master-data-hub/api/docs)
+:::info[API documentation]
+
+👉 https://elis.rossum.ai/svc/master-data-hub/api/docs
+
+:::
 
 ## What is the Master Data Hub extension
 
@@ -62,7 +66,7 @@ Once the extension is activated for a queue, it will be automatically triggered 
 
 ### Step 4: Assign the token owner (optional)
 
-For our clients, this step is not necessary. An account with admin rights will be able to create the extension, and the owner of the extension will automatically be assigned to the account that created it. Therefore, this step is not displayed in the User Interface.   
+For our clients, this step is not necessary. An account with admin rights will be able to create the extension, and the owner of the extension will automatically be assigned to the account that created it. Therefore, this step is not displayed in the User Interface.  
 ⚠️ However, if you plan to use a different account later, please ensure that you create the extension with that account, or contact our Support team to reassign ownership, for example, to a special technical user.
 
 For Rossum Employees: Token owner must have an "Admin" role assigned in Rossum. User queries the database and adds the results to annotation data.
