@@ -101,8 +101,8 @@ Documents in unique scripts should be in separate queues (e.g., documents in Lat
 
 Documents from different regions should also be sent to separate queues to ensure correct date and number parsing.
 
-
 ### How can I correct inaccurate annotations to improve AI predictions?
+
 If you have manually processed a document and later discovered mistakes in the annotations, you can correct them to prevent the AI from repeating these errors.
 
 If the document has already been exported, you will need to return it to the "Review" status. Simply select the document and move it to the same queue without re-extracting the data. Then, correct the data points and export it again.
@@ -110,12 +110,16 @@ If the document has already been exported, you will need to return it to the "Re
 If you are using the "Confirmed" status without exporting, you can open the document in this status and make the necessary edits. Once the changes are made, confirm it again.
 
 :::info
+
 Depending on your version of the AI engine, changes may affect predictions either immediately or after an agreed-upon period. For more information, please contact Rossum.
+
 :::
 
 :::danger
-⚠️ Always make sure you fully understand the consequences of re-confirming or re-exporting a document.
 
-Ensure that exporting again or making changes to a confirmed document does not cause complications with integrations or existing business logic. 
+Always make sure you fully understand the consequences of re-confirming or re-exporting a document.
+
+Ensure that exporting again or making changes to a confirmed document does not cause complications with integrations or existing business logic.
 For example, if you have an integration with a downstream system triggered every time you export data, re-exporting may cause duplicates or errors in that system.
+
 :::
