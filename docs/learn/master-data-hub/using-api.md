@@ -14,7 +14,7 @@ This part describes best practices for implementation of the differential update
 
 #### General description
 
-The MDS's API for the replication of the datasets is file based and asynchronous. The client sending the file to the endpoint does not get the status of the replication run in the response to the call of the replication endpoint (the replication can take minutes depending on the size of the file). The first call however returns ID of the operation that can be then monitored using other API endpoint and the result of the replication job can be determined based on the operation status.
+The MDH's API for the replication of the datasets is file based and asynchronous. The client sending the file to the endpoint does not get the status of the replication run in the response to the call of the replication endpoint (the replication can take minutes depending on the size of the file). The first call however returns ID of the operation that can be then monitored using other API endpoint and the result of the replication job can be determined based on the operation status.
 
 #### Implementation steps
 
