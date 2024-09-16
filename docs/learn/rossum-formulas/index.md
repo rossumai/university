@@ -14,7 +14,7 @@ In case you want to use the Rossum Python within the serverless functions, you n
 1. Go to the settings of the Webhook (Serverless function)
 2. Scroll to `Additional notification metadata`
 3. Enable the `Schemas` option
-4. Save it and now you can work with the `formula` in your function
+4. Save it and now you can work with the `RossumPython` in your function
 
 ## Basic usage
 
