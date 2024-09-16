@@ -10,7 +10,7 @@
 
 
 <link rel="search" type="application/opensearchdescription+xml" title="Rossum.ai University" href="/opensearch.xml"><link rel="stylesheet" href="/assets/css/styles.137aac8f.css">
-<script src="/assets/js/runtime~main.53070a55.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.ba64d62b.js" defer="defer"></script>
 <script src="/assets/js/main.fb40bc07.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -19,7 +19,7 @@
 <p>This part describes best practices for implementation of the differential updates of the dataset stored in the Rossum&#x27;s Master Data Hub (MDH) using the API.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="recommended-implementation">Recommended implementation<a href="#recommended-implementation" class="hash-link" aria-label="Direct link to Recommended implementation" title="Direct link to Recommended implementation">​</a></h3>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="general-description">General description<a href="#general-description" class="hash-link" aria-label="Direct link to General description" title="Direct link to General description">​</a></h4>
-<p>The MDS&#x27;s API for the replication of the datasets is file based and asynchronous. The client sending the file to the endpoint does not get the status of the replication run in the response to the call of the replication endpoint (the replication can take minutes depending on the size of the file). The first call however returns ID of the operation that can be then monitored using other API endpoint and the result of the replication job can be determined based on the operation status.</p>
+<p>The MDH&#x27;s API for the replication of the datasets is file based and asynchronous. The client sending the file to the endpoint does not get the status of the replication run in the response to the call of the replication endpoint (the replication can take minutes depending on the size of the file). The first call however returns ID of the operation that can be then monitored using other API endpoint and the result of the replication job can be determined based on the operation status.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="implementation-steps">Implementation steps<a href="#implementation-steps" class="hash-link" aria-label="Direct link to Implementation steps" title="Direct link to Implementation steps">​</a></h4>
 <ol>
 <li>Call <a href="https://elis.rossum.ai/api/docs/#login" target="_blank" rel="noopener noreferrer">login endpoint</a> of Rossum API to obtain access token that will be used for authentication of the dataset file push call. The username and password is required for this call. There can be an integration user created for this purpose in Rossum.</li>
