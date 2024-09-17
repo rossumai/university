@@ -11,6 +11,7 @@ Formula Fields or Rossum Python do not require any installation. It is available
 Formula Fields are available in the queue schema as a `formula` field type. Rossum Python is available in serverless functions. Both flavors are fundamentally similar and differ only in how they are used with minimal syntax differences.
 
 In case you want to use the Rossum Python within the serverless functions, you need to enable following setting:
+
 1. Go to the settings of the Webhook (Serverless function)
 2. Scroll to `Additional notification metadata`
 3. Enable the `Schemas` option
