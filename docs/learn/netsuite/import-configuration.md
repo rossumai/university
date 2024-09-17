@@ -118,6 +118,7 @@ Requires 'Lists -> Currency' permissions.
 ```
 
 ### Customers
+
 :::info
 
 Requires 'Lists -> Customers' permissions.
@@ -126,30 +127,30 @@ Requires 'Lists -> Customers' permissions.
 
 ```json
 {
-      "payload": {
-        "method_args": [
-          {
-            "_ns_type": "CustomerSearchBasic",
-            "isInactive": {
-              "searchValue": false
-            }
-          }
-        ],
-        "method_name": "search",
-        "method_headers": {
-          "searchPreferences": {
-            "pageSize": 100,
-            "bodyFieldsOnly": false,
-            "returnSearchColumns": false
-          }
+  "payload": {
+    "method_args": [
+      {
+        "_ns_type": "CustomerSearchBasic",
+        "isInactive": {
+          "searchValue": false
         }
-      },
-      "async_settings": {
-        "retries": 5,
-        "max_run_time_s": 36000
-      },
-      "master_data_name": "NS_SB1_Customer_v1"
+      }
+    ],
+    "method_name": "search",
+    "method_headers": {
+      "searchPreferences": {
+        "pageSize": 100,
+        "bodyFieldsOnly": false,
+        "returnSearchColumns": false
+      }
     }
+  },
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "master_data_name": "NS_SB1_Customer_v1"
+}
 ```
 
 ### Inventory items
