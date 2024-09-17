@@ -86,11 +86,6 @@ const config = {
             label: 'Watch',
             position: 'left',
           },
-          {
-            href: 'https://elis.rossum.ai/api/docs/',
-            label: 'API Reference',
-            position: 'left',
-          },
 
           // See: http://localhost:3000/docs/docusaurus/intro
           // {
@@ -108,6 +103,11 @@ const config = {
           // },
 
           {
+            href: 'https://elis.rossum.ai/api/docs/',
+            label: 'API',
+            position: 'right',
+          },
+          {
             href: 'https://rossum.ai/',
             label: 'Rossum.ai',
             position: 'right',
@@ -115,11 +115,6 @@ const config = {
           {
             href: 'https://status.rossum.ai/',
             label: 'Status page',
-            position: 'right',
-          },
-          {
-            href: 'https://github.com/rossumai/university',
-            label: 'GitHub',
             position: 'right',
           },
         ],
