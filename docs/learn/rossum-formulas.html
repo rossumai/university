@@ -10,7 +10,7 @@
 
 
 <link rel="search" type="application/opensearchdescription+xml" title="Rossum.ai University" href="/opensearch.xml"><link rel="stylesheet" href="/assets/css/styles.137aac8f.css">
-<script src="/assets/js/runtime~main.ba64d62b.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.d86a31cc.js" defer="defer"></script>
 <script src="/assets/js/main.fb40bc07.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -18,6 +18,13 @@
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="installation">Installation<a href="#installation" class="hash-link" aria-label="Direct link to Installation" title="Direct link to Installation">​</a></h2>
 <p>Formula Fields or Rossum Python do not require any installation. It is available as a native Rossum functionality.</p>
 <p>Formula Fields are available in the queue schema as a <code>formula</code> field type. Rossum Python is available in serverless functions. Both flavors are fundamentally similar and differ only in how they are used with minimal syntax differences.</p>
+<p>In case you want to use the Rossum Python within the serverless functions, you need to enable following setting:</p>
+<ol>
+<li>Go to the settings of the Webhook (Serverless function)</li>
+<li>Scroll to <code>Additional notification metadata</code></li>
+<li>Enable the <code>Schemas</code> option</li>
+<li>Save it and now you can work with the <code>Rossum Python</code> in your serverless function</li>
+</ol>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="basic-usage">Basic usage<a href="#basic-usage" class="hash-link" aria-label="Direct link to Basic usage" title="Direct link to Basic usage">​</a></h2>
 <p>To start with Formula Fields, follow these steps:</p>
 <ol>
