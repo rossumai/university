@@ -12,13 +12,13 @@ Using Sandboxes currently requires installation of an external tooling available
 
 ## Installation
 
-First, download the Sandboxing tool `deployment-manager` locally from its Rossum GitHub repository:
+First, download the install script for our Sandboxing tool `deployment-manager` from its Rossum GitHub repository:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rossumai/deployment-manager/main/install.sh)"
 ```
 
-This will install the Sandboxing tool in the `~/.local/bin` folder making it available globally under the command `prd`.
+The script will automatically run and install the Sandboxing tool in the `~/.local/bin` folder making it available globally under the command `prd`.
 
 To upgrade to the latest version, run:
 
