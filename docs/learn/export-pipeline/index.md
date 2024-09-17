@@ -5,19 +5,15 @@ title: 'Export pipelines'
 import WIP from '../\_wip.md';
 import RossumInternalOnly from '../\_rossum_internal_only.md';
 
-<WIP />
+After documents are processed in Rossum, the extracted data typically need to be exported to the downstream systems. The Rossum team has prepared an "Export pipeline" for this very purpose.
 
 <RossumInternalOnly url="https://rossumai.atlassian.net/l/cp/t2we9106" />
 
-## How to export extracted data from Rossum
+## Components of Export pipelines
 
-After documents are processed in Rossum, the extracted data typically need to be exported to the downstream systems. The Rossum team has prepared an "Export pipeline" for this very purpose.
+The export pipeline consists of the following components chained together:
 
-## What are the components of the Export pipelines
-
-The export pipeline has the following components:
-
-1. Cleaning mechanism that prepares the pipeline for export. The use is not mandatory, it is, however, beneficial for debugging (TODO).
+1. [Custom format templating purge](./custom-format-templating-purge.md), a cleaning mechanism that prepares the pipeline for export.
 1. [Custom format templating](./custom-format-templating.md), prepares the desired format for an export.
 1. [REST API export](./rest-api-export.md), exports the prepared data to REST API and stores the reply.
 1. [Data value extractor](./data-value-extractor.md) extracts important data from the API reply and stores them in the annotation object, e.g. downstream document ID, HTTP status codes.
