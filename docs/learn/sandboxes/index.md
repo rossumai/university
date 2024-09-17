@@ -12,29 +12,20 @@ Using Sandboxes currently requires installation of an external tooling available
 
 ## Installation
 
-First, download the Sandboxing tool `prd` locally:
+First, download the Sandboxing tool `deployment-manager` locally from its Rossum GitHub repository:
 
 ```bash
-git clone git@github.com:rossumai/prd.git
-cd prd
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rossumai/deployment-manager/main/install.sh)"
 ```
 
-And install it:
+This will install the Sandboxing tool in the `~/.local/bin` folder making it available globally under the command `prd`.
+
+To upgrade to the latest version, run:
 
 ```bash
-brew install pipx
-pipx ensurepath
-pipx install .
+prd update
 ```
-
-This will install the Sandboxing tool in the `~/.local/bin` folder making it available globally under command `prd`.
-
-To upgrade to the latest version, run (from the same Git directory):
-
-```bash
-git pull
-pipx install . --force
-```
+You can find more information here: https://github.com/rossumai/deployment-manager
 
 ## Available CLI commands
 
