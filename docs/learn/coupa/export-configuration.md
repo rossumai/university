@@ -32,6 +32,22 @@ This template then must be sent to the Coupa REST API which can be achieved usin
   jp="https://shared-jp.rest-api-export.rossum-ext.app/"
 />
 
+Optional secrets schema configuration:
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "client_secret": {
+      "type": "string",
+      "minLength": 1,
+      "description": "API OAuth Client secret"
+    }
+  },
+  "additionalProperties": false
+}
+```
+
 ## Configuration examples
 
 ### Invoice & Credit Note
