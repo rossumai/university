@@ -14,7 +14,12 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 
 ### Export endpoints
 
-<WebhookEndpoints />
+Coupa exports use [Custom format templating](../export-pipeline/custom-format-templating.md) from [Export pipelines](../export-pipeline/index.md) and therefore doesn't have any Coupa-specific URL. Instead, use the [Custom format templating](../export-pipeline/custom-format-templating.md) URLs from the table below:
+
+<WebhookEndpoints
+  eu1="https://elis.custom-format-templating.rossum-ext.app/"
+  eu2="https://shared-eu2.custom-format-templating.rossum-ext.app/"
+/>
 
 ## Configuration examples
 
