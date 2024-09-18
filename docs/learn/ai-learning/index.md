@@ -105,7 +105,11 @@ Documents from different regions should also be sent to separate queues to ensur
 
 If you have manually processed a document and later discovered mistakes in the annotations, you can correct them to prevent the AI from repeating these errors.
 
-If the document has already been exported, you will need to return it to the "Review" status. Simply select the document and move it to the same queue without re-extracting the data. Then, correct the data points and export it again.
+#### Using Export for documents
+
+If the document has already been exported, you will need to return it to the "Review" status. To change the document's status to "Review", simply select the document and move it to the same queue without re-extracting the data, this action will keep the document in the same queue and change the status. Then, correct the data points and export it again.
+
+#### Using Confirmed status
 
 If you are using the "Confirmed" status without exporting, you can open the document in this status and make the necessary edits. Once the changes are made, confirm it again.
 
@@ -125,7 +129,7 @@ For example, if you have an integration with a downstream system triggered every
 :::
 
 ### The field does not learn from annotations.
-1. Check your version of the AI engine. While one version learns almost instantly, another requires some agreed-upon time to pick up confirmed or exported documents. If you are unsure which AI engine you are using, contact a Rossum representative.
+1. Check your version of the AI engine. While one version learns almost instantly, another requires some agreed-upon time to pick up confirmed or exported documents. If you are unsure which AI engine you are using, you can review that on the page `Automation > Automation settings` and in the grid is a column with used technology. In case you are very unsure contact a Rossum representative.
 2. Ensure that you are teaching the AI to extract data into a field that is supposed to capture data directly from the document, rather than one that is calculated or matched from another data source.<br />
 A common example is fields used for matching data from a document with another data source. These fields use programmatic logic, not AI. If you want to modify the logic of this matching, contact your development team or consult a Rossum representative.
 3. Ensure that the field has the correct "Value Source." For AI-driven extraction, the "Value Source" must be set to "Captured." You can find this setting in the "Queue Settings -> Fields" section.
