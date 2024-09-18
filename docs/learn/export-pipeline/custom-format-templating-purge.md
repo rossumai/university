@@ -13,7 +13,20 @@ import WIP from '../\_wip.md';
 
 ## Installation
 
-<WIP />
+"Custom format templating purge" extension is provided and maintained by Rossum.ai in the form of webhook. To start using it, follow these steps:
+
+1. Login to your Rossum account.
+1. Navigate to **Extensions → My extensions**.
+1. Click on **Create extension**.
+1. Fill the following fields:
+   1. Name: `Custom format templating purge`
+   1. Trigger events: `Export`
+   1. Extension type: `Webhook`
+   1. URL (see below)
+1. In "Advanced settings" select **Token owner** (should have Admin access)
+1. Click **Create the webhook**.
+
+### Webhook URL endpoints
 
 <WebhookEndpoints
   eu1="https://elis.custom-format-templating-purge.rossum-ext.app/"
