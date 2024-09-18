@@ -130,7 +130,7 @@ For example, if you have an integration with a downstream system triggered every
 
 ### The field does not learn from annotations.
 1. Check your version of the AI engine. While one version learns almost instantly, another requires some agreed-upon time to pick up confirmed or exported documents. If you are unsure which AI engine you are using, you can review that on the page `Automation > Automation settings` and in the grid is a column with used technology. In case you are very unsure contact a Rossum representative.
-2. Ensure that you are teaching the AI to extract data into a field that is supposed to capture data directly from the document, rather than one that is calculated or matched from another data source.<br />
+2. Ensure that you are teaching the AI to extract data into a field that is supposed to capture data directly from the document, never use one that is calculated or matched from another data source.<br />
 A common example is fields used for matching data from a document with another data source. These fields use programmatic logic, not AI. If you want to modify the logic of this matching, contact your development team or consult a Rossum representative.
 3. Ensure that the field has the correct "Value Source." For AI-driven extraction, the "Value Source" must be set to "Captured." You can find this setting in the "Queue Settings -> Fields" section.
 ![value-source](img/value-source.png)
