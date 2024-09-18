@@ -1,11 +1,24 @@
 ---
-title: 'Coupa: Export configuration examples'
-sidebar_position: 5
-sidebar_label: 'Export configuration examples'
+title: 'Coupa: Export configuration'
+sidebar_position: 3
+sidebar_label: 'Export configuration'
 ---
 
+import WebhookEndpoints from '../\_webhook_endpoints.md';
 
-## Invoice
+# Export configuration
+
+## Setup
+
+Create webhook as described in [Integration Setup](./integration-setup.md#configuring-rossum) and use the right link from the table below (according the Rossum environment of configured account)
+
+### Export endpoints
+
+<WebhookEndpoints />
+
+## Configuration examples
+
+### Invoice
 
 ```json
 {

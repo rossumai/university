@@ -1,10 +1,27 @@
 ---
-title: 'Coupa: Import configuration examples'
-sidebar_position: 3
-sidebar_label: 'Import configuration examples'
+title: 'Coupa: Import configuration'
+sidebar_position: 2
+sidebar_label: 'Import configuration'
 ---
 
-## Currencies
+import WebhookEndpoints from '../\_webhook_endpoints.md';
+
+# Import configuration
+
+## Setup
+
+Create webhook as described in [Integration Setup](./integration-setup.md#configuring-rossum) and use the right link from the table below (according the Rossum environment of configured account)
+
+### Import endpoints
+
+<WebhookEndpoints
+  eu1="https://elis.rossum.ai/svc/scheduled-imports/api/coupa/v1/import"
+  eu2="https://shared-eu2.rossum.app/svc/scheduled-imports/api/coupa/v1/import"
+/>
+
+## Configuration examples
+
+### Currencies
 
 ```json
 {
@@ -25,7 +42,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Lookup values
+### Lookup values
 
 ```json
 {
@@ -81,7 +98,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Purchase orders
+### Purchase orders
 
 ```json
 {
@@ -218,7 +235,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Purchase order - Line items
+### Purchase order - Line items
 
 ```json
 {
@@ -307,7 +324,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Suppliers
+### Suppliers
 
 ```json
 {
@@ -408,7 +425,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Supplier information
+### Supplier information
 
 ```json
 {
@@ -568,7 +585,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Tax Codes
+### Tax Codes
 
 ```json
 {
@@ -590,7 +607,7 @@ sidebar_label: 'Import configuration examples'
 }
 ```
 
-## Units of measurement
+### Units of measurement
 
 ```json
 {

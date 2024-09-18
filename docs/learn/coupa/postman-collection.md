@@ -1,19 +1,21 @@
 ---
 title: 'Coupa: Postman collection'
-sidebar_position: 7
+sidebar_position: 5
 sidebar_label: 'Postman collection'
 ---
+
+# Postman collection
 
 ## Source
 
 :::info
-Download the Postman collection from here:
 
--  https://compass.coupa.com/en-us/products/core-platform/integration-playbooks-and-resources/integration-knowledge-articles/postman-collection-for-coupa-apis
+Download the Postman collection from here: https://compass.coupa.com/en-us/products/core-platform/integration-playbooks-and-resources/integration-knowledge-articles/postman-collection-for-coupa-apis
 
 :::
 
 ## Usage
+
 Although it is possible to setup it differently, using the provided collection has some benefits built-in:
 
 - You can copy and paste the OAuth scopes "as is" (including commas)
@@ -39,4 +41,3 @@ Best practices
 ### Environment
 
 ![alt text](img/coupa-postman-env.png)
-
