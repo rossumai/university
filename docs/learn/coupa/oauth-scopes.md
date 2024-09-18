@@ -4,6 +4,8 @@ sidebar_position: 6
 sidebar_label: 'OAuth 2.0 scopes'
 ---
 
+# OAuth 2.0 scopes
+
 _OAuth Scopes and Associated Permissions_
 
 ## 1. core.accounting.read

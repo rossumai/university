@@ -6,11 +6,13 @@ sidebar_label: 'Integration setup'
 
 import WIP from '../\_wip.md';
 
+# Integration setup
+
 The following article guides you through the Coupa integration setup. It consists of two mandatory parts: Coupa configuration and Rossum hook configuration.
 
 ## Configuring Coupa
 
-The main prerequisite is to have a valid Coupa user with needed permissions (see [OAuth 2.0 scopes](./coupa-oauth-scopes.md)). If you don't have a user with needed permission, ask your admin to create it.
+The main prerequisite is to have a valid Coupa user with needed permissions (see [OAuth 2.0 scopes](./oauth-scopes.md)). If you don't have a user with needed permission, ask your admin to create it.
 
 :::tip
 
@@ -42,10 +44,10 @@ Coupa service (integration) is provided by Rossum.ai in the form of webhook. To 
    1. Name: `Coupa: Import/Export [what]`
    1. Trigger events: `Manual` (later also `Scheduled`)
    1. Extension type: `Webhook`
-   1. URL (see [Import setup](./coupa-import-setup.md) and [Export setup](./coupa-export-setup.md))
+   1. URL (see [Import configuration](./import-configuration.md) and [Export configuration](./export-configuration.md))
    1. Token owner of the extension (typically a system user)
 1. Click **Create the webhook**.
-1. Fill `Configuration` (see [Import Examples](./coupa-import-configuration-examples.md) or [Export Examples](./coupa-export-configuration-examples.md))
+1. Fill `Configuration` (see [Import configuration examples](./import-configuration.md#configuration-examples) or [Export configuration examples](./export-configuration.md#configuration-examples))
 1. Fill `Secrets` fields.
 
 ### Patch token lifetime
