@@ -72,6 +72,7 @@ For in detail explanation please reach out to [Annotations Guide](https://rossum
 
 1. Always try to annotate text for names. Avoid logos or visual representations of data.
 2. Handwritten data is not currently supported, even though it may be partially recognized.
+3. Watermark recognition is not currently supported. If your use case requires this functionality, please contact a Rossum representative for further assistance.
 
 ## 🏆 Priority of rules {#priority-of-rules}
 
@@ -128,7 +129,7 @@ For example, if you have an integration with a downstream system triggered every
 
 :::
 
-### The field does not learn from annotations.
+### The field does not learn from annotations
 1. Check your version of the AI engine. While one version learns almost instantly, another requires some agreed-upon time to pick up confirmed or exported documents. If you are unsure which AI engine you are using, you can review that on the page `Automation > Automation settings` and in the grid is a column with used technology. In case you are very unsure contact a Rossum representative.
 2. Ensure that you are teaching the AI to extract data into a field that is supposed to capture data directly from the document, never use one that is calculated or matched from another data source.<br />
 A common example is fields used for matching data from a document with another data source. These fields use programmatic logic, not AI. If you want to modify the logic of this matching, contact your development team or consult a Rossum representative.
@@ -139,5 +140,12 @@ Any other type of "Value Source" will prevent AI learning.
 
 If none of the above steps help, contact a Rossum representative.
 
-### The field does not capture more than one line of data.
+### The field does not capture more than one line of data
 If you are using a custom field to capture multiple lines of data, please consult a Rossum representative. By default, the AI learns from a single line, except for out-of-the-box address fields.
+
+### Magic Grid Disappeared for Some Annotations
+Please check if the new option for annotating tables, [Aurora for Complex Tables](https://rossum.ai/help/article/aurora-for-complex-tables/), is available. If not, contact your Rossum representative for further assistance.
+
+The reason the Grid may not be fully or partially displayed is due to a shift in technology towards more advanced AI recognition that no longer requires the grid. For example, if some data points in your table are nested under others, the system may be unable to create a reliable grid, as multiple fields may appear in a single column. In such cases, the grid will not be shown.
+
+Aurora for Complex Tables avoids these issues since it does not use a grid. However, the annotation process is different, so be sure to familiarize yourself with the best practices.
