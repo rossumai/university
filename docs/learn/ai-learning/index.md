@@ -143,7 +143,7 @@ If none of the above steps help, contact a Rossum representative.
 ### The field does not capture more than one line of data
 If you are using a custom field to capture multiple lines of data, please consult a Rossum representative. By default, the AI learns from a single line, except for out-of-the-box address fields.
 
-### Magic Grid Disappeared for Some Annotations
+### Magic Grid disappeared for some annotations
 Please check if the new option for annotating tables, [Aurora for Complex Tables](https://rossum.ai/help/article/aurora-for-complex-tables/), is available. If not, contact your Rossum representative for further assistance.
 
 The reason the Grid may not be fully or partially displayed is due to a shift in technology towards more advanced AI recognition that no longer requires the grid. For example, if some data points in your table are nested under others, the system may be unable to create a reliable grid, as multiple fields may appear in a single column. In such cases, the grid will not be shown.
