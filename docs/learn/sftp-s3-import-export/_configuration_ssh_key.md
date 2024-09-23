@@ -1,8 +1,18 @@
 Secrets:
 
+Without passphrase
 ```json
 {
   "type": "sftp",
+  "ssh_key": "-----BEGIN OPENSSH PRIVATE KEY-----\nabcd…wxyz\n-----END OPENSSH PRIVATE KEY-----"
+}
+```
+
+With passphrase
+```json
+{
+  "type": "sftp",
+  "ssh_key_passphrase": "<passphrase for private key>",
   "ssh_key": "-----BEGIN OPENSSH PRIVATE KEY-----\nabcd…wxyz\n-----END OPENSSH PRIVATE KEY-----"
 }
 ```
