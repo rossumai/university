@@ -104,6 +104,26 @@ def rossum_hook_request_handler(payload):
     return r.hook_response()
 ```
 
+## Validate header fields
+
+```py
+from rossum_python import RossumPython, is_empty
+
+def rossum_hook_request_handler(payload):
+    r = RossumPython.from_payload(payload)
+
+    # Header total = subtotal + taxes:
+    if is_set(r.field.amount_due) and is_set(r.field.amount_total_base) and is_set(r.field.amount_total_tax):
+        amount_total_base = default_to(r.field.amount_total_base, 0)
+        amount_total_tax = default_to(r.field.amount_total_tax, 0)
+        amount_due = default_to(r.field.amount_due, 0)
+        if amount_due != (amount_total_base + amount_total_tax):
+            message = "Total invoice amount is not equal to the sum of amount base and the tax."
+            r.show_error(message, r.field.amount_due)
+
+    return r.hook_response()
+```
+
 ## Validate line items
 
 In serverless functions, it is necessary to iterate the individual line items and perform the validations on row level:
