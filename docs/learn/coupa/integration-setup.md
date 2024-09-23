@@ -50,17 +50,6 @@ Coupa service (integration) is provided by Rossum.ai in the form of webhook. To 
 1. Fill `Configuration` (see [Import configuration examples](./import-configuration.md#configuration-examples) or [Export configuration examples](./export-configuration.md#configuration-examples))
 1. Fill `Secrets` fields.
 
-### Patch token lifetime
-
-Patch the token lifetime to 2 minutes:
-
-```bash
-curl --location --request PATCH 'https://[company-example].rossum.app/api/v1/hooks/[hook-id]' \
---header 'Authorization: Bearer [token] \
---header 'Content-Type: application/json' \
---data '{"token_lifetime_s": 120}'
-```
-
 ### Setting hook secrets schema (optional):
 
 Optional step is it cannot be done via UI (but can be done either via API or via [`prd` deployment tool](../sandboxes/index.md))
