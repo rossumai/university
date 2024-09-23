@@ -1,6 +1,5 @@
-Secrets:
+Secrets (without a passphrase):
 
-Without passphrase
 ```json
 {
   "type": "sftp",
@@ -8,7 +7,8 @@ Without passphrase
 }
 ```
 
-With passphrase
+Secrets (with passphrase):
+
 ```json
 {
   "type": "sftp",

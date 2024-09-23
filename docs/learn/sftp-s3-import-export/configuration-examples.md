@@ -144,7 +144,6 @@ Configuration:
 
 <ConfigurationUsernamePassword />
 
-
 ## Import from S3
 
 There are few diferences from the SFTP, but it is very similar.
@@ -166,8 +165,11 @@ There is only one credential option for the `s3`. It consist of `Access Key ID` 
 ##### Import configuration for S3
 
 :::warning
-Please note, that the attribute `path` **starts without slash** (as the opposite from SFTP configuration)
+
+Please note, that the attribute `path` **starts without slash** (as opposed to the SFTP configuration).
+
 :::
+
 ```json
 {
   "credentials": {
