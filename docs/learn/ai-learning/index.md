@@ -82,7 +82,7 @@ It may happen that some of the recommendations contradict each other in particul
 - When applying the Consistency principle, be reasonable. For example, if there is a logo at the top of the first page and a written sender name in the footer of the document, choose the footer, even if the recommendation is to prefer the header.
 - Another example is when two values always appear together in the footer, but one of them is also present in the header section (e.g., Sender Name and Sender Address). In this case, you can choose to annotate both together in the footer, but be consistent and do not occasionally switch to another location. In the end, consistency itself is more important
 
-## 🙋 FAQ {#faq}
+## 🙋 Q&A {#q&a}
 
 ### When should I use multiple queues for my documents?
 
@@ -149,3 +149,22 @@ Please check if the new option for annotating tables, [Aurora for Complex Tables
 The reason the Grid may not be fully or partially displayed is due to a shift in technology towards more advanced AI recognition that no longer requires the grid. For example, if some data points in your table are nested under others, the system may be unable to create a reliable grid, as multiple fields may appear in a single column. In such cases, the grid will not be shown.
 
 Aurora for Complex Tables avoids these issues since it does not use a grid. However, the annotation process is different, so be sure to familiarize yourself with the best practices.
+
+### Some pre-trained fields strip characters during data extraction
+
+Certain pre-trained fields are modified when extracted. You can learn more about pre-trained fields in our [documentation](https://elis.rossum.ai/api/docs/#identifiers).
+
+Below is a list of fields that undergo modification (please refer to the documentation for the most up-to-date information):
+| Attr. rir_field_names	 | Field label	 | Modification |
+|----------|----------|----------|
+| `account_num` | Bank Account | Whitespaces are stripped |
+| `var_sym` | Variable symbol | Possible non-numeric characters are stripped |
+| `customer_id` | Customer Number | Whitespaces are stripped |
+| `document_id` | Document Identifier | Whitespaces are stripped |
+| `order_id` | Order Number | Whitespaces are stripped |
+| `recipient_dic` | Recipient Tax Number | Whitespaces are stripped |
+| `recipient_ic` | Recipient Company ID | Possible non-numeric characters are stripped |
+| `sender_dic` | Supplier Tax Number | Whitespaces are stripped |
+| `sender_ic` | Supplier Company ID | Possible non-numeric characters are stripped |
+
+If you need to prevent these modifications, please contact a Rossum representative. 
