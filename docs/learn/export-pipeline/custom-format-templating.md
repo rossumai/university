@@ -11,6 +11,20 @@ import WIP from '../\_wip.md';
 
 ## Installation
 
+"Custom format templating" extension is provided and maintained by Rossum.ai in the form of webhook. To start using it, follow these steps:
+
+1. Login to your Rossum account.
+1. Navigate to **Extensions → My extensions**.
+1. Click on **Create extension**.
+1. Fill the following fields:
+   1. Name: `Custom format templating`
+   1. Trigger events: `Export`
+   1. Extension type: `Webhook`
+   1. URL (see below)
+1. In "Advanced settings" select **Token owner** (should have Admin access)
+1. In the "Additional notification metadata" enable `Schemas`
+1. Click **Create the webhook**.
+
 <WIP />
 
 <WebhookEndpoints
