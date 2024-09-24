@@ -24,6 +24,7 @@ import WIP from '../\_wip.md';
    1. Extension type: `Webhook`
    1. URL (see below)
 1. In "Advanced settings" select **Token owner** (should have Admin access)
+1. In the "Additional notification metadata" enable `Schemas`
 1. Click **Create the webhook**.
 
 ### Webhook URL endpoints
