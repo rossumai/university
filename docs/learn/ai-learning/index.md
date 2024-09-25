@@ -82,7 +82,7 @@ It may happen that some of the recommendations contradict each other in particul
 - When applying the Consistency principle, be reasonable. For example, if there is a logo at the top of the first page and a written sender name in the footer of the document, choose the footer, even if the recommendation is to prefer the header.
 - Another example is when two values always appear together in the footer, but one of them is also present in the header section (e.g., Sender Name and Sender Address). In this case, you can choose to annotate both together in the footer, but be consistent and do not occasionally switch to another location. In the end, consistency itself is more important
 
-## 🙋 Q&A {#q&a}
+## 🙋 Q&A {#qa}
 
 ### When should I use multiple queues for my documents?
 
@@ -130,20 +130,23 @@ For example, if you have an integration with a downstream system triggered every
 :::
 
 ### The field does not learn from annotations
+
 1. Check your version of the AI engine. While one version learns almost instantly, another requires some agreed-upon time to pick up confirmed or exported documents. If you are unsure which AI engine you are using, you can review that on the page `Automation > Automation settings` and in the grid is a column with used technology. In case you are very unsure contact a Rossum representative.
 2. Ensure that you are teaching the AI to extract data into a field that is supposed to capture data directly from the document, never use one that is calculated or matched from another data source.<br />
-A common example is fields used for matching data from a document with another data source. These fields use programmatic logic, not AI. If you want to modify the logic of this matching, contact your development team or consult a Rossum representative.
+   A common example is fields used for matching data from a document with another data source. These fields use programmatic logic, not AI. If you want to modify the logic of this matching, contact your development team or consult a Rossum representative.
 3. Ensure that the field has the correct "Value Source." For AI-driven extraction, the "Value Source" must be set to "Captured." You can find this setting in the "Queue Settings -> Fields" section.
-![value-source](img/value-source.png)
-Any other type of "Value Source" will prevent AI learning.
+   ![value-source](img/value-source.png)
+   Any other type of "Value Source" will prevent AI learning.
 4. For "Captured" fields, ensure that a representative set of annotated documents has been confirmed or exported.
 
 If none of the above steps help, contact a Rossum representative.
 
 ### The field does not capture more than one line of data
+
 If you are using a custom field to capture multiple lines of data, please consult a Rossum representative. By default, the AI learns from a single line, except for out-of-the-box address fields.
 
 ### Magic Grid disappeared for some annotations
+
 Please check if the new option for annotating tables, [Aurora for Complex Tables](https://rossum.ai/help/article/aurora-for-complex-tables/), is available. If not, contact your Rossum representative for further assistance.
 
 The reason the Grid may not be fully or partially displayed is due to a shift in technology towards more advanced AI recognition that no longer requires the grid. For example, if some data points in your table are nested under others, the system may be unable to create a reliable grid, as multiple fields may appear in a single column. In such cases, the grid will not be shown.
@@ -155,16 +158,17 @@ Aurora for Complex Tables avoids these issues since it does not use a grid. Howe
 Certain pre-trained fields are modified when extracted. You can learn more about pre-trained fields in our [documentation](https://elis.rossum.ai/api/docs/#identifiers).
 
 Below is a list of fields that undergo modification (please refer to the documentation for the most up-to-date information):
-| Attr. rir_field_names	 | Field label	 | Modification |
-|----------|----------|----------|
-| `account_num` | Bank Account | Whitespaces are stripped |
-| `var_sym` | Variable symbol | Possible non-numeric characters are stripped |
-| `customer_id` | Customer Number | Whitespaces are stripped |
-| `document_id` | Document Identifier | Whitespaces are stripped |
-| `order_id` | Order Number | Whitespaces are stripped |
-| `recipient_dic` | Recipient Tax Number | Whitespaces are stripped |
-| `recipient_ic` | Recipient Company ID | Possible non-numeric characters are stripped |
-| `sender_dic` | Supplier Tax Number | Whitespaces are stripped |
-| `sender_ic` | Supplier Company ID | Possible non-numeric characters are stripped |
 
-If you need to prevent these modifications, please contact a Rossum representative. 
+| Attr. rir_field_names | Field label          | Modification                                 |
+| --------------------- | -------------------- | -------------------------------------------- |
+| `account_num`         | Bank Account         | Whitespaces are stripped                     |
+| `var_sym`             | Variable symbol      | Possible non-numeric characters are stripped |
+| `customer_id`         | Customer Number      | Whitespaces are stripped                     |
+| `document_id`         | Document Identifier  | Whitespaces are stripped                     |
+| `order_id`            | Order Number         | Whitespaces are stripped                     |
+| `recipient_dic`       | Recipient Tax Number | Whitespaces are stripped                     |
+| `recipient_ic`        | Recipient Company ID | Possible non-numeric characters are stripped |
+| `sender_dic`          | Supplier Tax Number  | Whitespaces are stripped                     |
+| `sender_ic`           | Supplier Company ID  | Possible non-numeric characters are stripped |
+
+If you need to prevent these modifications, please contact a Rossum representative.
