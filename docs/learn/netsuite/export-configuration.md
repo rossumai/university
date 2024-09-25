@@ -442,32 +442,25 @@ Notice also the highlighted `$GET_DOCUMENT_CONTENT$` which returns the content o
 
 ### Linking Vendor Credits with Vendor Bills
 
-Vendor credits can be linked to vendor bills via `applyList` configuration. Note that the credits can be applied only "Open" vendor bills and always to VB line `0`. The lines also need to be grouped by vendor bill (there cannot be multiple credit lines applied to the same VB). Configuration example:
+Vendor credits can be linked to vendor bills via `applyList` configuration. Note that the credits can be applied only "Open" vendor bills and always to VB line `0`. In this example, we apply the whole credit note value to the specified vendor bill:
 
 ```json
 {
   "applyList": {
-    "apply": {
-      "$FOR_EACH_SCHEMA_ID$": {
-        "mapping": {
-          "doc": "@{item_invoice_match_grouped_by_invoice}",
+    "$IF_DATAPOINT_VALUE$": {
+      "schema_id": "ns_status_match",
+      "value": "Open",
+      "mapping": {
+        "apply": {
+          "doc": "@{ns_internalId_match}",
           "line": "0",
-          "apply": {
-            "$DATAPOINT_MAPPING$": {
-              "mapping": {
-                "Open": true
-              },
-              "schema_id": "ns_invoice_status_grouped_by_invoice",
-              "fallback_mapping": false
-            }
-          },
-          "amount": "@{ns_amount_grouped_by_invoice}",
+          "apply": true,
+          "amount": "@{amount_total_normalized}",
           "_ns_type": "VendorCreditApply"
         },
-        "schema_id": "line_item_grouped_by_invoice"
+        "_ns_type": "VendorCreditApplyList"
       }
-    },
-    "_ns_type": "VendorCreditApplyList"
+    }
   }
 }
 ```
