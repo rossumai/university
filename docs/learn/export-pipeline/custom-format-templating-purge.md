@@ -9,7 +9,9 @@ import WIP from '../\_wip.md';
 
 # Custom format templating purge
 
-[Custom format templating](./custom-format-templating.md) is creating new documents and saving their links into the annotation metadata. However, when re-exporting, we need to clean up the old documents not to mix them up with the new documents. This purge extension allows us to do that.
+[Custom format templating](./custom-format-templating.md) is creating new documents and saving their links into the annotation metadata. However, when re-exporting, we need to clean up the old documents not to mix them up with the new documents. This purge extension allows us to do that (and effectively start with a clean slate).
+
+Additionally, this extension takes care of a cleanup when purging the original documents from Rossum (by default, all generated artifacts would stay in the system orphaned). Deleting such orphaned artifacts might be very important for **compliance reasons**.
 
 ## Installation
 
@@ -20,7 +22,7 @@ import WIP from '../\_wip.md';
 1. Click on **Create extension**.
 1. Fill the following fields:
    1. Name: `Custom format templating purge`
-   1. Trigger events: `Export`
+   1. Trigger events: `Export` and document status `Changed` (!)
    1. Extension type: `Webhook`
    1. URL (see below)
 1. In "Advanced settings" select **Token owner** (should have Admin access)
