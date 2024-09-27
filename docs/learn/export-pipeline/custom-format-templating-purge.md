@@ -9,7 +9,7 @@ import WIP from '../\_wip.md';
 
 # Custom format templating purge
 
-[Custom format templating](./custom-format-templating.md) is creating new documents and saving their links into the annotation metadata. However, when re-exporting, we need to clean up the old documents not to mix them up with the new documents. This purge extension allows us to do that (and effectively start with a clean slate).
+Extensions like [Custom format templating](./custom-format-templating.md) and [REST API export](./rest-api-export.md) (and possibly others) store their API responses and artefacts in the annotation metadata. When re-exporting, we need to remove these old documents and responses to ensure a clean start. The purge extension helps us achieve this.
 
 Additionally, this extension takes care of a cleanup when purging the original documents from Rossum (by default, all generated artifacts would stay in the system orphaned). Deleting such orphaned artifacts might be very important for **compliance reasons**.
 
