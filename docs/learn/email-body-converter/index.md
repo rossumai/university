@@ -12,7 +12,7 @@ The original API endpoint documentation can be found [here.](https://elis.rossum
 
 ## Installation
 
-Structured formats import is a webhook maintained by Rossum. To use it, follow these steps:
+Email body converter is a webhook maintained by Rossum. To use it, follow these steps:
 
 1. Log in to your Rossum account.
 1. Navigate to **Extensions → My extensions**.
