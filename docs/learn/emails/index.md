@@ -1,5 +1,5 @@
 ---
-title: 'Emails & Email Ingestion'
+title: 'Emails & email ingestion'
 ---
 
 ## Introduction

@@ -1,8 +1,12 @@
 ---
-title: 'Email body converter'
+sidebar_position: 2
+sidebar_label: 'Email body converter'
+title: 'Emails & email ingestion: Email body converter'
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
+
+# Email body converter
 
 A simple extension that can convert the email HTML body into a PDF and upload it to a queue as a new document.
 
