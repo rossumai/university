@@ -1,7 +1,7 @@
 ---
 sidebar_position: 1
 sidebar_label: 'Automating emails'
-title: 'Emails & Email Ingestion: automating emails'
+title: 'Emails & email ingestion: Automating emails'
 ---
 
 # Automating emails
