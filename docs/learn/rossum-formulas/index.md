@@ -144,10 +144,18 @@ default_to(r.field.amount, 0)
 
 ### Substitute
 
+Substitute is an alias for [`re.sub`](https://docs.python.org/3/library/re.html#re.sub) function (for convenience).
+
 #### Formula field
 
 ```py
-substitute(…, …)
+substitute(r"[^0-9]", r"", field.document_id)  # Remove non-digit characters
+```
+
+Could also be written as (`re` is imported automatically):
+
+```py
+re.sub(r"[^0-9]", r"", field.document_id)
 ```
 
 #### Serverless function
@@ -157,7 +165,7 @@ from rossum_python import RossumPython, substitute
 
 # …
 
-substitute(…, …)
+substitute(r"[^0-9]", r"", field.document_id)
 ```
 
 ### Show info/warning/error messages
