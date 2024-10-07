@@ -4,8 +4,9 @@ title: 'Master data hub'
 
 :::info[API documentation]
 
-👉 https://elis.rossum.ai/svc/master-data-hub/api/docs
+Master Data Hub: 👉 https://elis.rossum.ai/svc/master-data-hub/api/docs
 
+Data Matching: 👉 https://elis.rossum.ai/svc/data-matching/api/docs
 :::
 
 ## What is the Master Data Hub extension
