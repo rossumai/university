@@ -21,29 +21,33 @@ This powerful feature is available on the Business plan and above.
 Existing customers interested in using formula fields can reach out to our support team at support@rossum.ai for assistance.
 
 :::
-# Best Practices
+## Best Practices
 
-## Field Naming and Management
+### Field Naming and Management
 When you need to create a normalized version of a field like `document_id`, it's recommended to create a new field, such as `document_id_normalized`.
 Use the formula field to apply the normalization logic. This approach allows you to preserve the original value while keeping the normalized result in a separate field, making it easier to manage both.
 
 For better organization, it's also a good practice to group these related fields together, ensuring they are logically aligned and easy to find.
 
-## Wide Variety of Functions
+### Wide Variety of Functions
 As mentioned earlier, formula fields allow you to work with Python, enabling operations similar to those in serverless functions. 
 However, formula fields are much simpler to maintain and manage, offering a streamlined approach for straightforward tasks.
 
-## When to Use Formula Fields vs. Serverless Functions
+### When to Use Formula Fields vs. Serverless Functions
 Formula fields are ideal for simple tasks such as data normalization or creating new fields based on existing ones. 
 For more complex operations, serverless functions may be more appropriate. 
-Also, there is a limit of **2000** characters per formula fields which declares the highest complexity of the formula fields.
+Situations where you should prefer serverless functions include:
+- There is a limit of **2000** characters per formula fields which declares the highest complexity of the formula fields.
+- You cannot make request outside the formula field function.
+- You cannot access the document object from within the formula fuction.
+
 
 An additional advantage of formula fields is that they are stored at the schema level, so when you copy a queue,
 all associated formula fields are copied automatically. In contrast, serverless functions must be configured manually and re-linked to new queues after being copied.
 
 # Examples of common formula fields (using Formula Fields flavor).
 
-## Copy fields conditionally
+### Copy fields conditionally
 
 Copy `order_id` into another field but prioritize `order_id_manual` datapoint if it exists:
 
@@ -53,13 +57,13 @@ New formula field `order_id_normalized`:
 field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 ```
 
-## Find first non-empty line item value
+### Find first non-empty line item value
 
 ```py
 next((item for item in field.item_code.all_values if item), "")
 ```
 
-## Generate NetSuite external IDs
+### Generate NetSuite external IDs
 
 Create external ID needed by NetSuite for _VendorBill_ and _VendorCredit_ records:
 
@@ -75,7 +79,7 @@ substitute(r"[^a-zA-Z\d\-_]", "", f"__rossum__{field.document_type}__{external_i
 
 This is typically necessary when [exporting records into NetSuite](../netsuite/export-configuration#vendor-bills-invoices).
 
-## Get line item index
+### Get line item index
 
 Returns line item number (indexed from 0):
 
@@ -83,7 +87,7 @@ Returns line item number (indexed from 0):
 field._index
 ```
 
-## Normalize field value
+### Normalize field value
 
 Remove non-alphanumeric characters (except "-" and "\_"):
 
@@ -91,7 +95,7 @@ Remove non-alphanumeric characters (except "-" and "\_"):
 substitute(r"[^a-zA-Z\d\-_]", "", field.order_id)
 ```
 
-## Sum line item values
+### Sum line item values
 
 Sum the values of `item_amount_total`. Use `0` if the field is empty.
 
@@ -99,7 +103,7 @@ Sum the values of `item_amount_total`. Use `0` if the field is empty.
 sum(default_to(field.item_amount_total.all_values, 0))
 ```
 
-## Validations
+### Validations
 
 :::warning
 
