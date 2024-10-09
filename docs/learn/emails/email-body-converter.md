@@ -43,7 +43,7 @@ Email body converter is a webhook maintained by Rossum. To use it, follow these 
   // the queue IDs).
   "configurations": [
     {
-      // Optional. List of queue IDs this configuration applies to. A single configuration can be
+      // Required! List of queue IDs this configuration applies to. A single configuration can be
       // used for multiple queues, specified in this list.
       "queue_ids": [172636],
 
