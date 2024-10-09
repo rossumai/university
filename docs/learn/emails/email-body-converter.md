@@ -26,7 +26,7 @@ Email body converter is a webhook maintained by Rossum. To use it, follow these 
    1. Trigger events: `email.received`
    1. Extension type: `Webhook`
    1. URL (see below)
-   1. Access to Rossum’s API from extension (select your account)
+   1. In "Advanced settings" select **Token owner** (should have Admin access)
 1. Click **Create the webhook**.
 1. Fill in the `Configuration` field. See [Available configuration options](#available-configuration-options) below.
 
