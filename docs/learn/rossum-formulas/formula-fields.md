@@ -33,6 +33,9 @@ For better organization, it's also a good practice to group these related fields
 As mentioned earlier, formula fields allow you to work with Python, enabling operations similar to those in serverless functions. 
 However, formula fields are much simpler to maintain and manage, offering a streamlined approach for straightforward tasks.
 
+### Access document object information in formula field
+Unfortunately right now there is no better way than create a simple serverless function to store desired information to custom field and continue with that one in formula field.
+
 ### When to Use Formula Fields vs. Serverless Functions
 Formula fields are ideal for simple tasks such as data normalization or creating new fields based on existing ones. 
 For more complex operations, serverless functions may be more appropriate. 
@@ -40,7 +43,6 @@ Situations where you should prefer serverless functions include:
 - There is a limit of **2000** characters per formula fields which declares the highest complexity of the formula fields.
 - You cannot make request outside the formula field function.
 - You cannot access the document object from within the formula fuction.
-
 
 An additional advantage of formula fields is that they are stored at the schema level, so when you copy a queue,
 all associated formula fields are copied automatically. In contrast, serverless functions must be configured manually and re-linked to new queues after being copied.
