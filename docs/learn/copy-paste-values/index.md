@@ -2,7 +2,12 @@
 title: 'Copy & Paste Values'
 ---
 
+import Deprecated from '../\_deprecated.md';
 import WIP from '../\_wip.md';
+
+<Deprecated />
+
+# Copy & Paste Values
 
 _Formerly known as Value Operations_
 
@@ -31,7 +36,7 @@ A default "Rossum Store extension settings" page will open where you can configu
 
       // Source field from where the source value should be copied.
       "source_field": "order_id",
-      
+
       // Target field to where the source value should be copied.
       "target_field": "item_po_copy"
     }

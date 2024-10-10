@@ -4,6 +4,10 @@ sidebar_label: 'Configuration examples'
 title: 'Find & Replace Values: Configuration examples'
 ---
 
+import Deprecated from '../\_deprecated.md';
+
+<Deprecated />
+
 # Configuration examples
 
 The following examples are showing commonly used configurations when building applications using Rossum.ai platform.
