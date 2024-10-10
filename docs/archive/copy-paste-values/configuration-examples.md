@@ -1,8 +1,20 @@
 ---
-sidebar_position: 1
+unlisted: true
 sidebar_label: 'Configuration examples'
 title: 'Copy & Paste Values: Configuration examples'
 ---
+
+import PageArchivedMessage from '../\_page_archived_message.md';
+
+<PageArchivedMessage />
+
+:::tip
+
+A successor to this extension is [Rossum Formulas](../../learn/rossum-formulas/index.md).
+
+Consider contacting [Rossum.ai Sales](https://rossum.ai/form/contact/) if you need assistance migrating your legacy extensions.
+
+:::
 
 # Configuration examples
 
