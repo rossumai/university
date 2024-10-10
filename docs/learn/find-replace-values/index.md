@@ -2,6 +2,12 @@
 title: 'Find & Replace Values'
 ---
 
+import Deprecated from '../\_deprecated.md';
+
+<Deprecated />
+
+# Find & Replace Values
+
 _Formerly known as Value Transformations_
 
 ## Installation

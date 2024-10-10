@@ -4,6 +4,10 @@ sidebar_label: 'Configuration examples'
 title: 'Copy & Paste Values: Configuration examples'
 ---
 
+import Deprecated from '../\_deprecated.md';
+
+<Deprecated />
+
 # Configuration examples
 
 ## Copy header fields to line items conditionally
