@@ -243,38 +243,3 @@ Note that if you don't specify the `fallback_mapping`, it will skip the whole pa
 | `schema_id`          | Schema ID of the datapoint.                                                                                                                                                         | YES      |         |
 | `mapping`            | Mapping template that will be rendered if `schema_id` exists.                                                                                                                       | YES      |         |
 | `fallback_mapping`   | Mapping template that will be rendered if no element with the given `schema_id` is found. Note that if you don't specify the `fallback_mapping`, it will skip the whole parent key! | no       |         |
-
-## Advanced templating capabilities
-
-The JSON Templating uses the Python `jinja2` templating engine for rendering. You can use its full capabilities. For example, given the following JSON template:
-
-```json
-{
-  "math_example": "{my_value} + {my_value} = {my_value + my_value}",
-  "centered": "{my_string | center(9)}",
-  "nested": {
-    "converted_to_float": "{my_string | float}"
-  }
-}
-```
-
-And the following variables (schema datapoints):
-
-```text
-my_value = 1
-my_string = "123"
-```
-
-Will together render as:
-
-```json
-{
-  "math_example": "1 + 1 = 2",
-  "centered": "   123   ",
-  "nested": {
-    "converted_to_float": 123.0
-  }
-}
-```
-
-You can use any of the [`jinja2` filters](https://jinja.palletsprojects.com/en/3.1.x/templates/#builtin-filters) or other advanced features of the jinja2 templating engine.
