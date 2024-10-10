@@ -11,10 +11,6 @@ const { test, expect } = require('@playwright/test');
     title: 'Business Rules Validation | Rossum.ai University',
   },
   {
-    path: '/docs/learn/copy-paste-values',
-    title: 'Copy & Paste Values | Rossum.ai University',
-  },
-  {
     path: '/docs/learn/coupa',
     title: 'Coupa | Rossum.ai University',
   },
