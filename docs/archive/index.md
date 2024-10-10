@@ -16,8 +16,6 @@ If you reached this page accidentally, please return back to [Rossum.ai Universi
 Some rules for the archive:
 
 1. All pages in the archive should be marked as "unlisted". Simply add `unlisted: true` to the frontmatter.
-1. `sidebar_position` option should be removed
-1. Any external imports such as `import WIP from '../\_wip.md'` should be copy-pasted and these imports should be removed.
 1. A redirect should be created in `docusaurus.config.js` to point to the new page (we don't want to break the old links).
 1. All pages should have the following warning message on top:
 
