@@ -42,16 +42,6 @@ export default {
       from: ['/docs/learn/coupa/coupa-workflow-example'],
       to: '/docs/learn/coupa/workflow-example',
     },
-    {
-      // Redirected on 2024-10-10
-      from: ['/docs/learn/copy-paste-values'],
-      to: '/docs/archive/copy-paste-values',
-    },
-    {
-      // Redirected on 2024-10-10
-      from: ['/docs/learn/copy-paste-values/configuration-examples'],
-      to: '/docs/archive/copy-paste-values/configuration-examples',
-    },
   ],
   createRedirects(existingPath) {
     if (existingPath.includes('/docs/learn/')) {
