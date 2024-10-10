@@ -5,49 +5,46 @@ title: 'Rossum Formulas: Formula fields'
 ---
 
 # Formula fields
-### Intro
 
-Formula fields in Rossum enable you to easily transform your data directly within the app.
-Whether you need to normalize data, perform calculations, or handle text operations, formula fields provide the
-flexibility to set values based on your custom logic.
+## Intro
 
-For most tasks, Rossum’s Copilot handles everything seamlessly without needing code, and we recommend using it for the
-best results. However, if you want to dive deeper into custom logic,
-formula fields support Python-based coding with simple examples to get you started.
+Formula fields in Rossum enable you to easily transform your data directly within the app. Whether you need to normalize data, perform calculations, or handle text operations, formula fields provide the flexibility to set values based on your custom logic.
+
+For most tasks, Rossum’s Copilot handles everything seamlessly without needing code, and we recommend using it for the best results. However, if you want to dive deeper into custom logic, formula fields support Python-based coding with simple examples to get you started.
 
 :::info
 
-This powerful feature is available on the Business plan and above.
-Existing customers interested in using formula fields can reach out to our support team at support@rossum.ai for assistance.
+This powerful feature is available on the Business plan and above. Existing customers interested in using formula fields can reach out to our support team at support@rossum.ai for assistance.
 
 :::
-## Best Practices
 
-### Field Naming and Management
-When you need to create a normalized version of a field like `document_id`, it's recommended to create a new field, such as `document_id_normalized`.
-Use the formula field to apply the normalization logic. This approach allows you to preserve the original value while keeping the normalized result in a separate field, making it easier to manage both.
+## Best practices
+
+### Field naming and management
+
+When you need to create a normalized version of a field like `document_id`, it's recommended to create a new field, such as `document_id_normalized`. Use the formula field to apply the normalization logic. This approach allows you to preserve the original value while keeping the normalized result in a separate field, making it easier to manage both.
 
 For better organization, it's also a good practice to group these related fields together, ensuring they are logically aligned and easy to find.
 
-### Wide Variety of Functions
-As mentioned earlier, formula fields allow you to work with Python, enabling operations similar to those in serverless functions. 
-However, formula fields are much simpler to maintain and manage, offering a streamlined approach for straightforward tasks.
+### Wide variety of functions
+
+As mentioned earlier, formula fields allow you to work with Python, enabling operations similar to those in serverless functions. However, formula fields are much simpler to maintain and manage, offering a streamlined approach for straightforward tasks.
 
 ### Access document object information in formula field
+
 Unfortunately right now there is no better way than create a simple serverless function to store desired information to custom field and continue with that one in formula field.
 
 ### When to Use Formula Fields vs. Serverless Functions
-Formula fields are ideal for simple tasks such as data normalization or creating new fields based on existing ones. 
-For more complex operations, serverless functions may be more appropriate. 
-Situations where you should prefer serverless functions include:
+
+Formula fields are ideal for simple tasks such as data normalization or creating new fields based on existing ones. For more complex operations, serverless functions may be more appropriate. Situations where you should prefer serverless functions include:
+
 - There is a limit of **2000** characters per formula fields which declares the highest complexity of the formula fields.
 - You cannot make request outside the formula field function.
 - You cannot access the document object from within the formula fuction.
 
-An additional advantage of formula fields is that they are stored at the schema level, so when you copy a queue,
-all associated formula fields are copied automatically. In contrast, serverless functions must be configured manually and re-linked to new queues after being copied.
+An additional advantage of formula fields is that they are stored at the schema level, so when you copy a queue, all associated formula fields are copied automatically. In contrast, serverless functions must be configured manually and re-linked to new queues after being copied.
 
-# Examples of common formula fields (using Formula Fields flavor).
+## Examples of common formula fields
 
 ### Copy fields conditionally
 
@@ -132,12 +129,12 @@ if not math.isclose(item_total_base_calculated, field.item_total_base, rel_tol=0
 ```
 
 ### Date validation
-This function, check_invoice_date, checks if the invoice date (passed as document_date) is more than 90 days old compared
-to the current date. It calculates the difference in days between the two dates and, if the document is older than 90 days,
-triggers a warning message. This message notifies the user of the outdated date and blocks further automation until the issue is resolved.
+
+This function, `check_invoice_date`, checks if the invoice date (passed as `document_date`) is more than 90 days old compared to the current date. It calculates the difference in days between the two dates and, if the document is older than 90 days, triggers a warning message. This message notifies the user of the outdated date and blocks further automation until the issue is resolved.
+
 ```py
 # import fo the datetime module is not necessary as it is already imported by default
-import datetime 
+import datetime
 def check_invoice_date(document_date):
     # Get the current date
     current_date = datetime.datetime.now().date()
@@ -150,7 +147,7 @@ def check_invoice_date(document_date):
         # Raise a warning and set an automation blocker
         warning_message = f"Warning: Invoice date is older than 90 days ({days_difference} days). Please confirm the date."
         automation_blocker(warning_message, field.date_issue)
-        show_warning(warning_message) 
-    
+        show_warning(warning_message)
+
 check_invoice_date(field.date_issue)
 ```
