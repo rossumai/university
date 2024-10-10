@@ -6,7 +6,7 @@ title: 'Supported Integration Patterns'
 
 Integrating systems efficiently is critical for seamless data exchange and workflow automation. When working with the Rossum API, various integration patterns can be employed to suit different technical requirements and business needs. In this article, we explore five key integration methods—each with its own pros and cons—to help you determine the best approach for your system.
 
-## 1. Scheduled Polling Integration
+## 1. Scheduled polling integration
 
 In this model, the target system schedules regular queries to the Rossum API to retrieve annotations that are ready for export.
 
@@ -19,9 +19,10 @@ In this model, the target system schedules regular queries to the Rossum API to 
 - No real-time updates.
 - Requires tracking loaded annotations (Rossum’s “Confirmed” to “Exported” statuses help with this).
 - Hosting computational resources is necessary to run these scheduled queries.
-  ![Scheduled-Polling-Integration](img/Scheduled-Polling-Integration.png)
 
-## 2. Webhook-Driven Integration
+![Scheduled-Polling-Integration](img/Scheduled-Polling-Integration.png)
+
+## 2. Webhook-driven integration
 
 Here, the target system listens for real-time notifications via Rossum’s Webhook. When a notification is received, the system queries the Rossum API to retrieve the annotation data. This eliminates the need for a scheduled job and for tracking which annotations are ready, compared to approach #1 above. Notifications Webhook is provided by Rossum out of the box.
 
@@ -35,9 +36,10 @@ Here, the target system listens for real-time notifications via Rossum’s Webho
 
 - Requires readiness to handle incoming webhook data.
 - Even after receiving the notification, an API query is still necessary to retrieve the full annotation (except for certain event types that include annotation data. Please see [documentation](https://elis.rossum.ai/api/docs/#webhook-events) and option #3).
-  ![Webhook-Driven-Integration](img/Webhook-Driven-Integration.png)
 
-## 3. Direct Push Integration using Webhook with Annotation Data
+![Webhook-Driven-Integration](img/Webhook-Driven-Integration.png)
+
+## 3. Direct push integration using webhook with annotation data
 
 In this variation, Rossum’s Webhook delivers a direct push of data to the target system.
 It will be possible to do for the range of actions like: confirmation or export. For more see [documentation](https://elis.rossum.ai/api/docs/#webhook-events). But if you want to react only on status change the attached payload will have no content of the annotation.
@@ -52,9 +54,10 @@ It will be possible to do for the range of actions like: confirmation or export.
 - The system must be able to handle incoming requests.
 - Not all events deliver annotation data.
 - Limited customization of the Webhook logic, as it is offered "as-is."
-  ![Direct-Push-Integration-(Option-#2)](<img/Direct-Push-Integration-(Option-2).png>)
 
-## 4. Direct Push Integration using Serverless function hosted in Rossum
+![Direct-Push-Integration-(Option-#2)](<img/Direct-Push-Integration-(Option-2).png>)
+
+## 4. Direct push integration using serverless function hosted in Rossum
 
 Rossum’s serverless function pushes data directly to the target system’s public endpoint, eliminating the need for the system to pull data.
 
@@ -68,9 +71,10 @@ Rossum’s serverless function pushes data directly to the target system’s pub
 
 - The target system must be capable of receiving requests.
 - Development is needed within Rossum, which requires knowledge of Python or Node.js.
-  ![Direct-Push-Integration-(Option-#1)](<img/Direct-Push-Integration-(Option-1).png>)
 
-## 5. File-Based Integration
+![Direct-Push-Integration-(Option-#1)](<img/Direct-Push-Integration-(Option-1).png>)
+
+## 5. File-based integration
 
 With this method, Rossum exports documents to an SFTP server, and the target system retrieves the files based on its internal logic.
 
@@ -82,7 +86,8 @@ With this method, Rossum exports documents to an SFTP server, and the target sys
 
 - Must track new vs. old documents.
 - Potential latency due to the polling interval by the target system.
-  ![File-based-Integration](img/File-based-Integration.png)
+
+![File-based-Integration](img/File-based-Integration.png)
 
 ## Conclusion
 
