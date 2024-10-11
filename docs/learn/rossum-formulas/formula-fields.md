@@ -17,6 +17,13 @@ For most tasks, Rossum’s Copilot handles everything seamlessly without needing
 This powerful feature is available on the Business plan and above. Existing customers interested in using formula fields can reach out to our support team at support@rossum.ai for assistance.
 
 :::
+## Basic information
+- FFs can run any Python code including its [Standard Library modules.](https://docs.python.org/3/library/index.html) 
+- Additionally, the runtime is enriched with Rossum-specific functions and variables [(Rossum DSL / Rossum Python)](https://elis.rossum.ai/api/docs/internal/#rossum-embedded-python)
+- They are executed in an AWS lambda
+- FFs are automatically executed before and after each extension.
+- Extensions cannot overwrite FFs (create a separate “output” field instead).
+
 
 ## Best practices
 
@@ -39,8 +46,13 @@ Unfortunately right now there is no better way than create a simple serverless f
 Formula fields are ideal for simple tasks such as data normalization or creating new fields based on existing ones. For more complex operations, serverless functions may be more appropriate. Situations where you should prefer serverless functions include:
 
 - There is a limit of **2000** characters per formula fields which declares the highest complexity of the formula fields.
-- You cannot make request outside the formula field function.
 - You cannot access the document object from within the formula fuction.
+- FFs cannot and should not make HTTP requests (to Rossum API or elsewhere).
+- FFs are executed only within the scope the specific field; for many rows (200+), the execution time may be too long.
+- You need to set annotation status (e.g., “rejected”, “postponed”, etc.), you have to use Serverless functions.
+- You want to edit multiple fields at the same time
+- Manipulate enums
+
 
 An additional advantage of formula fields is that they are stored at the schema level, so when you copy a queue, all associated formula fields are copied automatically. In contrast, serverless functions must be configured manually and re-linked to new queues after being copied.
 
@@ -151,3 +163,19 @@ def check_invoice_date(document_date):
 
 check_invoice_date(field.date_issue)
 ```
+### HTML formatting
+
+Basic HTML formatting is available inside show_warning() and similar functions.
+You can even paste links (e.g, to the ERP system).
+
+Example:
+```python
+show_warning("""
+<ul>
+    <li>I am in a list!</li>
+    <li>Me too!</li>
+</ul>
+""")
+```
+Will render as:
+![Warning example](img/warning_message.png)
