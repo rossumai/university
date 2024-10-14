@@ -44,6 +44,10 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 
 ### Lookup values
 
+See: [Lookup Values API (/lookup_values)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/lookup-values-api-(lookup_values)>)
+
+Query attributes necessary for differential update are highlighted.
+
 ```json
 {
   "credentials": {
@@ -86,10 +90,14 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
           "custom_fields": {}
         }
       ],
+      // highlight-start
       "order_by": "created_at",
       "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
     },
+    // highlight-start
     "method": "update",
+    // highlight-end
     "id_keys": ["id"],
     "endpoint": "api/lookup_values",
     "dataset_name": "lookup_values",
@@ -100,6 +108,10 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 
 ### Payment Terms
 
+See: [Payment Terms API (/payment_terms)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/payment-terms-api-(payment_terms)>)
+
+Query attributes necessary for differential update are highlighted.
+
 ```json
 {
   "credentials": {
@@ -109,9 +121,14 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
   },
   "import_config": {
     "query": {
+      // highlight-start
+      "order_by": "created_at",
       "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
     },
+    // highlight-start
     "method": "update",
+    // highlight-end
     "id_keys": ["id"],
     "endpoint": "api/payment_terms",
     "dataset_name": "COUPA_DEV_payment_terms_v1",
