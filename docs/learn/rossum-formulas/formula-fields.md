@@ -18,11 +18,11 @@ This powerful feature is available on the Business plan and above. Existing cust
 
 :::
 ## Basic information
-- FFs can run any Python code including its [Standard Library modules.](https://docs.python.org/3/library/index.html) 
-- Additionally, the runtime is enriched with Rossum-specific functions and variables [(Rossum DSL / Rossum Python)](https://elis.rossum.ai/api/docs/internal/#rossum-embedded-python)
+- Formula Fields can run any Python code including its [Standard Library modules](https://docs.python.org/3/library/index.html). 
+- Additionally, the runtime is enriched with Rossum-specific functions and variables
 - They are executed in an AWS lambda
-- FFs are automatically executed before and after each extension.
-- Extensions cannot overwrite FFs (create a separate “output” field instead).
+- Formula Fields are automatically executed before and after each extension.
+- Extensions cannot overwrite Formula Fields value (create a separate “data” field instead).
 
 
 ## Best practices
@@ -46,9 +46,9 @@ Unfortunately right now there is no better way than create a simple serverless f
 Formula fields are ideal for simple tasks such as data normalization or creating new fields based on existing ones. For more complex operations, serverless functions may be more appropriate. Situations where you should prefer serverless functions include:
 
 - There is a limit of **2000** characters per formula fields which declares the highest complexity of the formula fields.
-- You cannot access the document object from within the formula fuction.
-- FFs cannot and should not make HTTP requests (to Rossum API or elsewhere).
-- FFs are executed only within the scope the specific field; for many rows (200+), the execution time may be too long.
+- You cannot access the document object from within the formula function.
+- Formula Fields cannot and should not make HTTP requests (to Rossum API or elsewhere).
+- Formula Fields are executed only within the scope the specific field; for many rows (200+), the execution time may be too long.
 - You need to set annotation status (e.g., “rejected”, “postponed”, etc.), you have to use Serverless functions.
 - You want to edit multiple fields at the same time
 - Manipulate enums
