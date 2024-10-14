@@ -98,6 +98,28 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 }
 ```
 
+### Payment Terms
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.common.read"
+  },
+  "import_config": {
+    "query": {
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+    },
+    "method": "update",
+    "id_keys": ["id"],
+    "endpoint": "api/payment_terms",
+    "dataset_name": "COUPA_DEV_payment_terms_v1",
+    "records_per_request": 50
+  }
+}
+```
+
 ### Purchase orders
 
 ```json
