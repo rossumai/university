@@ -23,6 +23,8 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 
 ### Currencies
 
+See [Currencies API (/currencies)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/currencies-api-(currencies)>)
+
 ```json
 {
   "credentials": {
@@ -42,11 +44,50 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 }
 ```
 
+### Invoices
+
+See: [Invoices API (/invoices)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/invoices-api-(invoices)>)
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "….coupacloud.com/",
+    "client_scope": "core.invoice.read"
+  },
+  "import_config": {
+    "query": {
+      // highlight-start
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
+    },
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
+    "endpoint": "api/invoices",
+    "dataset_name": "COUPA_DEV_invoices_v1",
+    "records_per_request": 50
+  }
+}
+```
+
 ### Lookup values
 
 See: [Lookup Values API (/lookup_values)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/lookup-values-api-(lookup_values)>)
 
+:::tip
+
 Query attributes necessary for differential update are highlighted.
+
+:::
 
 ```json
 {
@@ -110,7 +151,11 @@ Query attributes necessary for differential update are highlighted.
 
 See: [Payment Terms API (/payment_terms)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/payment-terms-api-(payment_terms)>)
 
+:::tip
+
 Query attributes necessary for differential update are highlighted.
+
+:::
 
 ```json
 {
