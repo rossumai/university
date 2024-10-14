@@ -2,6 +2,14 @@
 title: Watch the latest videos
 ---
 
+## Rossum e-invoicing for Germany
+
+This demonstration video showcases how Rossum's e-invoicing Germany plugin works to ingest and process EN 16931-compliant invoices (Zugferd and X-Rechnung).
+
+<p>
+    <iframe width="100%" style={{"aspect-ratio": "16 / 9"}} src="https://www.youtube-nocookie.com/embed/hcrOeUMWm58?si=jlFeZ_Rbp3ude4hL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</p>
+
 ## Introducing Rossum Aurora
 
 All the advantages of LLMs for transactional documents with zero hallucinations.
