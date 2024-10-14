@@ -18,5 +18,5 @@ test('main navigation (Watch button)', async ({ page }) => {
   await page.goto('/');
 
   await page.getByLabel('Main', { exact: true }).getByRole('link', { name: 'Watch' }).click();
-  await expect(page.locator('h2').first()).toContainText('Introducing Rossum Aurora');
+  await expect(page.locator('h2').first()).toContainText('Rossum e-invoicing for Germany');
 });
