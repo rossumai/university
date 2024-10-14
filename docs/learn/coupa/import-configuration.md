@@ -97,8 +97,8 @@ Query attributes necessary for differential update are highlighted.
     },
     // highlight-start
     "method": "update",
-    // highlight-end
     "id_keys": ["id"],
+    // highlight-end
     "endpoint": "api/lookup_values",
     "dataset_name": "lookup_values",
     "records_per_request": 50
@@ -128,8 +128,8 @@ Query attributes necessary for differential update are highlighted.
     },
     // highlight-start
     "method": "update",
-    // highlight-end
     "id_keys": ["id"],
+    // highlight-end
     "endpoint": "api/payment_terms",
     "dataset_name": "COUPA_DEV_payment_terms_v1",
     "records_per_request": 50
