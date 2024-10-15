@@ -34,7 +34,7 @@ Here, the target system listens for real-time notifications via Rossum’s Webho
 
 <b>Cons:</b>
 
-- Requires readiness to handle incoming webhook data.
+- The system must be able to handle incoming requests.
 - Even after receiving the notification, an API query is still necessary to retrieve the full annotation (except for certain event types that include annotation data. Please see [documentation](https://elis.rossum.ai/api/docs/#webhook-events) and option #3).
 
 ![Webhook-Driven-Integration](img/Webhook-Driven-Integration.png)
@@ -69,7 +69,7 @@ Rossum’s serverless function pushes data directly to the target system’s pub
 
 <b>Cons:</b>
 
-- The target system must be capable of receiving requests.
+- The system must be able to handle incoming requests.
 - Development is needed within Rossum, which requires knowledge of Python or Node.js.
 
 ![Direct-Push-Integration-(Option-#1)](<img/Direct-Push-Integration-(Option-1).png>)
