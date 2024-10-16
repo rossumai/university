@@ -21,15 +21,18 @@ You can always (also) check the official documentation [OAuth 2.0 Getting Starte
 :::
 
 1. Login to the Coupa web admin at URL `https://[example-company].coupacloud.com`
-2. Go to the Setup, search for keyword `oauth` and click the one result **OAuth2/OpenID Connect Clients**
+1. Go to the Setup, search for keyword `oauth` and click the one result **OAuth2/OpenID Connect Clients**
 
 ![Coupa Setup User](img/coupa-setup-1.png)
+3. Create a new Client and make sure that you have selected a Grant type with `Client Credentials` option and save it.
 
-3. Find the user prepared for the integration and note the values `Identifier` and `Secrets`. You will need it for every hook setup later
+<img alt="Coupa_Create_Client" height="300px" src="img/coupa_create_client_grant_type.png"/>
+
+4. Find the user prepared for the integration and note the values `Identifier` and `Secrets`. You will need it for every hook setup later
 
 ![alt text](img/coupa-setup-2.png)
 
-4. For the start, this scopes should works for basic integration `core.accounting.read, core.common.read, core.invoice.create, core.invoice.read, core.invoice.write, core.purchase_order.read, core.supplier.read` - you can copy and paste it exactly like this when using the Postman collection provided by Coupa
+5. For the start, this scopes should works for basic integration `core.accounting.read, core.common.read, core.invoice.create, core.invoice.read, core.invoice.write, core.purchase_order.read, core.supplier.read` - you can copy and paste it exactly like this when using the Postman collection provided by Coupa
 
 ## Configuring Rossum
 

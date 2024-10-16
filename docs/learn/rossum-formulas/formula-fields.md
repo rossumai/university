@@ -74,6 +74,12 @@ field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 next((item for item in field.item_code.all_values if item), "")
 ```
 
+### Access other table and its first row values
+
+```py
+field.table_name[0].column_name
+```
+
 ### Generate NetSuite external IDs
 
 Create external ID needed by NetSuite for _VendorBill_ and _VendorCredit_ records:
