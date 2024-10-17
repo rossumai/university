@@ -2,20 +2,20 @@
 title: 'Rossum Formulas'
 ---
 
-This section covers both the Rossum **Formula Fields** and the **Rossum Python** flavor.
+This section covers both the Rossum **Formula Fields** and the **TxScript** flavor.
 
 ## Installation
 
-Formula Fields or Rossum Python do not require any installation. It is available as a native Rossum functionality.
+Formula Fields or TxScript do not require any installation. It is available as a native Rossum functionality.
 
-Formula Fields are available in the queue schema as a `formula` field type. Rossum Python is available in serverless functions. Both flavors are fundamentally similar and differ only in how they are used with minimal syntax differences.
+Formula Fields are available in the queue schema as a `formula` field type. TxScript is available in serverless functions. Both flavors are fundamentally similar and differ only in how they are used with minimal syntax differences.
 
-In case you want to use the Rossum Python within the serverless functions, you need to enable following setting:
+In case you want to use the TxScript within pre-existing serverless functions, you need to enable following setting:
 
 1. Go to the settings of the Webhook (Serverless function)
 2. Scroll to `Additional notification metadata`
 3. Enable the `Schemas` option
-4. Save it and now you can work with the `Rossum Python` in your serverless function
+4. Save it and now you can work with the `TxScript` in your serverless function
 
 ## Basic usage
 
@@ -36,21 +36,23 @@ This formula copies the `order_id` field into your newly created Formula Field.
 Alternatively, you can create a new serverless (Python) function with the following boilerplate code that does the same thing:
 
 ```py
-from rossum_python import RossumPython
+from txscript import TxScript
 
 def rossum_hook_request_handler(payload):
-    r = RossumPython.from_payload(payload)
+    t = TxScript.from_payload(payload)
 
-    r.field.order_id_normalized = r.field.order_id # ←
+    t.field.order_id_normalized = t.field.order_id # ←
 
-    return r.hook_response()
+    return t.hook_response()
 ```
 
 Notice that it is a little bit more verbose, but it is still very similar. The main differences are that we need to wrap the functionality into `rossum_hook_request_handler` function and that we need to explicitly write into the `order_id_normalized` field.
 
+(This is an illustrative example. In case you simply need to modify an existing field value, always prefer making it a formula field.)
+
 ## Available functions and features
 
-Here is a list of available functions and features and their comparison between [Formula Fields](./formula-fields.md) and [Serverless Functions](./serverless-functions.md). Note that serverless functions examples always assume that the code is wrapped in `rossum_hook_request_handler` function and prefixed by `r = RossumPython.from_payload(payload)` call (see above).
+Here is a list of available functions and features and their comparison between [Formula Fields](./formula-fields.md) and [Serverless Functions](./serverless-functions.md). Note that serverless functions examples always assume that the code is wrapped in `rossum_hook_request_handler` function and prefixed by `t = TxScript.from_payload(payload)` call (see above).
 
 ### Get datapoint value
 
@@ -67,7 +69,7 @@ field.amount
 In case of serverless function, the value can never be returned directly and must be either used in some other function call, or stored in some temporary variable to be used later:
 
 ```py
-x = r.field.amount
+x = t.field.amount
 ```
 
 ### Get datapoint metadata
@@ -82,8 +84,8 @@ field.amount.rir_confidence   # Confidence score
 #### Serverless function
 
 ```py
-r.field.amount.id
-r.field.amount.rir_confidence
+t.field.amount.id
+t.field.amount.rir_confidence
 ```
 
 ### Write into datapoint value
@@ -99,7 +101,7 @@ Formula fields cannot write into any other fields. They simply return the value 
 #### Serverless function
 
 ```py
-r.field.amount = 10
+t.field.amount = 10
 ```
 
 ### Check whether datapoint is set or not
@@ -114,12 +116,12 @@ is_empty(field.amount)   # Opposite of `is_set`
 #### Serverless function
 
 ```py
-from rossum_python import RossumPython, is_set, is_empty
+from txscript import TxScript, is_set, is_empty
 
 # …
 
-is_set(r.field.amount)
-is_empty(r.field.amount)
+is_set(t.field.amount)
+is_empty(t.field.amount)
 ```
 
 ### Defaulting values
@@ -135,11 +137,11 @@ default_to(field.amount, 0)
 #### Serverless function
 
 ```py
-from rossum_python import RossumPython, default_to
+from txscript import TxScript, default_to
 
 # …
 
-default_to(r.field.amount, 0)
+default_to(t.field.amount, 0)
 ```
 
 ### Substitute
@@ -149,23 +151,23 @@ Substitute is an alias for [`re.sub`](https://docs.python.org/3/library/re.html#
 #### Formula field
 
 ```py
-substitute(r"[^0-9]", r"", field.document_id)  # Remove non-digit characters
+substitute(t"[^0-9]", t"", field.document_id)  # Remove non-digit characters
 ```
 
 Could also be written as (`re` is imported automatically):
 
 ```py
-re.sub(r"[^0-9]", r"", field.document_id)
+re.sub(t"[^0-9]", t"", field.document_id)
 ```
 
 #### Serverless function
 
 ```py
-from rossum_python import RossumPython, substitute
+from txscript import TxScript, substitute
 
 # …
 
-substitute(r"[^0-9]", r"", field.document_id)
+substitute(t"[^0-9]", t"", field.document_id)
 ```
 
 ### Show info/warning/error messages
@@ -192,14 +194,14 @@ Messages do not affect the automation behavior and, therefore, automation blocke
 :::
 
 ```py
-r.show_info("…")
-r.show_info("…", r.field.amount)
+t.show_info("…")
+t.show_info("…", t.field.amount)
 
-r.show_warning("…")
-r.show_warning("…", r.field.amount)
+t.show_warning("…")
+t.show_warning("…", t.field.amount)
 
-r.show_error("…")
-r.show_error("…", r.field.amount)
+t.show_error("…")
+t.show_error("…", t.field.amount)
 ```
 
 ### Set automation blockers
@@ -219,5 +221,5 @@ automation_blocker("message", field.amount)
 #### Serverless function
 
 ```py
-r.automation_blocker("message", r.field.amount)
+t.automation_blocker("message", t.field.amount)
 ```
