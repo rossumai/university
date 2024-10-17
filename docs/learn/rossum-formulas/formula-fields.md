@@ -17,13 +17,14 @@ For most tasks, Rossum’s Copilot handles everything seamlessly without needing
 This powerful feature is available on the Business plan and above. Existing customers interested in using formula fields can reach out to our support team at support@rossum.ai for assistance.
 
 :::
+
 ## Basic information
-- Formula Fields can run any Python code including its [Standard Library modules](https://docs.python.org/3/library/index.html). 
+
+- Formula Fields can run any Python code including its [Standard Library modules](https://docs.python.org/3/library/index.html).
 - Additionally, the runtime is enriched with Rossum-specific functions and variables
 - They are executed in an AWS lambda
 - Formula Fields are automatically executed before and after each extension.
 - Extensions cannot overwrite Formula Fields value (create a separate “data” field instead).
-
 
 ## Best practices
 
@@ -53,10 +54,15 @@ Formula fields are ideal for simple tasks such as data normalization or creating
 - You want to edit multiple fields at the same time
 - Manipulate enums
 
-
 An additional advantage of formula fields is that they are stored at the schema level, so when you copy a queue, all associated formula fields are copied automatically. In contrast, serverless functions must be configured manually and re-linked to new queues after being copied.
 
 ## Examples of common formula fields
+
+### Access other table and its first row values
+
+```py
+field.table_name[0].column_name
+```
 
 ### Copy fields conditionally
 
@@ -72,12 +78,6 @@ field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 
 ```py
 next((item for item in field.item_code.all_values if item), "")
-```
-
-### Access other table and its first row values
-
-```py
-field.table_name[0].column_name
 ```
 
 ### Generate NetSuite external IDs
@@ -169,12 +169,14 @@ def check_invoice_date(document_date):
 
 check_invoice_date(field.date_issue)
 ```
+
 ### HTML formatting
 
 Basic HTML formatting is available inside show_warning() and similar functions.
 You can even paste links (e.g, to the ERP system).
 
 Example:
+
 ```python
 show_warning("""
 <ul>
@@ -183,5 +185,6 @@ show_warning("""
 </ul>
 """)
 ```
+
 Will render as:
 ![Warning example](img/warning_message.png)
