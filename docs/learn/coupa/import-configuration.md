@@ -319,7 +319,7 @@ Query attributes necessary for differential update are highlighted.
 }
 ```
 
-### Purchase order - Line items
+### Purchase order
 
 ```json
 {
