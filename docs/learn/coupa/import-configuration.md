@@ -418,7 +418,7 @@ With this import configuration, you will receive a final collection that include
   "credentials": {
     "client_id": "…",
     "base_api_url": "…",
-    "client_scope": "core.accounting.read, core.common.read, core.invoice.create, core.invoice.read, core.invoice.write, core.purchase_order.read, core.supplier.read"
+    "client_scope": "core.supplier.read"
   },
   "import_config": {
     "query": {
