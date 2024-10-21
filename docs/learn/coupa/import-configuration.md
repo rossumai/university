@@ -88,6 +88,7 @@ See: [Lookup Values API (/lookup_values)](<https://compass.coupa.com/en-us/produ
 Query attributes necessary for differential update are highlighted.
 
 :::
+For not PO-backed invoices, there are default lookup values that Coupa requires for successful import of the object. 
 
 ```json
 {
@@ -183,6 +184,7 @@ Query attributes necessary for differential update are highlighted.
 ```
 
 ### Purchase orders
+Using this import configuration you will receive in a final state a collection where you will have all Purchase Orders (POs) and nested an array of PO Line items.
 
 ```json
 {
@@ -320,7 +322,7 @@ Query attributes necessary for differential update are highlighted.
 ```
 
 ### Purchase order - Line items
-
+Using this import configuration you will receive in a final state a collection where you will have all PO Line items with basic info about the PO that is associated to each line item.
 ```json
 {
   "credentials": {
