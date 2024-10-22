@@ -17,7 +17,7 @@ In this model, the target system schedules regular queries to the Rossum API to 
 <b>Cons:</b>
 
 - No real-time updates.
-- Requires tracking loaded annotations (Rossum’s “Confirmed” to “Exported” statuses help with this).
+- Requires tracking loaded annotations (Rossum’s `Confirmed` to `Exported` statuses help with this).
 - Hosting computational resources is necessary to run these scheduled queries.
 
 ![Scheduled-Polling-Integration](img/Scheduled-Polling-Integration.png)
