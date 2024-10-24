@@ -140,3 +140,17 @@ def rossum_hook_request_handler(payload):
 
     return r.hook_response()
 ```
+
+## Store document page count
+
+```py
+from rossum_python import RossumPython
+
+def rossum_hook_request_handler(payload):
+    r = RossumPython.from_payload(payload)
+
+    r.field.page_count = len(payload["annotation"]["pages"])
+
+    return r.hook_response()
+```
+
