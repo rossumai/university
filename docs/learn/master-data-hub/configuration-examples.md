@@ -733,6 +733,121 @@ This can be achieved by first searching and returning records with their respect
 }
 ```
 
+## Combine matching results from different collections (using memoization collection)
+
+```json
+{
+  "aggregate": [
+    // match no record with the dataset specified in the config
+    {
+      "$match": {
+        "_id": "#"
+      }
+    },
+    // append query results to previous results
+    {
+      "$unionWith": {
+        "coll": "_entity_data_acc",
+        "pipeline": [
+          {
+            "$match": {
+              "sender_name": "{recipient_name}"
+            }
+          },
+          {
+            "$lookup": {
+              "as": "original",
+              "from": "workday_entity",
+              "localField": "entity_wd",
+              "foreignField": "Organization_Data.ID"
+            }
+          },
+          {
+            "$replaceRoot": {
+              "newRoot": {
+                "$mergeObjects": [
+                  {
+                    "$arrayElemAt": [
+                      "$original",
+                      0
+                    ]
+                  },
+                  "$$ROOT"
+                ]
+              }
+            }
+          },
+          {
+            "$project": {
+              "original": 0
+            }
+          },
+          {
+            "$addFields": {
+              "score": 999
+            }
+          }
+        ]
+      }
+    },
+    // append empty record at the right position to use result_actions.multiple_matches_found: best match
+    // this means that if the first $unionWith does not return any results, the first "empty" record will be preselected and thus prevents automation of non confident matching
+    {
+      "$unionWith": {
+        "coll": "nonexistentcollection",
+        "pipeline": [
+          {
+            "$documents": [
+              {
+                "score": 900,
+                "Organization_Data": {
+                  "ID": "",
+                  "Organization_Name": "Please select ..."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    // append records from the main dataset with looser matching query to allow users to select the right match
+    {
+      "$unionWith": {
+        "coll": "workday_entity_acc",
+        "pipeline": [
+          {
+            "$match": {}
+          },
+          {
+            "$project": {
+              "Organization_Data.ID": 1,
+              "Organization_Data.Organization_Name": 1
+            }
+          },
+          {
+            "$addFields": {
+              "score": 888
+            }
+          }
+        ]
+      }
+    },
+    {
+      "$sort": {
+        "score": -1,
+        "Organization_Data.Organization_Name": 1
+      }
+    },
+    {
+      "$project": {
+        "Organization_Data.ID": 1,
+        "Organization_Data.Organization_Name": 1
+      }
+    }
+  ]
+}
+```
+
 ## Match score steps
 
 ```json
