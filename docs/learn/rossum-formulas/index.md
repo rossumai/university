@@ -151,13 +151,13 @@ Substitute is an alias for [`re.sub`](https://docs.python.org/3/library/re.html#
 #### Formula field
 
 ```py
-substitute(t"[^0-9]", t"", field.document_id)  # Remove non-digit characters
+substitute(r"[^0-9]", r"", field.document_id)  # Remove non-digit characters
 ```
 
 Could also be written as (`re` is imported automatically):
 
 ```py
-re.sub(t"[^0-9]", t"", field.document_id)
+re.sub(r"[^0-9]", r"", field.document_id)
 ```
 
 #### Serverless function
@@ -167,7 +167,7 @@ from txscript import TxScript, substitute
 
 # …
 
-substitute(t"[^0-9]", t"", field.document_id)
+substitute(r"[^0-9]", r"", field.document_id)
 ```
 
 ### Show info/warning/error messages
