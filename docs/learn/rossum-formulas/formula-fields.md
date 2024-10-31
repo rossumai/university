@@ -146,6 +146,15 @@ if not math.isclose(item_total_base_calculated, field.item_total_base, rel_tol=0
     show_error(message, field.item_total_base)
 ```
 
+### Get year/month from date field
+
+Returns year/month integer of a date field:
+
+```py
+field.date_issue.year
+field.date_issue.month
+```
+
 ### Date validation
 
 This function, `check_invoice_date`, checks if the invoice date (passed as `document_date`) is more than 90 days old compared to the current date. It calculates the difference in days between the two dates and, if the document is older than 90 days, triggers a warning message. This message notifies the user of the outdated date and blocks further automation until the issue is resolved.
