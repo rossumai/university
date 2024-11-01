@@ -22,17 +22,16 @@ def rossum_hook_request_handler(payload):
             "item_description_grouped": row.item_description.value,
         })
 
-    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
-    grouped_data = (
-        pd.DataFrame(data)
-        .groupby('item_rate_grouped')
-        .agg({
-            'item_description_grouped': 'first'
-        })
-        .reset_index().to_dict('records')
-    )
-
-    x.field.line_items_grouped = grouped_data
+    if len(data) > 0:
+        # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+        x.field.line_items_grouped = (
+            pd.DataFrame(data)
+            .groupby('item_rate_grouped')
+            .agg({
+                'item_description_grouped': 'first'
+            })
+            .reset_index().to_dict('records')
+        )
 
     return x.hook_response()
 ```
