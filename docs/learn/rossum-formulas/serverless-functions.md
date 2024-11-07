@@ -4,6 +4,8 @@ sidebar_label: 'Serverless functions'
 title: 'Rossum Formulas: Serverless functions'
 ---
 
+import WIP from '../\_wip.md';
+
 # Serverless functions
 
 Examples of common or interesting serverless functions (using TxScript flavor).
@@ -145,3 +147,196 @@ def rossum_hook_request_handler(payload):
 
     return t.hook_response()
 ```
+
+## Accounts Payable Checks
+
+Historically, there was an "Accounts Payable Checks" extension in the Rossum store which was used to validate basic calculations on invoices, for example. Nowadays, it is not necessary since the same can be easily achieved using custom serverless function. The following is a (loosely) migrated example of the extension configuration:
+
+<WIP />
+
+```py
+import math
+from rossum_python import RossumPython, is_set, is_empty, default_to
+from datetime import datetime
+
+def rossum_hook_request_handler(payload):
+    x = RossumPython.from_payload(payload)
+    rounding = 2
+
+    ###################
+    ## HEADER FIELDS ##
+    ###################
+
+    # 1: "Total Amount" (amount_total) == "Total Without Tax" (amount_total_base) + "Tax Amount" (amount_total_tax)
+    if is_set(x.field.amount_total) and is_set(x.field.amount_total_base) and is_set(x.field.amount_total_tax):
+        amount_total_ocr = round(x.field.amount_total, rounding)
+        amount_total_calculated = round(x.field.amount_total_base + x.field.amount_total_tax, rounding)
+        if not math.isclose(amount_total_ocr, amount_total_calculated):
+            message = f"Total Amount is not calculated correctly (expected: ~{amount_total_calculated})."
+            x.show_warning(message, x.field.amount_total)
+            x.automation_blocker(message, x.field.amount_total)
+
+    # 2: Check if "Due Date" (date_due) is within 0 to 120 days after "Invoice Date" (date_issue)
+    if is_set(x.field.date_issue) and is_set(x.field.date_due):
+        days_difference = (x.field.date_due - x.field.date_issue).days
+        if not (0 <= days_difference <= 120):
+            message = f"Due Date ({x.field.date_due}) is not within 120 days after Invoice Date ({x.field.date_issue})."
+            x.show_warning(message, x.field.date_due)
+            x.automation_blocker(message, x.field.date_due)
+
+    #######################
+    ## TAX DETAILS table ##
+    #######################
+
+    for row in x.field.tax_details:
+        # 3: "VAT Amount" (tax_detail_tax) == "VAT Base" (tax_detail_base) * "VAT Rate" (tax_detail_rate)
+        if is_set(row.tax_detail_tax) and is_set(row.tax_detail_base) and is_set(row.tax_detail_rate):
+            tax_detail_tax_ocr = round(row.tax_detail_tax, rounding)
+            tax_detail_tax_calculated = round(row.tax_detail_base * (row.tax_detail_rate / 100), rounding)
+            if not math.isclose(tax_detail_tax_ocr, tax_detail_tax_calculated):
+                message = f"VAT amount is not calculated correctly (expected: ~{tax_detail_tax_calculated})."
+                x.show_warning(message, row.tax_detail_tax)
+                x.automation_blocker(message, row.tax_detail_tax)
+```
+
+<details>
+  <summary>Original default configuration of the "Accounts Payable Checks" extension (for reference).</summary>
+
+The config examples are numbered for easier orientation:
+
+```json
+{
+  "checks": [
+    {
+      // 1
+      "left": ["amount_total"],
+      "right": ["amount_total_base", "amount_total_tax"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_sum",
+      "message_type": "warning",
+      "message_content": "{amount_total} is not equal to {amount_total_base} + {amount_total_tax}."
+    },
+    {
+      // 2
+      "left": "date_issue",
+      "right": "date_due",
+      "data_type": "date",
+      "operation": "check_right_minus_left_within_range",
+      "lower_bound": 0,
+      "upper_bound": 120,
+      "message_type": "warning",
+      "message_content": "{date_due} is not within 120 days after {date_issue}."
+    },
+    {
+      // 3
+      "left": ["tax_detail_tax"],
+      "right": ["tax_detail_base", "tax_detail_rate"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_multiplication",
+      "message_type": "warning",
+      "message_content": "{tax_detail_tax} is not equal to {tax_detail_base} x {tax_detail_rate}."
+    },
+    {
+      // 4
+      "left": ["tax_detail_total"],
+      "right": ["tax_detail_base", "tax_detail_tax"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_sum",
+      "message_type": "warning",
+      "message_content": "{tax_detail_total} is not equal to {tax_detail_base} + {tax_detail_tax}."
+    },
+    {
+      // 5
+      "left": ["item_amount_total"],
+      "right": ["item_total_base", "item_tax"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_sum",
+      "message_type": "warning",
+      "message_content": "{item_amount_total} is not equal to {item_total_base} + {item_tax}."
+    },
+    {
+      // 6
+      "left": ["item_total_base"],
+      "right": ["item_amount_base", "item_quantity"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_multiplication",
+      "message_type": "warning",
+      "message_content": "{item_total_base} is not equal to {item_amount_base} x {item_quantity}."
+    },
+    {
+      // 7
+      "left": ["item_amount_total"],
+      "right": ["item_amount", "item_quantity"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_multiplication",
+      "message_type": "warning",
+      "message_content": "{item_amount_total} is not equal to {item_amount} x {item_quantity}."
+    },
+    {
+      // 8
+      "left": ["item_tax"],
+      "right": ["item_total_base", "item_rate"],
+      "epsilon": 0.5,
+      "operation": "check_left_sum_equals_right_multiplication",
+      "message_type": "warning",
+      "message_content": "{item_tax} is not equal to {item_total_base} x {item_rate}."
+    },
+    {
+      // 9
+      "epsilon": 0.5,
+      "operation": "check_header_field_equals_table_field_sum",
+      "table_field": "tax_detail_total",
+      "header_field": "amount_total",
+      "message_type": "warning",
+      "message_content": "{amount_total} is not equal to the {tax_detail_total} in the Tax table."
+    },
+    {
+      // 10
+      "epsilon": 0.5,
+      "operation": "check_header_field_equals_table_field_sum",
+      "table_field": "tax_detail_base",
+      "header_field": "amount_total_base",
+      "message_type": "warning",
+      "message_content": "{amount_total_base} is not equal to the {tax_detail_base} in the Tax table."
+    },
+    {
+      // 11
+      "epsilon": 0.5,
+      "operation": "check_header_field_equals_table_field_sum",
+      "table_field": "tax_detail_tax",
+      "header_field": "amount_total_tax",
+      "message_type": "warning",
+      "message_content": "{amount_total_tax} is not equal to {tax_detail_tax} in the Tax table."
+    },
+    {
+      // 12
+      "epsilon": 0.5,
+      "operation": "check_header_field_equals_table_field_sum",
+      "table_field": "item_amount_total",
+      "header_field": "amount_total",
+      "message_type": "warning",
+      "message_content": "{amount_total} is not equal to the sum of the line items’ total amounts."
+    },
+    {
+      // 13
+      "epsilon": 0.5,
+      "operation": "check_header_field_equals_table_field_sum",
+      "table_field": "item_total_base",
+      "header_field": "amount_total_base",
+      "message_type": "warning",
+      "message_content": "{amount_total_base} is not equal to the sum of the line items’ total bases."
+    },
+    {
+      // 14
+      "epsilon": 0.5,
+      "operation": "check_header_field_equals_table_field_sum",
+      "table_field": "item_tax",
+      "header_field": "amount_total_tax",
+      "message_type": "warning",
+      "message_content": "{amount_total_tax} is not equal to the sum of the line items’ taxes."
+    }
+  ]
+}
+```
+
+</details>
