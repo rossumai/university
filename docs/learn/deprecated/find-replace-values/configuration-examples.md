@@ -2,9 +2,10 @@
 sidebar_position: 1
 sidebar_label: 'Configuration examples'
 title: 'Find & Replace Values: Configuration examples'
+slug: '/learn/find-replace-values/configuration-examples'
 ---
 
-import Deprecated from '../\_deprecated.md';
+import Deprecated from '../../\_deprecated.md';
 
 <Deprecated />
 
@@ -113,7 +114,7 @@ The following snippet removes all non-alphanumeric characters. The source datapo
 
 :::tip
 
-Consider turning `sender_vat_id_normalized` into [formula field](../rossum-formulas/formula-fields.md) instead where the same functionality can be rewritten as:
+Consider turning `sender_vat_id_normalized` into [formula field](../../rossum-formulas/formula-fields.md) instead where the same functionality can be rewritten as:
 
 ```python
 ''.join(filter(str.isalnum, fields.order_id.strip()))
