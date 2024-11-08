@@ -1,9 +1,10 @@
 ---
 title: 'Find & Replace Values'
 sidebar_position: 1
+slug: '/learn/find-replace-values'
 ---
 
-import Deprecated from '../\_deprecated.md';
+import Deprecated from '../../\_deprecated.md';
 
 <Deprecated />
 
@@ -57,7 +58,7 @@ For example, the following configuration removes non-alphanumeric characters fro
 ## What can't it do?
 
 - React to "No match" scenarios: if no match is found, the value from the source field is copied "as-is" to the target field (you need to set up action condition to avoid this behavior).
-- Provide conditional mapping of values: for this, you need to use another extension called [Copy & Paste Values](../deprecated/copy-paste-values/index.md).
+- Provide conditional mapping of values: for this, you need to use another extension called [Copy & Paste Values](../copy-paste-values/index.md).
 
 ## How It Works
 
