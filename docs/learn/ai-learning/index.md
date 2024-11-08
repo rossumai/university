@@ -1,5 +1,6 @@
 ---
 title: 'AI training best practices'
+sidebar_position: 1
 ---
 
 Rossum's AI-powered document processing doesn't need complex templates to be built for each vendor layout to be able to predict where the values should be.

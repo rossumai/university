@@ -1,5 +1,6 @@
 ---
 title: 'Single Sign-On (SSO)'
+sidebar_position: 1
 ---
 
 import PaidFeature from '../\_paid_feature.md';

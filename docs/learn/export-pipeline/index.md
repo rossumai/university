@@ -1,5 +1,6 @@
 ---
 title: 'Export pipelines'
+sidebar_position: 1
 ---
 
 import WIP from '../\_wip.md';

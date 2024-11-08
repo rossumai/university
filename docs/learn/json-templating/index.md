@@ -1,5 +1,6 @@
 ---
 title: 'JSON Templating'
+sidebar_position: 1
 ---
 
 JSON Templating engine is commonly used to configure many of our extensions.

@@ -1,5 +1,6 @@
 ---
 title: 'Supported Integration Patterns'
+sidebar_position: 1
 ---
 
 # Supported Integration Patterns

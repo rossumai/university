@@ -2,9 +2,10 @@
 sidebar_position: 1
 sidebar_label: 'Configuration examples'
 title: 'Copy & Paste Values: Configuration examples'
+slug: '/learn/copy-paste-values/configuration-examples'
 ---
 
-import Deprecated from '../\_deprecated.md';
+import Deprecated from '../../\_deprecated.md';
 
 <Deprecated />
 
