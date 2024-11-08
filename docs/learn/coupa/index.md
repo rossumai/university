@@ -1,5 +1,6 @@
 ---
 title: 'Coupa'
+sidebar_position: 1
 ---
 
 :::warning

@@ -1,5 +1,6 @@
 ---
 title: 'Emails & email ingestion'
+sidebar_position: 1
 ---
 
 ## Introduction

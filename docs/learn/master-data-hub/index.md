@@ -1,5 +1,6 @@
 ---
 title: 'Master data hub'
+sidebar_position: 1
 ---
 
 :::info[API documentation]

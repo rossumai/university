@@ -1,5 +1,6 @@
 ---
 title: 'Business Rules Validation'
+sidebar_position: 1
 ---
 
 Business Rules Validation allows users to perform validations of the extracted and calculated data. It typically runs at the end of the extension chain and the main purpose of it is to prevent confirmations (or block automation) of invalid documents.

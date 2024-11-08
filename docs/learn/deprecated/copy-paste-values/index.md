@@ -1,9 +1,10 @@
 ---
 title: 'Copy & Paste Values'
+slug: '/learn/copy-paste-values'
 ---
 
-import Deprecated from '../\_deprecated.md';
-import WIP from '../\_wip.md';
+import Deprecated from '../../\_deprecated.md';
+import WIP from '../../\_wip.md';
 
 <Deprecated />
 

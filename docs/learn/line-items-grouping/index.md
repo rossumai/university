@@ -1,5 +1,6 @@
 ---
 title: 'Line items grouping'
+sidebar_position: 1
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';

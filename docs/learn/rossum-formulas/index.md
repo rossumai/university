@@ -1,5 +1,6 @@
 ---
 title: 'Rossum Formulas'
+sidebar_position: 1
 ---
 
 This section covers both the Rossum **Formula Fields** and the **TxScript** flavor.

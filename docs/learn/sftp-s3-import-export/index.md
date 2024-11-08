@@ -1,5 +1,6 @@
 ---
 title: 'SFTP and S3 imports/exports'
+sidebar_position: 1
 ---
 
 import WIP from '../\_wip.md';
