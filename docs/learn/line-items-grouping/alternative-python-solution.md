@@ -10,7 +10,13 @@ Consider using the following simple Python code (as a [serverless function](../r
 
 ```py
 import pandas as pd
-from rossum_python import RossumPython, is_empty, default_to
+from rossum_python import RossumPython, is_empty, default_to, is_set
+
+
+def sum_values(values):
+    """Sums values if there are any, otherwise returns an empty string (not zero)."""
+    return sum(v for v in values if is_set(v)) if any(is_set(v) for v in values) else ''
+
 
 def rossum_hook_request_handler(payload):
     x = RossumPython.from_payload(payload)
@@ -18,8 +24,11 @@ def rossum_hook_request_handler(payload):
     data = []
     for row in x.field.line_items:
         data.append({
-            "item_rate_grouped": row.item_rate.value,
-            "item_description_grouped": row.item_description.value,
+            "item_rate_grouped": row.item_rate.attr.value,  # Must use attr.value because of the `groupby` call!
+            "item_description_grouped": row.item_description,
+            "item_total_base_grouped": row.item_total_base,
+            "item_tax_grouped": row.item_tax,
+            "item_amount_total_grouped": row.item_amount_total,
         })
 
     if len(data) > 0:
@@ -28,7 +37,10 @@ def rossum_hook_request_handler(payload):
             pd.DataFrame(data)
             .groupby('item_rate_grouped')
             .agg({
-                'item_description_grouped': 'first'
+                'item_description_grouped': 'first',
+                'item_total_base_grouped': sum_values,
+                'item_tax_grouped': sum_values,
+                'item_amount_total_grouped': sum_values
             })
             .reset_index().to_dict('records')
         )
