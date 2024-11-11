@@ -1,7 +1,7 @@
 ---
 title: 'Structured formats import: Configuration examples'
 sidebar_label: 'Configuration examples'
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Configuration examples
