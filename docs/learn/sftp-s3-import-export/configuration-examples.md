@@ -136,6 +136,21 @@ Configuration:
 }
 ```
 
+### Using dynamic SFTP folder
+
+Configuration for a schema data point `sftp_folder` containing the appropriate address on the SFTP.
+
+```json
+{
+  (...)
+  "export_rules": [
+    {
+      "path_to_directory": "/{sftp_folder}",
+      (...)
+    }
+  ]
+}
+```
 ### Using SSH key
 
 <ConfigurationSshKey />
