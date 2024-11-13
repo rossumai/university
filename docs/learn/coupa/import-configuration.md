@@ -21,6 +21,41 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 
 ## Configuration examples
 
+### Account types
+
+See: [Account Types API (/account_types)](https://compass.coupa.com/_dita_/en-us/documentation/plat/integ/coupa_core_api/topics/account_types_api_account_types.dita)
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.accounting.read"
+  },
+  "import_config": {
+    "query": {
+      // highlight-start
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
+    },
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
+    "endpoint": "api/account_types",
+    "dataset_name": "COUPA_DEV_account_types_v1",
+    "records_per_request": 50
+  }
+}
+```
+
 ### Currencies
 
 See [Currencies API (/currencies)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/currencies-api-(currencies)>)
@@ -38,7 +73,7 @@ See [Currencies API (/currencies)](<https://compass.coupa.com/en-us/products/pro
     },
     "method": "replace",
     "endpoint": "api/currencies",
-    "dataset_name": "dataset_currencies",
+    "dataset_name": "COUPA_DEV_currencies_v1",
     "records_per_request": 50
   }
 }
@@ -143,7 +178,7 @@ For invoices that are not tied to a purchase order (non-PO-backed), Coupa requir
     "id_keys": ["id"],
     // highlight-end
     "endpoint": "api/lookup_values",
-    "dataset_name": "lookup_values",
+    "dataset_name": "COUPA_DEV_lookup_values_v1",
     "records_per_request": 50
   }
 }
@@ -185,6 +220,7 @@ Query attributes necessary for differential update are highlighted.
 ```
 
 ### Purchase orders
+
 With this import configuration, you will receive a final collection that includes all Purchase Orders (POs), along with an array of their corresponding PO line items nested within each order. This structure allows for easy access to both the POs and their specific line item details.
 
 ```json
@@ -316,14 +352,16 @@ With this import configuration, you will receive a final collection that include
     "method": "update",
     "id_keys": ["id"],
     "endpoint": "api/purchase_orders",
-    "dataset_name": "purchase_orders",
+    "dataset_name": "COUPA_DEV_purchase_orders_v1",
     "records_per_request": 50
   }
 }
 ```
 
 ### Purchase order - Line items
+
 With this import configuration, you will receive a final collection that includes all PO line items, along with basic information about the associated Purchase Order for each line item.
+
 ```json
 {
   "credentials": {
@@ -405,7 +443,7 @@ With this import configuration, you will receive a final collection that include
     "method": "update",
     "id_keys": ["id"],
     "endpoint": "api/purchase_order_lines",
-    "dataset_name": "purchase_order_lines",
+    "dataset_name": "COUPA_DEV_purchase_order_lines_v1",
     "records_per_request": 50
   }
 }
@@ -506,7 +544,7 @@ With this import configuration, you will receive a final collection that include
     },
     "method": "replace",
     "endpoint": "api/suppliers",
-    "dataset_name": "dataset_suppliers",
+    "dataset_name": "COUPA_DEV_suppliers_v1",
     "records_per_request": 50
   }
 }
@@ -666,13 +704,21 @@ With this import configuration, you will receive a final collection that include
     "method": "update",
     "id_keys": ["id"],
     "endpoint": "api/supplier_information",
-    "dataset_name": "supplier_information",
+    "dataset_name": "COUPA_DEV_supplier_information_v1",
     "records_per_request": 50
   }
 }
 ```
 
 ### Tax Codes
+
+See: [Tax Code API](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/tax-registrations-api-(tax_registrations)/tax-code-api>)
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
 
 ```json
 {
@@ -683,12 +729,64 @@ With this import configuration, you will receive a final collection that include
   },
   "import_config": {
     "query": {
+      // highlight-start
       "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
     },
+    // highlight-start
     "method": "update",
     "id_keys": ["id"],
+    // highlight-end
     "endpoint": "api/tax_codes",
     "dataset_name": "tax_codes",
+    "records_per_request": 50
+  }
+}
+```
+
+### Tax Registrations
+
+See: [Tax Registrations API (/tax_registrations)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/tax-registrations-api-(tax_registrations)>)
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.invoice.read"
+  },
+  "import_config": {
+    "query": {
+      "fields": [
+        "id",
+        "created_at",
+        "updated_at",
+        "number",
+        "owner-id",
+        "owner-type",
+        "active",
+        "local",
+        {
+          "country": ["id", "code", "name"]
+        }
+      ],
+      // highlight-start
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
+    },
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
+    "endpoint": "api/tax_registrations",
+    "dataset_name": "COUPA_DEV_tax_registrations_v1",
     "records_per_request": 50
   }
 }
@@ -720,7 +818,7 @@ With this import configuration, you will receive a final collection that include
     "method": "update",
     "id_keys": ["id"],
     "endpoint": "api/uoms",
-    "dataset_name": "uoms",
+    "dataset_name": "COUPA_DEV_uoms_v1",
     "records_per_request": 50
   }
 }
