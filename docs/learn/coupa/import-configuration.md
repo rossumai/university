@@ -40,6 +40,63 @@ Query attributes necessary for differential update are highlighted.
   },
   "import_config": {
     "query": {
+      "fields": [
+        "id",
+        "created_at",
+        "updated_at",
+        "name",
+        "active",
+        "legal_entity_name",
+        "dynamic_flag",
+        {
+          "currency": ["id", "code", "decimals"]
+        },
+        {
+          "primary_contact": [
+            "id",
+            "created_at",
+            "updated_at",
+            "email",
+            "name_prefix",
+            "name_suffix",
+            "name_additional",
+            "name_given",
+            "name_family",
+            "name_fullname",
+            "notes",
+            "active",
+            "purposes"
+          ]
+        },
+        {
+          "primary_address": [
+            "id",
+            "created_at",
+            "updated_at",
+            "name",
+            "location_code",
+            "street1",
+            "street2",
+            "street3",
+            "street4",
+            "city",
+            "state",
+            "postal_code",
+            "attention",
+            "active",
+            "business_group_name",
+            "vat_number",
+            "local_tax_number",
+            "type",
+            {
+              "country": ["id", "code", "name"]
+            },
+            {
+              "vat_country": ["id", "code", "name"]
+            }
+          ]
+        }
+      ],
       // highlight-start
       "order_by": "created_at",
       "updated-at[gt_or_eq]": "${last_modified_date}"
