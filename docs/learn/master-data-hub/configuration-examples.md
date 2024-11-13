@@ -496,13 +496,69 @@ Score returned normalized to interval between 0-1. This works only when a "compo
 
 ## HTTP requests
 
-Master Data Hub can work not only with existing collections, but it can also send HTTP requests. The whole configuration for HTTP requests is slightly different:
+Master Data Hub extension can work not only with the existing database collections, but it can also send HTTP requests. The configuration for HTTP requests is slightly different. The following case shows an example of calling the Rossum API and getting the most urgent document based on the `sla_deadline_utc` field ([API reference](https://elis.rossum.ai/api/docs/#search-for-annotations)):
 
 ```json
 {
   "configurations": [
     {
-      "name": "…",
+      "name": "Find the most urgent document for review (in one specific workspace)",
+      "source": {
+        "queries": [
+          {
+            "url": "https://mydomain.rossum.app/api/v1/annotations/search?page_size=1&ordering=field.sla_deadline_utc.string&sideload=content&content.schema_id=sla_deadline_utc",
+            "body": {
+              "query": {
+                "$and": [
+                  { "field.sla_deadline_utc.string": { "$emptyOrMissing": false } },
+                  { "status": { "$in": ["to_review"] } },
+                  {
+                    "workspace": { "$in": ["https://mydomain.rossum.app/api/v1/workspaces/123456"] }
+                  }
+                ]
+              }
+            },
+            "method": "POST",
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer {payload.rossum_authorization_token}"
+            },
+            "result_path": ""
+          }
+        ]
+      },
+      "default": { "label": "---", "value": "" },
+      "mapping": {
+        "dataset_key": "content[0].content.value || ''",
+        "label_template": "{content[0].content.value || ''}",
+        "target_schema_id": "sla_deadline_most_urgent_datetime"
+      },
+      "result_actions": {
+        "no_match_found": { "message": { "type": "error", "content": "No match found" } },
+        "one_match_found": { "select": "best_match" },
+        "multiple_matches_found": {
+          "select": "default",
+          "message": { "type": "error", "content": "Multiple matches found" }
+        }
+      },
+      "additional_mappings": [
+        {
+          "dataset_key": "results[0].id || ''",
+          "label_template": "{results[0].id || ''}",
+          "target_schema_id": "sla_deadline_most_urgent_id"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Notice the structure of the `queries` source where we are constructing the HTTP request with body and headers. Also notice that it is possible to access the `rossum_authorization_token` token via `payload` variable. If necessary, you can also perform `auth` call in the source like so:
+
+```json
+{
+  "configurations": [
+    {
       "source": {
         // highlight-start
         "auth": {
@@ -512,26 +568,29 @@ Master Data Hub can work not only with existing collections, but it can also sen
             "username": "{secrets.elis_username}"
           },
           "method": "POST",
-          "headers": {
-            "Content-Type": "application/json"
-          }
+          "headers": { "Content-Type": "application/json" }
         },
+        // highlight-end
         "queries": [
           {
             "url": "https://elis.rossum.ai/api/v1/annotations/{annotation_id}/content",
             "method": "GET",
             "headers": {
               "Content-Type": "application/json",
+              // highlight-start
               "Authorization": "Bearer {auth.body.key}"
+              // highlight-end
             },
-            "result_path": "content[?contains(schema_id, 'line_items_section')].children[].children[].children[?contains(schema_id, 'item_po_number')].content[]"
+            "result_path": "content[?contains(schema_id, 'line_items_section')].children[].children[].children[?contains(schema_id, 'item_po_number')].content[]",
+
+            // Optionally, you can also specify query parameters:
+            "query_params": {
+              "referenceNumber": "{document_id}"
+            }
           }
         ]
-        // highlight-end
-      },
-      "default": { … },
-      "mapping": { … },
-      "result_actions": { … }
+      }
+      // …
     }
   ]
 }
@@ -767,10 +826,7 @@ This can be achieved by first searching and returning records with their respect
               "newRoot": {
                 "$mergeObjects": [
                   {
-                    "$arrayElemAt": [
-                      "$original",
-                      0
-                    ]
+                    "$arrayElemAt": ["$original", 0]
                   },
                   "$$ROOT"
                 ]
