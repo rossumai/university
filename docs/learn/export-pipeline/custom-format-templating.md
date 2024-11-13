@@ -36,11 +36,11 @@ import WIP from '../\_wip.md';
 
 ## Basic usage
 
-<WIP />
+<WIP issue="https://github.com/rossumai/university/issues/382" />
 
 ## Available configuration options
 
-<WIP />
+<WIP issue="https://github.com/rossumai/university/issues/382" />
 
 ## Configuration examples
 
