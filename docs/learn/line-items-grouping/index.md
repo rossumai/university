@@ -35,8 +35,8 @@ Line items grouping service is provided by Rossum.ai in the form of webhook. To 
 
 ## Basic usage
 
-<WIP />
+<WIP issue="https://github.com/rossumai/university/issues/380" />
 
 ## Available configuration options
 
-<WIP />
+<WIP issue="https://github.com/rossumai/university/issues/380" />
