@@ -21,6 +21,10 @@ def sum_values(values):
 def rossum_hook_request_handler(payload):
     x = RossumPython.from_payload(payload)
 
+    # Reset the target table:
+    x.field.line_items_grouped = []
+
+    # Collect all relevant data:
     data = []
     for row in x.field.line_items:
         data.append({
@@ -31,18 +35,19 @@ def rossum_hook_request_handler(payload):
             "item_amount_total_grouped": row.item_amount_total,
         })
 
+    # Group the data if any:
     if len(data) > 0:
         # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
         x.field.line_items_grouped = (
             pd.DataFrame(data)
             .groupby('item_rate_grouped')
             .agg({
-                'item_description_grouped': 'first',
-                'item_total_base_grouped': sum_values,
-                'item_tax_grouped': sum_values,
-                'item_amount_total_grouped': sum_values
+                "item_description_grouped": "first",
+                "item_total_base_grouped": sum_values,
+                "item_tax_grouped": sum_values,
+                "item_amount_total_grouped": sum_values
             })
-            .reset_index().to_dict('records')
+            .reset_index().to_dict("records")
         )
 
     return x.hook_response()
