@@ -37,23 +37,51 @@ https://www.fatturapa.gov.it/en/norme-e-regole/documentazione-fattura-elettronic
     },
     {
       "schema_id": "iban",
-      "selectors": ["FatturaElettronicaBody/DatiPagamento/DettaglioPagamento/IBAN"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiPagamento/DettaglioPagamento/IBAN"
+      ]
     },
     {
       "schema_id": "document_type_code",
-      "selectors": ["FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/TipoDocumento"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/TipoDocumento"
+      ]
     },
     {
       "schema_id": "document_id",
-      "selectors": ["FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/Numero"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/Numero"
+      ]
     },
     {
       "schema_id": "order_id",
-      "selectors": ["FatturaElettronicaBody/DatiGenerali/DatiOrdineAcquisto/IdDocumento"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiGenerali/DatiOrdineAcquisto/IdDocumento"
+      ]
     },
     {
       "schema_id": "date_issue",
-      "selectors": ["FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/Data"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/Data"
+      ]
+    },
+    {
+      "schema_id": "date_due",
+      "selectors": [
+        "FatturaElettronicaBody/DatiPagamento/DettaglioPagamento/DataScadenzaPagamento"
+      ]
+    },
+    {
+      "schema_id": "payment_terms_start_date",
+      "selectors": [
+        "//FatturaElettronicaBody/DatiPagamento/DettaglioPagamento/DataRiferimentoTerminiPagamento"
+      ]
+    },
+    {
+      "schema_id": "payment_terms_days",
+      "selectors": [
+        "//FatturaElettronicaBody/DatiPagamento/DettaglioPagamento/GiorniTerminiPagamento"
+      ]
     },
     {
       "schema_id": "amount_total",
@@ -63,7 +91,9 @@ https://www.fatturapa.gov.it/en/norme-e-regole/documentazione-fattura-elettronic
     },
     {
       "schema_id": "currency_code",
-      "selectors": ["FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/Divisa"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiGenerali/DatiGeneraliDocumento/Divisa"
+      ]
     },
     {
       "schema_id": "bollo_amount",
@@ -105,53 +135,95 @@ https://www.fatturapa.gov.it/en/norme-e-regole/documentazione-fattura-elettronic
       "fields": [
         {
           "schema_id": "item_description",
-          "selectors": ["Descrizione"]
+          "selectors": [
+            "Descrizione"
+          ]
         },
         {
           "schema_id": "item_quantity",
-          "selectors": ["Quantita"]
+          "selectors": [
+            "Quantita"
+          ]
         },
         {
           "schema_id": "item_amount_base",
-          "selectors": ["PrezzoUnitario"]
+          "selectors": [
+            "PrezzoUnitario"
+          ]
         },
         {
           "schema_id": "item_total_base",
-          "selectors": ["PrezzoTotale"]
+          "selectors": [
+            "PrezzoTotale"
+          ]
         },
         {
           "schema_id": "item_rate",
-          "selectors": ["AliquotaIVA"]
+          "selectors": [
+            "AliquotaIVA"
+          ]
         },
         {
           "schema_id": "item_vat_code",
-          "selectors": ["Natura"]
+          "selectors": [
+            "Natura"
+          ]
+        },
+        {
+          "schema_id": "item_code",
+          "selectors": [
+            "CodiceArticolo/CodiceValore"
+          ]
         }
       ],
       "schema_id": "line_items",
-      "selectors": ["FatturaElettronicaBody/DatiBeniServizi/DettaglioLinee"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiBeniServizi/DettaglioLinee"
+      ]
     },
     {
       "fields": [
         {
           "schema_id": "item_tipo_cassa",
-          "selectors": ["TipoCassa"]
+          "selectors": [
+            "TipoCassa"
+          ]
         },
         {
           "schema_id": "item_contributo_cassa",
-          "selectors": ["ImportoContributoCassa"]
+          "selectors": [
+            "ImportoContributoCassa"
+          ]
         },
         {
           "schema_id": "item_aliquoata_iva_cassa",
-          "selectors": ["AliquotaIVA"]
+          "selectors": [
+            "AliquotaIVA"
+          ]
         },
         {
           "schema_id": "item_cassa_alcassa",
-          "selectors": ["AlCassa"]
+          "selectors": [
+            "AlCassa"
+          ]
         },
         {
           "schema_id": "item_cassa_tax_code",
-          "selectors": ["Natura"]
+          "selectors": [
+            "Natura"
+          ]
+        },
+        {
+          "schema_id": "item_discount_amount",
+          "selectors": [
+            "ScontoMaggiorazione[Tipo='SC']/Importo"
+          ]
+        },
+        {
+          "schema_id": "item_discount_rate",
+          "selectors": [
+            "ScontoMaggiorazione[Tipo='SC']/Percentuale"
+          ]
         }
       ],
       "schema_id": "cassa_items",
@@ -163,23 +235,33 @@ https://www.fatturapa.gov.it/en/norme-e-regole/documentazione-fattura-elettronic
       "fields": [
         {
           "schema_id": "tax_detail_rate",
-          "selectors": ["AliquotaIVA"]
+          "selectors": [
+            "AliquotaIVA"
+          ]
         },
         {
           "schema_id": "tax_detail_tax",
-          "selectors": ["Imposta"]
+          "selectors": [
+            "Imposta"
+          ]
         },
         {
           "schema_id": "tax_detail_base",
-          "selectors": ["ImponibileImporto"]
+          "selectors": [
+            "ImponibileImporto"
+          ]
         },
         {
           "schema_id": "tax_detail_code",
-          "selectors": ["Natura"]
+          "selectors": [
+            "Natura"
+          ]
         }
       ],
       "schema_id": "tax_details",
-      "selectors": ["FatturaElettronicaBody/DatiBeniServizi/DatiRiepilogo"]
+      "selectors": [
+        "FatturaElettronicaBody/DatiBeniServizi/DatiRiepilogo"
+      ]
     }
   ],
   "trigger_condition": {
