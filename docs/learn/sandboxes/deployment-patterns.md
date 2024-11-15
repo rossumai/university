@@ -98,6 +98,10 @@ prd push
 And to release changes to production, run `release` command:
 
 ```bash
+# Preview the changes first:
+prd release --plan-only
+
+# Run the actual release:
 prd release
 ```
 
