@@ -2,6 +2,7 @@
 sidebar_position: 1
 sidebar_label: 'Formula fields'
 title: 'Rossum Formulas: Formula fields'
+toc_max_heading_level: 4
 ---
 
 # Formula fields
@@ -196,4 +197,53 @@ show_warning("""
 ```
 
 Will render as:
+
 ![Warning example](img/warning_message.png)
+
+### VAT Rates table fallbacks
+
+It is often necessary to calculate missing values from the captured VAT information. For example, if we know "VAT Base" and "VAT Amount", we can calulate the missing "VAT Rate". The following section shows all the necessary combinations to calculate the missing values.
+
+All the following examples are rounding the values to two decimal places.
+
+#### `tax_detail_rate_calculated`
+
+```py
+if is_set(field.tax_detail_rate):
+    round(field.tax_detail_rate, 2)
+elif is_set(field.tax_detail_base) and is_set(field.tax_detail_tax) and field.tax_detail_base != 0:
+    round((field.tax_detail_tax / field.tax_detail_base) * 100, 2)
+else:
+    0
+```
+
+#### `tax_detail_base_calculated`
+
+```py
+if is_set(field.tax_detail_base):
+    round(field.tax_detail_base, 2)
+elif is_set(field.tax_detail_tax) and is_set(field.tax_detail_rate) and field.tax_detail_rate != 0:
+    round(field.tax_detail_tax * 100 / field.tax_detail_rate, 2)
+```
+
+#### `tax_detail_tax_calculated`
+
+```py
+if is_set(field.tax_detail_tax):
+    round(field.tax_detail_tax, 2)
+elif is_set(field.tax_detail_base) and is_set(field.tax_detail_rate):
+    round(field.tax_detail_base * field.tax_detail_rate / 100, 2)
+```
+
+#### `tax_detail_total_calculated`
+
+```py
+if is_set(field.tax_detail_total):
+    round(field.tax_detail_total, 2)
+elif is_set(field.tax_detail_base) and is_set(field.tax_detail_tax):
+    round(field.tax_detail_base + field.tax_detail_tax, 2)
+elif is_set(field.tax_detail_base) and is_set(field.tax_detail_rate):
+    round(field.tax_detail_base * (1 + field.tax_detail_rate / 100), 2)
+elif is_set(field.tax_detail_rate) and is_set(field.tax_detail_tax) and field.tax_detail_rate != 0:
+    round(field.tax_detail_tax / (field.tax_detail_rate / 100) + field.tax_detail_tax, 2)
+```
