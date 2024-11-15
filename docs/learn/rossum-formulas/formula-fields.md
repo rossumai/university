@@ -146,7 +146,7 @@ if not math.isclose(item_total_base_calculated, field.item_total_base, rel_tol=0
     show_error(message, field.item_total_base)
 ```
 
-### Get year/month from date field
+### Get year/month from a date field
 
 Returns year/month integer of a date field:
 

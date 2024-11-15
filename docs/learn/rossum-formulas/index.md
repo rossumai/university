@@ -3,20 +3,20 @@ title: 'Rossum Formulas'
 sidebar_position: 1
 ---
 
-This section covers both the Rossum **Formula Fields** and the **TxScript** flavor.
+This section covers both the Rossum **Formula Fields** and the **Serverless Functions** (Formula Fields flavor in custom extensions).
 
 ## Installation
 
-Formula Fields or TxScript do not require any installation. It is available as a native Rossum functionality.
+Formula Fields or Serverless Functions do not require any installation. They are both available as a native Rossum functionality.
 
-Formula Fields are available in the queue schema as a `formula` field type. TxScript is available in serverless functions. Both flavors are fundamentally similar and differ only in how they are used with minimal syntax differences.
+Formula Fields are available in the queue schema as a `formula` field type. In serverless functions, you can import `TxScript` library which is a wrapper introducing the same functionality into serverless functions. Both flavors are fundamentally similar and differ only in how they are used with minimal syntax differences.
 
 In case you want to use the TxScript within pre-existing serverless functions, you need to enable following setting:
 
 1. Go to the settings of the Webhook (Serverless function)
 2. Scroll to `Additional notification metadata`
 3. Enable the `Schemas` option
-4. Save it and now you can work with the `TxScript` in your serverless function
+4. Save it, and now you can work with the `TxScript` in your serverless function
 
 ## Basic usage
 
@@ -42,18 +42,39 @@ from txscript import TxScript
 def rossum_hook_request_handler(payload):
     t = TxScript.from_payload(payload)
 
-    t.field.order_id_normalized = t.field.order_id # ←
+    t.field.order_id_normalized = t.field.order_id  # Copies `order_id` value into `order_id_normalized`
 
     return t.hook_response()
 ```
 
 Notice that it is a little bit more verbose, but it is still very similar. The main differences are that we need to wrap the functionality into `rossum_hook_request_handler` function and that we need to explicitly write into the `order_id_normalized` field.
 
-(This is an illustrative example. In case you simply need to modify an existing field value, always prefer making it a formula field.)
+This is an illustrative example. In case you only need to modify an existing field value, always prefer making it a formula field.
+
+For backward compatibility, you can also use the following import which works the same way as `TxScript`:
+
+```py
+from rossum_python import RossumPython
+
+# …
+```
 
 ## Available functions and features
 
-Here is a list of available functions and features and their comparison between [Formula Fields](./formula-fields.md) and [Serverless Functions](./serverless-functions.md). Note that serverless functions examples always assume that the code is wrapped in `rossum_hook_request_handler` function and prefixed by `t = TxScript.from_payload(payload)` call (see above).
+Here is a list of available functions and features and their comparison between [Formula Fields](./formula-fields.md) and [Serverless Functions](./serverless-functions.md). Note that serverless functions examples always assume that the code is wrapped in `rossum_hook_request_handler` function like so:
+
+```py
+from txscript import TxScript
+
+def rossum_hook_request_handler(payload):
+    t = TxScript.from_payload(payload)
+
+    # INSERT THE EXAMPLES HERE
+
+    return t.hook_response()
+```
+
+Formula field examples do not require any further modification.
 
 ### Get datapoint value
 
@@ -70,7 +91,7 @@ field.amount
 In case of serverless function, the value can never be returned directly and must be either used in some other function call, or stored in some temporary variable to be used later:
 
 ```py
-x = t.field.amount
+tmp = t.field.amount
 ```
 
 ### Get datapoint metadata
@@ -168,7 +189,7 @@ from txscript import TxScript, substitute
 
 # …
 
-substitute(r"[^0-9]", r"", field.document_id)
+substitute(r"[^0-9]", r"", t.field.document_id)
 ```
 
 ### Show info/warning/error messages

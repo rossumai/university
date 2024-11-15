@@ -8,7 +8,7 @@ import WIP from '../\_wip.md';
 
 # Serverless functions
 
-Examples of common or interesting serverless functions (using TxScript flavor).
+Examples of common or interesting serverless functions (using `TxScript` flavor).
 
 ## Automatic adjustments to the issue date format
 
@@ -75,7 +75,7 @@ def rossum_hook_request_handler(payload):
     return t.hook_response()
 ```
 
-(Note that this is just for illustrative purposes - for this particular usecase, always prefer making `order_id_normalized` a formula field.)
+Note that this is just for illustrative purposes. For this particular use-case, always prefer making `order_id_normalized` a [formula field](./formula-fields.md).
 
 ## Get annotation information
 
