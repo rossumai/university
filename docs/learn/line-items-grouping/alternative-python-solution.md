@@ -10,7 +10,7 @@ Consider using the following simple Python code (as a [serverless function](../r
 
 ```py
 import pandas as pd
-from rossum_python import RossumPython, is_empty, default_to, is_set
+from txscript import TxScript, is_empty, default_to, is_set
 
 
 def sum_values(values):
@@ -19,14 +19,14 @@ def sum_values(values):
 
 
 def rossum_hook_request_handler(payload):
-    x = RossumPython.from_payload(payload)
+    t = RossumPython.from_payload(payload)
 
     # Reset the target table:
-    x.field.line_items_grouped = []
+    t.field.line_items_grouped = []
 
     # Collect all relevant data:
     data = []
-    for row in x.field.line_items:
+    for row in t.field.line_items:
         data.append({
             "item_rate_grouped": row.item_rate.attr.value,  # Must use attr.value because of the `groupby` call!
             "item_description_grouped": row.item_description,
@@ -38,7 +38,7 @@ def rossum_hook_request_handler(payload):
     # Group the data if any:
     if len(data) > 0:
         # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
-        x.field.line_items_grouped = (
+        t.field.line_items_grouped = (
             pd.DataFrame(data)
             .groupby('item_rate_grouped')
             .agg({
@@ -50,5 +50,5 @@ def rossum_hook_request_handler(payload):
             .reset_index().to_dict("records")
         )
 
-    return x.hook_response()
+    return t.hook_response()
 ```
