@@ -75,6 +75,14 @@ New formula field `order_id_normalized`:
 field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 ```
 
+### Get all enum options
+
+You can access all enum options via special `attr` attribute. The following code would return the number of enum options (regardless of what option is selected):
+
+```py
+len(field.language.attr.options)
+```
+
 ### Find first non-empty line item value
 
 ```py
