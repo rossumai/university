@@ -255,3 +255,46 @@ elif is_set(field.tax_detail_base) and is_set(field.tax_detail_rate):
 elif is_set(field.tax_detail_rate) and is_set(field.tax_detail_tax) and field.tax_detail_rate != 0:
     round(field.tax_detail_tax / (field.tax_detail_rate / 100) + field.tax_detail_tax, 2)
 ```
+
+### Check existence of a field in the schema
+
+Formula fields expect that all fields are present in the schema. If a field is missing, an error will be raised. For example:
+
+```txt
+AttributeError: Field 'doesntexist' is not defined
+
+Traceback (most recent call last):
+  at line 7, in <formula:test_ff>:
+    if is_set(field.doesntexist):
+```
+
+If you'd like to check the field existence, use one of the following formulas (all of them should work):
+
+```py
+if 'doesntexist' in vars(field) and is_set(value := field.doesntexist):
+    show_info(value)
+```
+
+Or:
+
+```py
+if hasattr(field, 'doesntexist') and is_set(value := field.doesntexist):
+    show_info(value)
+```
+
+Or:
+
+```py
+if is_set(value := getattr(field, 'doesntexist', None)):
+    show_info(value)
+```
+
+Or:
+
+```py
+try:
+    if is_set(value := field.doesntexist):
+        show_info(value)
+except AttributeError:
+    pass
+```
