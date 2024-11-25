@@ -19,7 +19,7 @@ def sum_values(values):
 
 
 def rossum_hook_request_handler(payload):
-    t = RossumPython.from_payload(payload)
+    t = TxScript.from_payload(payload)
 
     # Reset the target table:
     t.field.line_items_grouped = []
