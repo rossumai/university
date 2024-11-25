@@ -351,7 +351,7 @@ from txscript import TxScript
 def rossum_hook_request_handler(payload):
     t = TxScript.from_payload(payload)
 
-    t.field.document_id = payload.get("queues")[0].get("name")
+    t.field.queue_name = payload.get("queues")[0].get("name")
 
     return t.hook_response()
 ```
