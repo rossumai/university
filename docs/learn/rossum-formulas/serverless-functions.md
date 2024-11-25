@@ -340,3 +340,18 @@ The config examples are numbered for easier orientation:
 ```
 
 </details>
+
+## Get queue name
+
+To store the queue name in a in schema data point `queue_name` please use the following code. Don't forget to sideload both Schema and Queue in the extension setup.
+
+```py
+from txscript import TxScript
+
+def rossum_hook_request_handler(payload):
+    t = TxScript.from_payload(payload)
+
+    t.field.document_id = payload.get("queues")[0].get("name")
+
+    return t.hook_response()
+```
