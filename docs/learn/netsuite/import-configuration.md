@@ -435,6 +435,38 @@ Requires 'Lists -> Vendors' permissions.
 }
 ```
 
+### Vendor-Subsidiary Relationship
+
+:::warning
+
+Note that when working with this import, you might get the following error:
+
+```text
+UNEXPECTED_ERROR: An unexpected error occurred. Error ID: m3hhy7qy186i564uw6ob4
+```
+
+To solve it, try removing `method_headers.searchPreferences` from your request. This is a solution recommended by NetSuite support. There is however no good explanation of why this happens.
+
+:::
+
+```json
+{
+  "payload": {
+    "method_args": [
+      {
+        "_ns_type": "VendorSubsidiaryRelationshipSearchBasic"
+      }
+    ],
+    "method_name": "search"
+  },
+  "async_settings": {
+    "retries": 5,
+    "max_run_time_s": 36000
+  },
+  "master_data_name": "NS_SB1_VendorSubsidiaryRelationship_v1"
+}
+```
+
 ### Vendor Bills (Invoices)
 
 ```json
