@@ -347,18 +347,16 @@ It is necessary to restrict the fuzzy search results by using `$match` on the re
 
 ## Fuzzy match score normalization
 
-By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 to any number (defined by MongoDB). This makes it challenging to filter only relevant results. It is therefore a good idea to normalize the score. The following snippet normalizes the score to a value between 0 and 1:
+### Recommended solution
+
+By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 to any number (defined by MongoDB). This makes it challenging to filter only relevant results. It is therefore a good idea to normalize the score. The following snippet normalizes the score to a value between `0` and `1`:
 
 ```json
 {
   "aggregate": [
-    // … (fuzzy search)
+    // … (fuzzy $search)
     {
-      "$addFields": {
-        "__searchScore": {
-          "$meta": "searchScore"
-        }
-      }
+      "$addFields": { "__searchScore": { "$meta": "searchScore" } }
     },
     {
       "$addFields": {
@@ -373,14 +371,7 @@ By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 t
                     "$subtract": [
                       1,
                       {
-                        "$divide": [
-                          {
-                            "$strLenCP": "$Name"
-                          },
-                          {
-                            "$strLenCP": "{sender_name}"
-                          }
-                        ]
+                        "$divide": [{ "$strLenCP": "$Name" }, { "$strLenCP": "{sender_name}" }]
                       }
                     ]
                   }
@@ -394,58 +385,39 @@ By default, [fuzzy match](#fuzzy-match) returns a score which can range from 0 t
     {
       "$addFields": {
         "__normalized_score": {
-          "$divide": [
-            "$new_score",
-            {
-              "$add": [1, "$new_score"]
-            }
-          ]
+          "$divide": ["$new_score", { "$add": [1, "$new_score"] }]
         }
       }
     },
-    {
-      "$sort": {
-        "__normalized_score": -1
-      }
-    },
-    {
-      "$match": {
-        "__normalized_score": {
-          "$gt": 0.7
-        }
-      }
-    }
+    { "$sort": { "__normalized_score": -1 } },
+    { "$match": { "__normalized_score": { "$gt": 0.7 } } }
   ]
 }
 ```
+
+### Naive solution
 
 Naiver (and less recommended) solution would be the following:
 
 ```json
 {
   "aggregate": [
-    // … (fuzzy search)
+    // … (fuzzy $search)
     {
       "$addFields": {
-        "__searchScore": {
-          "$meta": "searchScore"
-        }
+        "__searchScore": { "$meta": "searchScore" }
       }
     },
     {
       "$setWindowFields": {
         "output": {
-          "__maxSearchScore": {
-            "$max": "$__searchScore"
-          }
+          "__maxSearchScore": { "$max": "$__searchScore" }
         }
       }
     },
     {
       "$addFields": {
-        "__normalizedSearchScore": {
-          "$divide": ["$__searchScore", "$__maxSearchScore"]
-        }
+        "__normalizedSearchScore": { "$divide": ["$__searchScore", "$__maxSearchScore"] }
       }
     }
     // …
@@ -453,15 +425,33 @@ Naiver (and less recommended) solution would be the following:
 }
 ```
 
-Note that one disadvantage of this second normalization approach is that `__normalizedSearchScore` can be exactly "1" even when `__searchScore` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
+One major disadvantage of this second normalization approach is that `__normalizedSearchScore` can be exactly "1" even when `__searchScore` has low value. It might be a good idea to combine both scores to filter out results that would normally be considered not-a-match.
 
-## Fuzzy match score normalization - non-compound query
+### Advanced solution for non-compound queries
 
-Score returned normalized to interval between 0-1. This works only when a "compound" query is **not** used.
+:::note
+
+To make the following query work, your `$search` query must contain the `scoreDetails:true` option. Without this configuration, the `searchScoreDetails` in `$addFields` would not work.
+
+```json
+{
+  "$search": {
+    // …
+    "scoreDetails": true
+  }
+}
+```
+
+For more information see: https://www.mongodb.com/docs/atlas/atlas-search/score/get-details/
+
+:::
+
+Score returned normalized to interval between 0-1. This works only when a [compound query](https://www.mongodb.com/docs/atlas/atlas-search/compound/) is **not** used.
 
 ```json
 {
   "aggregate": [
+    // … (fuzzy $search)
     {
       "$addFields": {
         "__searchScore": {
