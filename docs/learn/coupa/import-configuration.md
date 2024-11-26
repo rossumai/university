@@ -21,6 +21,41 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 
 ## Configuration examples
 
+### Accounts
+
+See: [Accounts API (/accounts)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/accounts-api-(accounts)>)
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.accounting.read"
+  },
+  "import_config": {
+    "query": {
+      // highlight-start
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
+    },
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
+    "endpoint": "api/accounts",
+    "dataset_name": "COUPA_DEV_accounts_v1",
+    "records_per_request": 50
+  }
+}
+```
+
 ### Account types
 
 See: [Account Types API (/account_types)](https://compass.coupa.com/_dita_/en-us/documentation/plat/integ/coupa_core_api/topics/account_types_api_account_types.dita)
@@ -166,6 +201,41 @@ Query attributes necessary for differential update are highlighted.
     // highlight-end
     "endpoint": "api/invoices",
     "dataset_name": "COUPA_DEV_invoices_v1",
+    "records_per_request": 50
+  }
+}
+```
+
+### Legal entities
+
+See: [Legal Entity API](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/expenses-api-(expense_reports)/legal-entity-api>)
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.legal_entity.read"
+  },
+  "import_config": {
+    "query": {
+      // highlight-start
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
+    },
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
+    "endpoint": "api/legal_entities",
+    "dataset_name": "COUPA_DEV_legal_entities_v1",
     "records_per_request": 50
   }
 }
