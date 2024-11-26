@@ -375,7 +375,24 @@ For more information, please visit: https://docs.oracle.com/en/cloud/saas/netsui
 
 ### Using NetSuite File Cabinet (`pipeline_context`)
 
-You can reference earlier export stages by accessing `pipeline_context` variable. In this example, we use `pipeline_context` for attaching file uploaded to the NetSuite File Cabinet:
+You can reference earlier export stages by accessing `pipeline_context` variable. In the following example, we use `pipeline_context` for attaching file uploaded to the NetSuite File Cabinet. Note that the configuration uses `original_file_name` variable from the [`Get document information` serverless function](../rossum-formulas/serverless-functions.md#get-document-information).
+
+<details>
+  <summary>`original_file_name` serverless function</summary>
+
+```py
+from txscript import TxScript
+
+def rossum_hook_request_handler(payload):
+    t = TxScript.from_payload(payload)
+
+    # Original file name:
+    t.field.original_file_name = payload.get("document").get("original_file_name")
+
+    return t.hook_response()
+```
+
+</details>
 
 ```json
 {
@@ -389,7 +406,7 @@ You can reference earlier export stages by accessing `pipeline_context` variable
           "method_name": "add",
           "method_args": [
             {
-              "name": "@{file_name}",
+              "name": "@{original_file_name}",
               "folder": {
                 "type": "folder",
                 "_ns_type": "RecordRef",
