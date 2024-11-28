@@ -133,6 +133,10 @@ ORGANIZATION:
           targets:
             # ID(s) of the `target` queue(s) (there can be none or more than one):
             - target_id: null
+              # (optional) You could override attribute on the target using `attribute_override` 
+              ## - for example you can have `name:` on `target` different from the `source`
+              attribute_override:
+                name: Invoices (PROD)
           INBOX:
             # IDs of the `source` inbox belonging to the `source` queue above:
             id: 123456
