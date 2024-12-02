@@ -58,7 +58,7 @@ Define CSV header fields as well as the actual datapoints to be exported:
 {
   "export_configs": [
     {
-      "export_id": "export_annotation_to_csv",
+      "export_reference_key": "export_annotation_to_csv",
       "file_content_template": "Document ID,Document Type,Quantity\n{{field.document_id}},{{field.document_type}},{{field.line_items[0].item_quantity}}"
     }
   ]
@@ -71,7 +71,7 @@ Alternatively, it is possible to leverage `file_content_template_multiline` for 
 {
   "export_configs": [
     {
-      "export_id": "export_annotation_to_csv",
+      "export_reference_key": "export_annotation_to_csv",
       "file_content_template_multiline": [
         "Document ID,Document Type,Quantity",
         "{{field.document_id}},{{field.document_type}},{{field.line_items[0].item_quantity}}"
@@ -95,7 +95,7 @@ It is also possible to iterate line items:
 {
   "export_configs": [
     {
-      "export_id": "export_annotation_to_csv",
+      "export_reference_key": "export_annotation_to_csv",
       "file_content_template_multiline": [
         "Document ID,Document Type,Item Description,Item Quantity",
         "{% for item in field.line_items %}{{field.document_id}},{{field.document_type}},{{item.item_description}},{{item.item_quantity}}\n{% endfor %}"
@@ -126,7 +126,7 @@ Note that such created CSV is not available anywhere in the UI, but it's rather 
     "custom_format_exports": [
       {
         "document": "https://elis.rossum.ai/api/v1/documents/123456",
-        "export_id": "export_annotation_to_csv"
+        "export_reference_key": "export_annotation_to_csv"
       }
     ]
   }
@@ -145,7 +145,7 @@ Similarly to other formats, custom XML can be defined using the following templa
 {
   "export_configs": [
     {
-      "export_id": "export_annotation_to_xml",
+      "export_reference_key": "export_annotation_to_xml",
       "content_encoding": "utf-8",
       "file_content_template_multiline": [
         "<ROSSUM>",
@@ -174,7 +174,7 @@ Similarly to other formats, custom XML can be defined using the following templa
 {
   "export_configs": [
     {
-      "export_id": "export_annotation_to_json",
+      "export_reference_key": "export_annotation_to_json",
       "content_encoding": "utf-8",
       "file_content_template_multiline": [
         "{",
