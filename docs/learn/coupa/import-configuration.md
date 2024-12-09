@@ -17,6 +17,7 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
 <WebhookEndpoints
   eu1="https://elis.rossum.ai/svc/scheduled-imports/api/coupa/v1/import"
   eu2="https://shared-eu2.rossum.app/svc/scheduled-imports/api/coupa/v1/import"
+  us="https://us.app.rossum.ai/svc/scheduled-imports/api/coupa/v1/import"
 />
 
 ## Configuration examples
