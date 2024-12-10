@@ -82,6 +82,12 @@ const config = {
             label: 'Learn',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'coursesSidebar',
+            position: 'left',
+            label: 'Courses',
+          },
+          {
             to: '/docs/watch',
             label: 'Watch',
             position: 'left',
