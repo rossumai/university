@@ -19,6 +19,35 @@ Building NetSuite integration is much more than just reading the values from doc
    1. Comparing files on a binary level (looking for identical files)
    2. Comparing extracted fields (looking for exactly matching extracted content)
    3. Searching whether such invoices already exist in NetSuite or not (complements the previous point but takes historic documents into account as well)
+1. Consider whether original files should be attached and created in the NetSuite File Cabinet. If so, make sure that the original filenames are unique (filenames in Rossum can be duplicated but not in NetSuite). Example [serverless function](../rossum-formulas/serverless-functions.md) implementation:
+
+```py
+import os
+from datetime import datetime
+from rossum_python import RossumPython
+
+
+def add_iso_timestamp(filename):
+    # Get the file name and extension separately
+    name, ext = os.path.splitext(filename)
+
+    # Get the current ISO timestamp
+    timestamp = datetime.now().isoformat(timespec='seconds')
+
+    # Create the new filename with the timestamp
+    new_filename = f"{name}_{timestamp}{ext}"
+
+    return new_filename
+
+
+def rossum_hook_request_handler(payload):
+    r = RossumPython.from_payload(payload)
+
+    # Add ISO timestamp to the file name to ensure two files with the same name can be uploaded to NetSuite file cabinet:
+    r.field.meta_original_file_name = add_iso_timestamp(payload.get("document").get("original_file_name"))
+
+    return r.hook_response()
+```
 
 ## Default webhook timeout is 30 seconds
 
