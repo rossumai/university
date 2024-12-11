@@ -353,5 +353,88 @@ The config examples are numbered for easier orientation:
   ]
 }
 ```
-
 </details>
+
+## Fetch and Analyze OCR Text for Pattern Matches
+
+This function retrieves and processes textual data from Rossum's page_data API for an annotation. It is designed to:
+
+1. Fetch Text Data: Make an HTTP GET request to the page_data endpoint of a specific annotation using the provided rossum_authorization_token.
+1. Retry Mechanism: Handle transient network or server issues by retrying up to 3 times in case of a non-200 HTTP response or exceptions.
+1. Analyze Text Content: Parse the fetched text content for specific patterns defined in the find_variants function (e.g., formats like xxxxxx.xx.xxx or xxxxxx xx xxx).
+1. Return Matches: Return a structured list of matches, including the page ID, the matched text, and the extracted patterns.
+
+```py
+import re
+import requests
+
+def find_variants(text):
+    """
+    Find specific patterns in the given text.
+
+    :param text: String to search patterns in.
+    :return: List of matches for defined patterns.
+    """
+    # Patterns to match
+    patterns = [
+        r'\b[\w\d]{6}\.\w{2}\.\w{3}\b',  # xxxxxx.xx.xxx
+        r'\b[\w\d]{6}\.\w{3}\.\w{2}\b',  # xxxxxx.xxx.xx
+        r'\b[\w\d]{6} \w{2} \w{3}\b',      # xxxxxx xx xxx (spaces instead of dots)
+        r'\b[\w\d]{6} \w{3} \w{2}\b',      # xxxxxx xxx xx (spaces instead of dots)
+        r'\b[\w\d]{6}[-_\s]?\w{2}[-_\s]?\w{3}\b',  # xxxxxx xx xxx with optional - or _
+        r'\b[\w\d]{6}[-_\s]?\w{3}[-_\s]?\w{2}\b',  # xxxxxx xxx xx with optional - or _
+    ]
+
+    # Find all matches for each pattern
+    matches = []
+    for pattern in patterns:
+        matches.extend(re.findall(pattern, text))
+
+    return matches
+
+def fetch_and_analyze_ocr_text(payload):
+    """
+    Fetch page_data from annotation and check for text matching variants.
+
+    :param payload: Dictionary containing the payload with annotation information.
+    :return: List of matches found in the page_data text.
+    """
+    matches = []
+    token = payload.get("rossum_authorization_token")
+    annotation_url = payload.get("annotation", {}).get("url")
+
+    if not token or not annotation_url:
+        return matches
+
+    retries = 3
+    for attempt in range(retries):
+        try:
+            # Request to fetch text content from annotation
+            page_req = requests.get(
+                url=f"{annotation_url}/page_data?granularity=texts",
+                headers={"Authorization": f"Bearer {token}"}
+            )
+
+            if page_req.status_code == 200:
+                results = page_req.json().get("results", [])
+                for page in results:
+                    for item in page.get("items", []):
+                        ocr_text = item.get("text", "")
+                        if ocr_text:
+                            ocr_matches = find_variants(ocr_text)
+                            if ocr_matches:
+                                matches.append({
+                                    "page_id": page.get("id"),
+                                    "ocr_text": ocr_text,
+                                    "ocr_matches": ocr_matches
+                                })
+                break  # Exit retry loop if request is successful
+            else:
+                print(f"Attempt {attempt + 1} failed with status code {page_req.status_code}. Retrying...")
+
+        except requests.RequestException as e:
+            print(f"Attempt {attempt + 1} encountered an exception: {e}. Retrying...")
+
+    return matches
+
+```
