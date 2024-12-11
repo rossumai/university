@@ -368,14 +368,14 @@ This function retrieves and processes textual data from Rossum's page_data API f
 import re
 import requests
 
-def find_variants(text):
+def find_strings(text):
     """
     Find specific patterns in the given text.
 
     :param text: String to search patterns in.
     :return: List of matches for defined patterns.
     """
-    # Patterns to match
+    # Example patterns to match, change these for your use case
     patterns = [
         r'\b[\w\d]{6}\.\w{2}\.\w{3}\b',  # xxxxxx.xx.xxx
         r'\b[\w\d]{6}\.\w{3}\.\w{2}\b',  # xxxxxx.xxx.xx
@@ -421,7 +421,7 @@ def fetch_and_analyze_ocr_text(payload):
                     for item in page.get("items", []):
                         ocr_text = item.get("text", "")
                         if ocr_text:
-                            ocr_matches = find_variants(ocr_text)
+                            ocr_matches = find_strings(ocr_text)
                             if ocr_matches:
                                 matches.append({
                                     "page_id": page.get("id"),
@@ -436,5 +436,4 @@ def fetch_and_analyze_ocr_text(payload):
             print(f"Attempt {attempt + 1} encountered an exception: {e}. Retrying...")
 
     return matches
-
 ```
