@@ -298,3 +298,9 @@ try:
 except AttributeError:
     pass
 ```
+
+### Remove whitespaces
+
+```py
+''.join(field.iban.split())
+```
