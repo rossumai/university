@@ -25,24 +25,25 @@ The most favorite way is email ingestion, however.
 
 Documents in Rossum can be organized into queues, which are "folders" with their own email address. Each queue can then be organized in a "workspace" for better orientation. The overall structure is as follows:
 
+
 ```text
- Rossum.ai organization
-+-------------------------------+
-|                               |
-|    Workspace(s)               |
-|   +-----------------------+   |
-|   |                       |   |
-|   |    Queue 1            |   |
-|   |   +---------------+   |   |
-|   |   |   Mailbox 1   |   |   |
-|   |   +---------------+   |   |
-|   |                       |   |
-|   |    Queue 2            |   |
-|   |   +---------------+   |   |
-|   |   |   Mailbox 2   |   |   |
-|   |   +---------------+   |   |
-|   +-----------------------+   |
-+-------------------------------+
+         Rossum.ai Organization
++---------------------------------------+
+|                                       |
+|             Workspace(s)              |
+|         +-------------------+         |
+|         |                   |         |
+|         |      Queue 1      |         |
+|         |   +-----------+   |         |
+|         |   | Mailbox 1 |   |         |
+|         |   +-----------+   |         |
+|         |                   |         |
+|         |      Queue 2      |         |
+|         |   +-----------+   |         |
+|         |   | Mailbox 2 |   |         |
+|         |   +-----------+   |         |
+|         +-------------------+         |
++---------------------------------------+
 ```
 
 Each queue has its own email address which can be found by opening the relevant queue and clicking either on **Upload** button or by going to queue settings and clicking on **Emails** tab.
