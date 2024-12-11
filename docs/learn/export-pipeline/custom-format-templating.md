@@ -168,6 +168,14 @@ Similarly to other formats, custom XML can be defined using the following templa
 }
 ```
 
+:::tip
+
+If the fields may include any of the following chars (`>`, `<`, `&`, or `"`) you **SHOULD** escape it unless the variable contains well-formed and trusted HTML/XML like so: `{ field.name|e }`
+
+You can learn more about this (and other) filter(s) here: https://jinja.palletsprojects.com/en/stable/templates/#working-with-manual-escaping
+
+:::
+
 ### Custom JSON
 
 ```json
