@@ -579,6 +579,20 @@ With this import configuration, you will receive a final collection that include
 
 ### Suppliers
 
+See: [Suppliers API (/suppliers)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/suppliers-api-(suppliers)>)
+
+:::warning
+
+Do not fetch `remit_to_addresses` directly on the supplier object. Update to the remit-to addresses in Coupa would not re-trigger the differential import and your supplier data would be inconsistent. Instead, use [Supplier remit-to addresses](#supplier-remit-to-addresses).
+
+:::
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
 ```json
 {
   "credentials": {
@@ -668,11 +682,86 @@ With this import configuration, you will receive a final collection that include
             }
           ]
         }
-      ]
+      ],
+      // highlight-start
+      "order_by": "created_at",
+      "updated-at[gt_or_eq]": "${last_modified_date}"
+      // highlight-end
     },
-    "method": "replace",
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
     "endpoint": "api/suppliers",
     "dataset_name": "COUPA_DEV_suppliers_v1",
+    "records_per_request": 50
+  }
+}
+```
+
+### Supplier remit-to addresses
+
+See: [Suppliers API (/suppliers)](<https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/suppliers-api-(suppliers)>)
+
+Use this configuration to import all supplier remit-to addresses. Note that Coupa (currently) doesn't have any API endpoint to fetch all the remit-to addresses directly. Therefore, we fetch all suppliers and get the remit to addresses from there. It is important to do it in a separate import job (not together with the supplier data) to make sure that `last_modified_date` works correctly.
+
+:::tip
+
+Query attributes necessary for differential update are highlighted.
+
+:::
+
+```json
+{
+  "credentials": {
+    "client_id": "…",
+    "base_api_url": "…",
+    "client_scope": "core.supplier.read"
+  },
+  "import_config": {
+    "query": {
+      "fields": [
+        "id",
+        "created_at",
+        "updated_at",
+        "name",
+        "display_name",
+        {
+          "remit_to_addresses": [
+            "id",
+            "created_at",
+            "updated_at",
+            "remit_to_code",
+            "name",
+            "street1",
+            "street2",
+            "street3",
+            "street4",
+            "city",
+            "state",
+            "postal_code",
+            "active",
+            "vat_number",
+            "local_tax_number",
+            "external_src_ref",
+            "external_src_name",
+            {
+              "country": ["id", "code", "name"]
+            }
+          ]
+        }
+      ],
+      // highlight-start
+      "order_by": "created_at",
+      "remit-to-addresses[updated-at][gt_or_eq]": "${last_modified_date}"
+      // highlight-end
+    },
+    // highlight-start
+    "method": "update",
+    "id_keys": ["id"],
+    // highlight-end
+    "endpoint": "api/suppliers",
+    "dataset_name": "COUPA_TEST_suppliers_remit_to_addresses_v1",
     "records_per_request": 50
   }
 }
