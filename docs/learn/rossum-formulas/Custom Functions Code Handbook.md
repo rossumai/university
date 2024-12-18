@@ -41,17 +41,16 @@ Example:
 Bad practice \- hook code 
 
 ```py
-...
-API_URL = "https://api.example.com/v1"
-WRITE_RESPONSE_TARGET_FIELD = "response_datapoint"
+  API_URL = "https://api.example.com/v1"
+  WRITE_RESPONSE_TARGET_FIELD = "response_datapoint"
 ```
 
 Good practice \- hook.settings
 
 ```json
 {
-API_URL = "https://api.example.com/v1"
-WRITE_RESPONSE_TARGET_FIELD = "response_datapoint"
+  "API_URL" : "https://api.example.com/v1"
+  "WRITE_RESPONSE_TARGET_FIELD" : "response_datapoint"
 }
 ```
 
