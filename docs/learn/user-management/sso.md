@@ -1,9 +1,12 @@
 ---
-title: 'Single Sign-On (SSO)'
+title: 'User management: Single Sign-On (SSO)'
+sidebar_label: 'Single Sign-On (SSO)'
 sidebar_position: 1
 ---
 
 import PaidFeature from '../\_paid_feature.md';
+
+# Single Sign-On (SSO)
 
 <PaidFeature />
 
