@@ -40,7 +40,30 @@ import WIP from '../\_wip.md';
 
 ## Available configuration options
 
-<WIP issue="https://github.com/rossumai/university/issues/382" />
+```json
+{
+  "export_configs": [
+    {
+      "content_encoding": "utf-8",
+
+      // Name of the export template used for later reference in the export pipeline.
+      "export_reference_key": "example_invoice_template",
+
+      // In-line template of the file to be exported. You can either use this in-line version or
+      // use `file_content_template_multiline` for multiple lines instead.
+      "file_content_template": "…",
+
+      // Multiline template of the file to be exported. You can either use this multipline version
+      // or use `file_content_template` for in-line templates instead.
+      "file_content_template_multiline": [
+        // Rows of the template. Each row is a new line (no need for "\n" separators).
+        "…",
+        "…"
+      ]
+    }
+  ]
+}
+```
 
 ## Configuration examples
 
@@ -139,7 +162,7 @@ This extension is typically to be used in combination with [REST API Export exte
 
 ### Custom XML
 
-Similarly to other formats, custom XML can be defined using the following template:
+Similarly to other formats, custom XML can be defined using the following template (notice the `| upper` [filter](https://jinja.palletsprojects.com/en/stable/templates/#filters)):
 
 ```json
 {
@@ -156,7 +179,9 @@ Similarly to other formats, custom XML can be defined using the following templa
         "      <DOCUMENT_LANGUAGE>{{ field.language }}</DOCUMENT_LANGUAGE>",
         "      <DATE_ISSUE>{{ field.date_issue }}</DATE_ISSUE>",
         "      <DATE_DUE>{{ field.date_due }}</DATE_DUE>",
-        "      <CURRENCY>{{ field.currency|upper }}</CURRENCY>",
+        // highlight-start
+        "      <CURRENCY>{{ field.currency | upper }}</CURRENCY>",
+        // highlight-end
         "      <AMOUNT_TOTAL>{{ field.amount_total }}</AMOUNT_TOTAL>",
         "      <AMOUNT_TOTAL_TAX>{{ field.amount_total_tax }}</AMOUNT_TOTAL_TAX>",
         "    </HEADER>",
@@ -178,6 +203,8 @@ You can learn more about this (and other) filter(s) here: https://jinja.palletsp
 
 ### Custom JSON
 
+Creates custom JSON templates with some header fields and line items (iteration over the line items is highlighted).
+
 ```json
 {
   "export_configs": [
@@ -189,13 +216,17 @@ You can learn more about this (and other) filter(s) here: https://jinja.palletsp
         "  \"document_id\": \"{{ field.document_id }}\",",
         "  \"document_type\": \"{{ field.document_type }}\",",
         "  \"line_items\": [",
+        // highlight-start
         "    {% for item in field.line_items %}{",
+        // highlight-end
         "      \"code\": \"{{ item.item_code }}\",",
         "      \"description\": \"{{ item.item_description }}\",",
         "      \"quantity\": {{ item.item_quantity }},",
         "      \"amount\": {{ item.item_amount }},",
+        // highlight-start
         "    }{% if not loop.last %},{% endif %}",
         "  {% endfor %}]",
+        // highlight-end
         "}"
       ]
     }
