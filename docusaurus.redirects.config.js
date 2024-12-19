@@ -42,6 +42,11 @@ export default {
       from: ['/docs/learn/coupa/coupa-workflow-example'],
       to: '/docs/learn/coupa/workflow-example',
     },
+    {
+      // Redirected on 2024-12-19
+      from: ['/docs/learn/sso'],
+      to: '/docs/learn/user-management/sso',
+    },
   ],
   createRedirects(existingPath) {
     if (existingPath.includes('/docs/learn/')) {
