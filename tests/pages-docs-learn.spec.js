@@ -51,8 +51,8 @@ const { test, expect } = require('@playwright/test');
     title: 'SFTP and S3 imports/exports | Rossum.ai University',
   },
   {
-    path: '/docs/learn/sso',
-    title: 'Single Sign-On (SSO) | Rossum.ai University',
+    path: '/docs/learn/user-management/sso',
+    title: 'User management: Single Sign-On (SSO) | Rossum.ai University',
   },
   {
     path: '/docs/learn/structured-formats-import',
