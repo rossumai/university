@@ -75,6 +75,16 @@ New formula field `order_id_normalized`:
 field.order_id_manual if not is_empty(field.order_id_manual) else field.order_id
 ```
 
+:::danger
+
+Note that copying numbers like this does not copy the original format (specifically trailing zeros). So copying number `123.40` will result in `123.4` (notice the missing zero). In most of the cases, this is not an issue, however. To get the original format (as a string), you must use the following code:
+
+```py
+field.amount.attr.value  # "123.40"
+```
+
+:::
+
 ### Get all enum options
 
 You can access all enum options via special `attr` attribute. The following code would return the number of enum options (regardless of what option is selected):
