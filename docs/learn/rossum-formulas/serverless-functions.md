@@ -37,7 +37,7 @@ def flip_day_month(date_value):
         return date_value
 
     day, month = date_value.day, date_value.month
-    raw_text = date_value.ocr_raw_text or date_value.rir_raw_text
+    raw_text = date_value.attr.ocr_raw_text or date_value.attr.rir_raw_text
 
     try:
         raw_month, raw_day, raw_year = map(int, raw_text.split('/'))
