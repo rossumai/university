@@ -173,3 +173,25 @@ Below is a list of fields that undergo modification (please refer to the documen
 | `sender_ic`           | Supplier Company ID  | Possible non-numeric characters are stripped |
 
 If you need to prevent these modifications, please contact a Rossum representative.
+
+
+(!) Create branch first
+
+
+### Dates are mixing formats
+In some cases, despite the date format you have chosen in the schema for your date field, you may notice extraction errors. Specifically, days, months, and years may be confused.
+This occurs because the formatting you define per field in the schema represents the desired output format, not how the system actually interprets dates.
+
+In cases where the date is not `ambiguous`, the system does attempt to follow the format you specified. However, for more complex dates, it uses a different approach.
+What are `ambiguous` dates?
+- Dates with incomplete years (e.g., "24" could represent either a day or a year).
+- Dates where both the day and month are 12 or less, such as `12/11/2024`. In this case, the system cannot determine whether "12" represents the day or the month.
+
+We understand that your documents may not consistently follow one format. For example, one document might use the European format `DD/MM/YYYY`, while another uses the American format `MM/DD/YYYY`. For this reason, the system cannot rely solely on the specified format.
+**To determine the correct date, the system evaluates all variations and chooses the date closest to the document’s arrival time.** This approach works reliably for recent documents, but it may produce errors for older documents or those containing older dates.
+
+Let's check the example:
+1. Today is December 23rd, 2024
+2. Document has date *9/11/24*
+3. Your schema assumes American format `MM/DD/YYYY`. Then it gives us the following variations: *9/11/2024*, *11/09/2024*, *9/24/2011*, *11/24/2009*.
+4. The closest date to December 23rd, 2024 is *11/09/2024*. This date will be selected. 
