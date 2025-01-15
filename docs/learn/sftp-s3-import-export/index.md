@@ -15,7 +15,9 @@ import WIP from '../\_wip.md';
 
 ## Available configuration options
 
-Available configuration options are described in the API documentation of the [Scheduled Imports - File storage](https://elis.rossum.ai/svc/scheduled-imports/api/docs#tag/File-Storage/operation/import_dataset_from_file_storage_api_file_storage_v1_dataset_import_post) 
+Available configuration options are described in the API documentation:
+- Import: [Scheduled Imports - File storage](https://elis.rossum.ai/svc/scheduled-imports/api/docs#tag/File-Storage/operation/import_dataset_from_file_storage_api_file_storage_v1_dataset_import_post)
+- Export: [File Storage Export](https://elis.rossum.ai/svc/file-storage-export/api/docs)
 
 ## Logging and observability
 
