@@ -53,6 +53,101 @@ If duplicate is detected, field `is_rossum_duplicate` is set to `true`.
 
 </details>
 
+### Based the /annotations/search endpoiont and MQL query
+```json
+{
+  "configurations": [
+    {
+      "logic": [
+        {
+          "actions": [
+            {
+              "type": "fill_field",
+              "field_to_fill": "is_rossum_duplicate",
+              "value_to_fill": "true"
+            },
+            {
+              "type": "mark_duplicate"
+            }
+          ],
+          "search_query": {
+            "query": {
+              "$and": [
+                {
+                  "status": {
+                    "$nin": [
+                      "split",
+                      "purged"
+                    ]
+                  }
+                },
+                {
+                  "field.document_id.string": {
+                    "$ne": ""
+                  }
+                },
+                {
+                  "field.document_id.string": {
+                    "$eq": "@{document_id}"
+                  }
+                },
+                {
+                  "field.sender_match.string": {
+                    "$ne": ""
+                  }
+                },
+                {
+                  "field.sender_match.string": {
+                    "$eq": "@{supplier_id}"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "trigger_events": [
+        "annotation_content"
+      ],
+      "trigger_actions": [
+        "initialize",
+        "started",
+        "updated"
+      ]
+    },
+    {
+      "logic": [
+        {
+          "rules": [
+            {
+              "id": 1,
+              "attribute": "relation"
+            }
+          ],
+          "actions": [
+            {
+              "type": "fill_field",
+              "field_to_fill": "is_rossum_duplicate",
+              "value_to_fill": "true"
+            }
+          ],
+          "matching_flow": [
+            "1"
+          ]
+        }
+      ],
+      "trigger_events": [
+        "annotation_content"
+      ],
+      "trigger_actions": [
+        "initialize"
+      ]
+    }
+  ]
+}
+```
+
+### Based the /annnotations endpoint
 ```json
 {
   "configurations": [
