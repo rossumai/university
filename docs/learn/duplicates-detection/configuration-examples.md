@@ -53,7 +53,8 @@ If duplicate is detected, field `is_rossum_duplicate` is set to `true`.
 
 </details>
 
-### Based the /annotations/search endpoiont and MQL query
+### Based the `/annotations/search` endpoint and MQL query
+
 ```json
 {
   "configurations": [
@@ -75,10 +76,7 @@ If duplicate is detected, field `is_rossum_duplicate` is set to `true`.
               "$and": [
                 {
                   "status": {
-                    "$nin": [
-                      "split",
-                      "purged"
-                    ]
+                    "$nin": ["split", "purged"]
                   }
                 },
                 {
@@ -106,14 +104,8 @@ If duplicate is detected, field `is_rossum_duplicate` is set to `true`.
           }
         }
       ],
-      "trigger_events": [
-        "annotation_content"
-      ],
-      "trigger_actions": [
-        "initialize",
-        "started",
-        "updated"
-      ]
+      "trigger_events": ["annotation_content"],
+      "trigger_actions": ["initialize", "started", "updated"]
     },
     {
       "logic": [
@@ -131,23 +123,18 @@ If duplicate is detected, field `is_rossum_duplicate` is set to `true`.
               "value_to_fill": "true"
             }
           ],
-          "matching_flow": [
-            "1"
-          ]
+          "matching_flow": ["1"]
         }
       ],
-      "trigger_events": [
-        "annotation_content"
-      ],
-      "trigger_actions": [
-        "initialize"
-      ]
+      "trigger_events": ["annotation_content"],
+      "trigger_actions": ["initialize"]
     }
   ]
 }
 ```
 
-### Based the /annnotations endpoint
+### Based the `/annnotations` endpoint
+
 ```json
 {
   "configurations": [
