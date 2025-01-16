@@ -25,8 +25,6 @@ import WIP from '../\_wip.md';
 1. In the "Additional notification metadata" enable `Schemas`
 1. Click **Create the webhook**.
 
-<WIP />
-
 <WebhookEndpoints
   eu1="https://elis.custom-format-templating.rossum-ext.app/"
   eu2="https://shared-eu2.custom-format-templating.rossum-ext.app/"
@@ -61,17 +59,31 @@ import WIP from '../\_wip.md';
         "…"
       ]
     }
+    // …
   ]
 }
 ```
-
-## Configuration examples
 
 :::warning
 
 Maximum five export configs can be defined per annotation export.
 
 :::
+
+## Configuration examples
+
+### Original document (base64)
+
+```json
+{
+  "export_configs": [
+    {
+      "export_reference_key": "export_original_file",
+      "file_content_template": "{{file.original_file|b64encode}}"
+    }
+  ]
+}
+```
 
 ### Custom CSV
 
