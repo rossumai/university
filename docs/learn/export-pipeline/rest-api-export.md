@@ -21,6 +21,7 @@ REST API export extension is provided and maintained by Rossum.ai in the form of
    1. Trigger events: `Export`
    1. Extension type: `Webhook`
    1. URL (see below)
+1. In "Advanced settings" select **Token owner** (should have Admin access)
 1. Click **Create the webhook**.
 1. Fill in the `Configuration` field (see [Configuration examples](#configuration-examples) for some examples).
 
