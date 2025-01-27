@@ -158,13 +158,14 @@ Note that such created CSV is not available anywhere in the UI, but it's rather 
 {
   // …
   "metadata": {
-    "custom_format_exports": [
+    "child_documents": [
       {
-        "document": "https://elis.rossum.ai/api/v1/documents/123456",
-        "export_reference_key": "export_annotation_to_csv"
+        "document_url": "https://elis.rossum.ai/api/v1/documents/123456",
+        "reference_key": "export_annotation_to_csv"
       }
     ]
   }
+  // …
 }
 ```
 
