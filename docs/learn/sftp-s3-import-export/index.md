@@ -5,6 +5,7 @@ sidebar_position: 1
 
 import WIP from '../\_wip.md';
 import WebhookEndpoints from '../\_webhook_endpoints.md';
+import RossumInternalOnly from '../\_rossum_internal_only.md';
 
 ## Installation
 
@@ -29,6 +30,8 @@ File storage (SFTP and S3) import/export extension is provided and maintained by
   jp="https://shared-jp.rossum.app/svc/scheduled-imports/api/file_storage/v1/dataset_import"
 />
 
+<RossumInternalOnly url="https://rossumai.atlassian.net/l/cp/PV1jzmqK" />
+
 ### Document import endpoints
 
 <WebhookEndpoints
@@ -38,6 +41,8 @@ File storage (SFTP and S3) import/export extension is provided and maintained by
   jp="https://shared-jp.rossum.app/svc/scheduled-imports/api/file_storage/v1/document_import"
 />
 
+<RossumInternalOnly url="https://rossumai.atlassian.net/l/cp/PV1jzmqK" />
+
 ### Export endpoints
 
 <WebhookEndpoints
@@ -46,6 +51,8 @@ File storage (SFTP and S3) import/export extension is provided and maintained by
   us="https://shared-us2.rossum.app/svc/file-storage-export/api/v1/export"
   jp="https://shared-jp.rossum.app/svc/file-storage-export/api/v1/export"
 />
+
+<RossumInternalOnly url="https://rossumai.atlassian.net/l/cp/S1coKmuC" />
 
 ## Basic usage
 
