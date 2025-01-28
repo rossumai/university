@@ -105,79 +105,9 @@ Configuration:
 
 <ConfigurationUsernamePassword />
 
-## Export to SFTP
+## Import master data from S3
 
-Configuration:
-
-```json
-{
-  "credentials": {
-    "host": "sftp.example.com",
-    "port": "22",
-    "type": "sftp",
-    "username": "rossum-demo"
-  },
-  "export_rules": [
-    {
-      "path_to_directory": "/export",
-      "export_object_configurations": [
-        {
-          "type": "annotation_content",
-          "format": "csv",
-          "filename_template": "invoice_data-{annotation.id}.csv"
-        },
-        {
-          "type": "document",
-          "filename_template": "invoice_file-{annotation.id}"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Using dynamic SFTP folder
-
-Configuration for a schema data point `sftp_folder` containing the appropriate address on the SFTP.
-
-```json
-{
-  (...)
-  "export_rules": [
-    {
-      "path_to_directory": "/{sftp_folder}",
-      (...)
-    }
-  ]
-}
-```
-### Using SSH key
-
-<ConfigurationSshKey />
-
-### Using username and password
-
-<ConfigurationUsernamePassword />
-
-## Import from S3
-
-There are few diferences from the SFTP, but it is very similar.
-
-### S3 Credentials
-
-There is only one credential option for the `s3`. It consist of `Access Key ID` and `Secret Access Key`. For more information about these credentials and how to obtain it, see the official AWS documentation here: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
-
-#### Secret Schema
-
-```json
-{
-  "type": "__change_me__",
-  "access_key_id": "__change_me__",
-  "secret_access_key": "__change_me__"
-}
-```
-
-##### Import configuration for S3
+There are few differences from the SFTP imports (see above), but it is very similar.
 
 :::warning
 
@@ -216,6 +146,84 @@ Please note, that the attribute `path` **starts without slash** (as opposed to t
           }
         ]
       }
+    }
+  ]
+}
+```
+
+### Using S3 Credentials
+
+There is only one credential option for the `s3`. It consists of `Access Key ID` and `Secret Access Key`. For more information about these credentials and how to obtain it, see the official AWS documentation here: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
+
+```json
+{
+  "type": "__change_me__",
+  "access_key_id": "__change_me__",
+  "secret_access_key": "__change_me__"
+}
+```
+
+## Export to SFTP
+
+Configuration example:
+
+```json
+{
+  "credentials": {
+    "host": "sftp.example.com",
+    "port": "22",
+    "type": "sftp",
+    "username": "rossum-demo"
+  },
+  "export_rules": [
+    {
+      "path_to_directory": "/export",
+      "export_object_configurations": [
+        {
+          "type": "annotation_content",
+          "format": "csv",
+          "filename_template": "invoice_data-{annotation.id}.csv"
+        },
+        {
+          "type": "document",
+          "filename_template": "invoice_file-{annotation.id}" // No file extension for `document` export type!
+        },
+        {
+          "type": "custom_format",
+          "filename_template": "invoice_data-{annotation.id}.csv",
+          "export_reference_key": "export_annotation_to_csv"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Notice the various `export_object_configurations` types, each having its own configuration. The supported types:
+
+- `annotation_content`: exports data in a Rossum native format
+- `document`: exports the original document
+- `custom_format` exports custom data using the [custom format templating](../export-pipeline/custom-format-templating.md) extension
+
+### Using SSH key
+
+<ConfigurationSshKey />
+
+### Using username and password
+
+<ConfigurationUsernamePassword />
+
+### Using dynamic SFTP folder
+
+Configuration for a schema data point `sftp_folder` containing the appropriate address on the SFTP.
+
+```json
+{
+  // …
+  "export_rules": [
+    {
+      "path_to_directory": "/{sftp_folder}"
+      // …
     }
   ]
 }
