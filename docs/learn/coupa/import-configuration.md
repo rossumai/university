@@ -1040,3 +1040,34 @@ Query attributes necessary for differential update are highlighted.
   }
 }
 ```
+### How to add a new fields/object to the import configuration
+
+1. In case you want to add a new attribute from the Coupa API to be imported to your Master Data Hub, you need to simply add the attribute as a string to the list. Only keep in mind to replace "-" with "_" .
+
+Original file name: `attribute-example`
+New file name: `attribute_example`
+
+2. If you need to add a new object to the import you need to specify the name of the object and then list all attributes that are nested within the given object.
+
+We want to add a nested object which is named `payment-term` and from this object, we need attributes `id` and `name`
+
+Keep in mind to also replace "-" with "_" in the name of the object.
+
+To the import configuration we need to add the following:
+
+```json
+{
+   "fields": [
+        "id",
+        "name",
+        "code",
+        "allowable-precession",
+        "active",
+        "updated-at",
+        "created-at",
+       {
+        "payment_term": ["id", "name"]
+       }
+      ]
+}
+```
