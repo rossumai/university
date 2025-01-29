@@ -30,6 +30,21 @@ All the components of Export pipelines are typically connected by the standard e
 1. Custom format templating prepares extracted data in desired format.
 2. SFTP export stores data in on an SFTP (or S3).
 
+Configuration of `export_rules` of your SFTP extension will look like this then to accept the custom format templating output:
+
+```json
+{
+      "path_to_directory": "/Path_To_Your_Directory",
+      "export_object_configurations": [
+        {
+          "type": "custom_format",
+          "filename_template": "{export_order_name}.json",
+          "export_reference_key": "your_reference_key"
+        }
+      ]
+    }
+```
+
 ### Simple API export pipeline
 
 1. (Optional) Pipeline cleaning cleans previous export data (relevant for debugging).
