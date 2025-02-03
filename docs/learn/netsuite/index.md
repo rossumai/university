@@ -19,7 +19,7 @@ NetSuite service (integration) is provided by Rossum.ai in the form of webhook. 
 1. Navigate to **Extensions → My extensions**.
 1. Click on **Create extension**.
 1. Fill the following fields:
-   1. Name: `SB1 NetSuite: Import/Export`
+   1. Name: `NetSuite SB1: Import/Export`
    1. Trigger events: `Manual` (later also `Scheduled`)
    1. Extension type: `Webhook`
    1. URL (see below)
