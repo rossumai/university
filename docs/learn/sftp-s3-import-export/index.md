@@ -19,6 +19,7 @@ File storage (SFTP and S3) import/export extension is provided and maintained by
    1. Trigger events: `Scheduled` for import or `Export` for exports
    1. Extension type: `Webhook`
    1. URL (see import and export endpoints below)
+   1. In "Advanced settings" select **Token owner** (should have Admin access)
 1. Click **Create the webhook**.
 
 ### Dataset import endpoints
