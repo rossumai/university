@@ -29,6 +29,12 @@ prd update
 
 You can find more information here: https://github.com/rossumai/deployment-manager
 
+:::warning[Using Microsoft Windows?]
+
+Sandboxes are currently not supported on Windows. You can, however, use WSL to run the `prd` command: https://learn.microsoft.com/en-us/windows/wsl/install
+
+:::
+
 ## Available CLI commands
 
 `prd` is a CLI tool and offers the following main commands:
