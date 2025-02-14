@@ -17,7 +17,7 @@ Structured formats import is a webhook maintained by Rossum. In order to use it,
 1. Click on **Create extension**.
 1. Fill the following fields:
    1. Name: `Structured formats import`
-   1. Trigger events: `Document content: Initialize, Started, Updated`
+   1. Trigger events: `Upload: Created`
    1. Extension type: `Webhook`
    1. URL (see below)
 1. Click **Create the webhook**.
