@@ -10,6 +10,27 @@ Structured formats import allows for importing and processing of non-visual docu
 
 ## Installation
 
+:::warning
+
+The support for ingesting XML or JSON files needs to be enabled by Rossum team.
+
+:::
+
+<details>
+  <summary>Rossum team info</summary>
+
+  1. In Django admin under **Organization Group -> Features** check the `stored_only_mime_types` field and if present, remove the `application/xml` and `text/xml` values from the list. If the values are not there or the field does not exist, continue.
+
+  1. In Django admin under **Queue -> Queue Settings**, add the desired mime types to the `accepted_mime_types` list:
+  ```json
+  "accepted_mime_types": [
+    "application/xml",
+    "text/xml",
+    ...
+  ]
+  ```
+</details>
+
 Structured formats import is a webhook maintained by Rossum. In order to use it, follow these steps:
 
 1. Login to your Rossum account.
@@ -17,11 +38,12 @@ Structured formats import is a webhook maintained by Rossum. In order to use it,
 1. Click on **Create extension**.
 1. Fill the following fields:
    1. Name: `Structured formats import`
-   1. Trigger events: `Upload: Created`
+   1. Trigger events: `Upload - Created`
    1. Extension type: `Webhook`
    1. URL (see below)
 1. Click **Create the webhook**.
-1. Fill `Configuration` field (see [Configuration examples](./configuration-examples.md)
+1. Fill `Configuration` field (see [Configuration examples](./configuration-examples.md))
+1. Assign an API token user
 
 <WebhookEndpoints
   eu1="https://elis.task-manager.rossum-ext.app/api/v1/tasks/structured-formats-import"
@@ -32,7 +54,47 @@ Structured formats import is a webhook maintained by Rossum. In order to use it,
 
 ## Basic usage
 
-<WIP />
+:::info Note
+The extension supports multiple configurations. Even when using a single configuration, make sure it's defined in an array named `configurations`.
+:::
+
+```json
+{
+  // Various independent configurations that can be conditionally
+  // triggered via `trigger_condition`:
+  "configurations": [
+    {
+      "trigger_condition": {
+        // supported values: "xml" and "json"
+        "file_type": "xml"
+      },
+
+      // Fields to be extracted from the source file
+      // and assigned to given datapoints:
+      "fields": [
+        {
+          "schema_id": "recipient_name",
+
+          // If many selectors are specified, they serve as a fallback list.
+          // Selectors don't need to specify the root element (see sample XML below)
+          "selectors": ["Header/Recipient/Name"]
+        },
+        ...
+      ]
+    }
+  ]
+}
+```
+Sample source file:
+```xml
+<Invoice>
+  <Header>
+    <Recipient>
+      <Name>Hello world</Name>
+    </Recipient>
+  </Header>
+</Invoice>
+```
 
 ## Available configuration options
 
