@@ -175,7 +175,7 @@ This extension is typically to be used in combination with [REST API Export exte
 
 ### Custom XML
 
-Similarly to other formats, custom XML can be defined using the following template (notice the `| upper` [filter](https://jinja.palletsprojects.com/en/stable/templates/#filters)):
+Similarly to other formats, custom XML can be defined using the following template (notice the `|upper` and `|default` [filters](https://jinja.palletsprojects.com/en/stable/templates/#filters)):
 
 ```json
 {
@@ -196,7 +196,9 @@ Similarly to other formats, custom XML can be defined using the following templa
         "      <CURRENCY>{{ field.currency | upper }}</CURRENCY>",
         // highlight-end
         "      <AMOUNT_TOTAL>{{ field.amount_total }}</AMOUNT_TOTAL>",
-        "      <AMOUNT_TOTAL_TAX>{{ field.amount_total_tax }}</AMOUNT_TOTAL_TAX>",
+        // highlight-start
+        "      <AMOUNT_TOTAL_TAX>{{ field.amount_total_tax | default(0,true) }}</AMOUNT_TOTAL_TAX>",
+        // highlight-end
         "    </HEADER>",
         "  </INVOICE>",
         "</ROSSUM>"
