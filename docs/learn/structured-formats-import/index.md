@@ -19,16 +19,20 @@ The support for ingesting XML or JSON files needs to be enabled by Rossum team.
 <details>
   <summary>Rossum team info</summary>
 
-  1. In Django admin under **Organization Group -> Features** check the `stored_only_mime_types` field and if present, remove the `application/xml` and `text/xml` values from the list. If the values are not there or the field does not exist, continue.
+1. In Django admin under **Organization Group -> Features** check the `stored_only_mime_types` field and if present, remove the `application/xml` and `text/xml` values from the list. If the values are not there or the field does not exist, continue.
 
-  1. In Django admin under **Queue -> Queue Settings**, add the desired mime types to the `accepted_mime_types` list:
-  ```json
+1. In Django admin under **Queue -> Queue Settings**, add the desired mime types to the `accepted_mime_types` list:
+
+```json
+{
   "accepted_mime_types": [
     "application/xml",
-    "text/xml",
-    ...
+    "text/xml"
+    // …
   ]
-  ```
+}
+```
+
 </details>
 
 Structured formats import is a webhook maintained by Rossum. In order to use it, follow these steps:
@@ -85,7 +89,9 @@ The extension supports multiple configurations. Even when using a single configu
   ]
 }
 ```
+
 Sample source file:
+
 ```xml
 <Invoice>
   <Header>
