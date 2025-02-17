@@ -1,5 +1,5 @@
 ---
-title: 'Distributing values among line items'
+title: 'Distributive webhook'
 sidebar_position: 1
 ---
 
@@ -8,7 +8,7 @@ import WIP from '../\_wip.md';
 
 **Distributive webhook** extension allows for distribution of header-level or multiple-lines-level fields to respective line items. This is handy when some values appear only once per multiple lines.
 
-## Distributive Webhook extension
+## Install distributive webhook extension
 
 Distribution of values to line items is provided as a service by Rossum.ai in the form of a webhook. To start using the extension, follow these steps:
 
@@ -58,9 +58,7 @@ The configuration follows this format:
   "distributive_fields": {
     "{line items table schema ID}": {
       "{line item field (target) schema ID}": {
-        "schema_ids": [
-            "{multivalue field's child (source) schema ID}"
-        ]
+        "schema_ids": ["{multivalue field's child (source) schema ID}"]
       }
     }
   }
@@ -74,14 +72,10 @@ For the sample schema above, the configuration would look like this:
   "distributive_fields": {
     "line_items": {
       "item_delivery_note": {
-        "schema_ids": [
-          "delivery_note"
-        ]
+        "schema_ids": ["delivery_note"]
       },
       "item_delivery_date": {
-        "schema_ids": [
-          "delivery_date"
-        ]
+        "schema_ids": ["delivery_date"]
       }
     }
   }
@@ -94,20 +88,18 @@ The default direction of the distribution is downwards, to the rows below the va
 
 For cases when the value should be distributed to the rows above it (instead of the ones below), it is possible to specify the preferred direction.
 
-```json {8,9}
+```json
 {
   "distributive_fields": {
     "line_items": {
       "item_delivery_note": {
-        "schema_ids": [
-          "delivery_note"
-        ],
+        "schema_ids": ["delivery_note"],
+        // highlight-start
         "preferred_direction": "upwards",
         "preferred_direction_only": true
+        // highlight-end
       }
     }
   }
 }
 ```
-
-
