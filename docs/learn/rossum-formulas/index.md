@@ -245,3 +245,36 @@ automation_blocker("message", field.amount)
 ```py
 t.automation_blocker("message", t.field.amount)
 ```
+
+### Create multivalue field values
+
+#### Formula field
+
+:::warning
+
+Multivalue formula fields are currently not supported.
+
+:::
+
+#### Serverless function
+
+```py
+t.field.multivalue_field.all_values = ["AAA", "BBB"]
+```
+
+### Create enum field options
+
+#### Formula field
+
+:::warning
+
+Changing enum field options is currently not supported in formula fields.
+
+:::
+
+#### Serverless function
+
+```py
+t.field.enum_field.attr.options = [{"label":"AAA", "value":"aaa"}, {"label":"BBB", "value":"bbb"}]
+t.field.enum_field = "bbb"
+```
