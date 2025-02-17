@@ -34,15 +34,15 @@ Configuration of `export_rules` of your SFTP extension will look like this then 
 
 ```json
 {
-      "path_to_directory": "/Path_To_Your_Directory",
-      "export_object_configurations": [
-        {
-          "type": "custom_format",
-          "filename_template": "{export_order_name}.json",
-          "export_reference_key": "your_reference_key"
-        }
-      ]
+  "path_to_directory": "/Path_To_Your_Directory",
+  "export_object_configurations": [
+    {
+      "type": "custom_format",
+      "filename_template": "{export_order_name}.json",
+      "export_reference_key": "your_reference_key"
     }
+  ]
+}
 ```
 
 ### Simple API export pipeline
