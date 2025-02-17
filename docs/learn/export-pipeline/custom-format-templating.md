@@ -42,6 +42,7 @@ import WIP from '../\_wip.md';
 {
   "export_configs": [
     {
+      // Optional. Specifies resulting file content encoding. Default: "utf-8".
       "content_encoding": "utf-8",
 
       // Name of the export template used for later reference in the export pipeline.
@@ -63,6 +64,10 @@ import WIP from '../\_wip.md';
   ]
 }
 ```
+
+In the template definitions (`file_content_template` or `file_content_template_multiline`) you can reference any field from annotation object by using dot syntax (for example `{{field.document_id}}`).
+
+It is also possible to access the annotation payload like so: `{{payload['document']['original_file_name']}}`. This way, you can create a link to the annotation directly in the template, for example: `https://example.rossum.app/document/{{payload['annotation']['id']}}`
 
 :::warning
 
@@ -247,4 +252,44 @@ Creates custom JSON templates with some header fields and line items (iteration 
     }
   ]
 }
+```
+
+### Custom TXT (The Tree)
+
+This is example of the Jinja2 language capabilities. The following example is a small Jinja program that generates simple ASCII art representation of a tree. The tree height is a parameter which can be changed, see line 15 in the example config.
+
+```json
+{
+  "export_configs": [
+    {
+      "export_reference_key": "export_tree_ascii_art",
+      "content_encoding": "utf-8",
+      "file_content_template_multiline": [
+        "{%- macro draw_tree(height) -%}",
+        "{%- set width = height * 2 - 1 %}",
+        "{%- for level in range(1, height + 1) -%}",
+        "{%- set padding = (width - (level * 2 - 1)) // 2 %}",
+        "{{ ' ' * padding }}{{ '*' * (level * 2 - 1) }}{{ ' ' * padding }}",
+        "{%- endfor %}",
+        "{{ ' ' * ((width - 1) // 2) }}|{{ ' ' * ((width - 1) // 2) }}",
+        "{%- endmacro %}",
+        // highlight-start
+        "{{ draw_tree(5) }}",
+        // highlight-end
+        ""
+      ]
+    }
+  ]
+}
+```
+
+Result is a generated TXT file representing a tree with crown height of 5 rows:
+
+```text
+    *
+   ***
+  *****
+ *******
+*********
+    |
 ```
