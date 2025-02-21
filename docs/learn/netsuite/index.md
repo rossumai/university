@@ -23,6 +23,7 @@ NetSuite service (integration) is provided by Rossum.ai in the form of webhook. 
    1. Trigger events: `Manual` (later also `Scheduled`)
    1. Extension type: `Webhook`
    1. URL (see below)
+   1. In "Advanced settings" select Token owner
 1. Click **Create the webhook**.
 1. Fill `Configuration` and `Secrets` fields (see [Integration Configuration](./integration-configuration.md) and [Import configuration](./import-configuration.md) or [Export configuration](./export-configuration.md).
 1. (Optional) Disable retries for export webhooks (see: [Considerations & Limitations](./considerations.md#webhook-retries-5-on-failed-requests))
