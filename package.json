@@ -27,7 +27,7 @@
     "@docusaurus/plugin-client-redirects": "^3.7.0",
     "@docusaurus/types": "^3.7.0",
     "@playwright/test": "^1.50.1",
-    "prettier": "^3.5.1"
+    "prettier": "^3.5.2"
   },
   "browserslist": {
     "production": [
