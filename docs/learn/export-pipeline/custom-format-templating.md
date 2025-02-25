@@ -9,9 +9,11 @@ import WIP from '../\_wip.md';
 
 # Custom format templating
 
+**Custom format templating** extension allows users to create custom files in almost any shape or form. It works by defining a custom template and later calling it on export with the annotation data.
+
 ## Installation
 
-"Custom format templating" extension is provided and maintained by Rossum.ai in the form of webhook. To start using it, follow these steps:
+**Custom format templating** extension is provided and maintained by Rossum.ai in the form of webhook. To start using it, follow these steps:
 
 1. Login to your Rossum account.
 1. Navigate to **Extensions → My extensions**.
@@ -74,6 +76,44 @@ It is also possible to access the annotation payload like so: `{{payload['docume
 Maximum five export configs can be defined per annotation export.
 
 :::
+
+## Obtaining generated files
+
+Outputs from the **Custom format templating** webhook are not available anywhere in the UI. Instead, they are stored as a "[document relation](https://elis.rossum.ai/api/docs/#document-relation)". To get the actual document content, you need to call two API endpoints. First, you need to get the relevant relation:
+
+```bash
+curl 'https://elis.rossum.ai/api/v1/document_relations?type=export&annotation=1234567&key=export_annotation_to_csv' \
+--header 'Authorization: Bearer XYZ'
+```
+
+You can omit the `key` to get all available relations for given annotation. The response will look something like this:
+
+```json
+{
+  "pagination": { "total": 1, "total_pages": 1, "next": null, "previous": null },
+  "results": [
+    {
+      "id": 1234567,
+      "type": "export",
+      "key": "export_annotation_to_csv",
+      "annotation": "https://elis.rossum.ai/api/v1/annotations/1234567",
+      // highlight-start
+      "documents": ["https://elis.rossum.ai/api/v1/documents/1234567"],
+      // highlight-end
+      "url": "https://elis.rossum.ai/api/v1/document_relations/1234567"
+    }
+  ]
+}
+```
+
+To get the actual generated document content, you need to call the following API endpoint (see the highlighted document URL above):
+
+```bash
+curl 'https://elis.rossum.ai/api/v1/documents/1234567/content' \
+--header 'Authorization: Bearer XYZ'
+```
+
+Note that you do not need to know these technical details. This extension is typically to be used in combination with [REST API Export extension](./rest-api-export.md) which knows how to work with it.
 
 ## Configuration examples
 
@@ -155,28 +195,7 @@ Document ID,Document Type,Item Description,Item Quantity
 123456,tax_invoice,AWS services #3,750
 ```
 
-:::info
-
-Note that such created CSV is not available anywhere in the UI, but it's rather created as a "document" which is referenced via annotation metadata (on annotation **export** event).
-
-```json
-{
-  // …
-  "metadata": {
-    "child_documents": [
-      {
-        "document_url": "https://elis.rossum.ai/api/v1/documents/123456",
-        "reference_key": "export_annotation_to_csv"
-      }
-    ]
-  }
-  // …
-}
-```
-
-This extension is typically to be used in combination with [REST API Export extension](./rest-api-export.md) which knows how to work with it.
-
-:::
+Learn how to get the generated file in [Obtaining generated files](#obtaining-generated-files) section.
 
 ### Custom XML
 
