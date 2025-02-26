@@ -5,6 +5,7 @@ sidebar_position: 1
 ---
 
 import PaidFeature from '../\_paid_feature.md';
+import RossumInternalOnly from '../\_rossum_internal_only.md';
 
 # Single Sign-On (SSO)
 
@@ -48,3 +49,18 @@ Users with enabled SSO can be switched back to password based login following th
 1. In the **Authentication** section, select **Log in with Password**.
 
 After saving the changes it is necessary to click on **Reset password** which will send an email with password reset link. This is necessary even when the user previously had a password but was switched to SSO! It is because when switching to SSO, we purge the passwords for security reasons.
+
+## Using SSO on both sandbox and production
+
+<RossumInternalOnly url="https://rossumai.atlassian.net/wiki/x/AQA6Uw" />
+
+It is sometimes necessary to grant SSO access to the same user to both sandbox and production. Rossum, however, doesn't allow creating the same in multiple organizations (on the same cluster). Here is our recommended approach to work around this limitation:
+
+1. Create unique users in both sandbox and production organizations. It is recommended to use their actual email addresses in production environment and add "+sandbox" suffix in sandbox environment (for example, test@example.com and test+sandbox@example.com).
+1. In user settings, unify the "External user ID" values (claims). This value should be the same as the email used in the identity provider (so in sandbox remove the "+sandbox" suffix).
+1. Ask your assigned account manager to create two "SSO providers" with the same frontend domain. This way, you'll be able to log in from one URL to both environments. Consider auto-provisioning in production.
+1. Use this one domain to log in to sandbox or production via SSO. You can also log in via password for "break-glass" accounts.
+
+Here is an example of how the login screen will look like:
+
+![Multiple SSO providers](./_img/multiple-sso-providers.png)
