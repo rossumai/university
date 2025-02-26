@@ -1061,10 +1061,10 @@ To the import configuration we need to add the following:
         "id",
         "name",
         "code",
-        "allowable-precession",
+        "allowable_precession",
         "active",
-        "updated-at",
-        "created-at",
+        "updated_at",
+        "created_at",
        {
         "payment_term": ["id", "name"]
        }
