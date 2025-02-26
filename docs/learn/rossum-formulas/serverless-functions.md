@@ -422,3 +422,20 @@ def rossum_hook_request_handler(payload):
 
     return t.hook_response()
 ```
+
+## Working with "updated datapoints"
+
+When users update any datapoints on the annotation screen, the serverless function can get triggered and the resulting values can get recalculated (assuming the extension is listening to "updated" trigger event). You can work with this information to either prevent the updates or optimize the execution (skip recalculations if not needed). To do so, use the following code:
+
+```py
+from txscript import TxScript
+
+def rossum_hook_request_handler(payload):
+    t = TxScript.from_payload(payload)
+
+    if t.field.my_custom_field.id in payload.get("updated_datapoints", []):
+        # Perform any logic when "my_custom_field" field is updated
+        # …
+
+    return t.hook_response()
+```
