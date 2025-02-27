@@ -8,6 +8,8 @@ import WebhookEndpoints from '../\_webhook_endpoints.md';
 
 # Import configuration
 
+Allows importing Coupa data to your Master Data Hub via the [Coupa Code API](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api).
+
 ## Setup
 
 Create webhook as described in [Integration Setup](./integration-setup.md#configuring-rossum) and use the right link from the table below (according the Rossum environment of configured account)
@@ -19,6 +21,68 @@ Create webhook as described in [Integration Setup](./integration-setup.md#config
   eu2="https://shared-eu2.rossum.app/svc/scheduled-imports/api/coupa/v1/import"
   us="https://us.app.rossum.ai/svc/scheduled-imports/api/coupa/v1/import"
 />
+
+## Available configuration options
+
+```json
+{
+  "credentials": {
+    // Example: "b1946ac92492d2347c6235b4d2611184"
+    "client_id": "…",
+    // Example: "https://mycompany-dev.coupahost.com/"
+    "base_api_url": "…",
+    // Example: "core.accounting.read"
+    "client_scope": "…"
+  },
+  "import_config": {
+    // Query parameters to be passed to the Coupa API.
+    "query": {
+      // Explicit list of attributes to be imported.
+      "fields": []
+    },
+    // What method to use when inserting data to MDH. Available options: "update", "insert"
+    "method": "update",
+    // List of attributes that are used to identify a record (used for method "update").
+    "id_keys": ["id"],
+    // Coupa API endpoint.
+    "endpoint": "api/currencies",
+    // Name of the dataset in MDH.
+    "dataset_name": "COUPA_DEV_currencies_v1",
+    // Number of records that will be imported per request.
+    "records_per_request": 50
+  }
+}
+```
+
+### Adding new fields to `query.fields`
+
+In case you want to add a new attribute from the Coupa API to be imported to your Master Data Hub, you need to simply add the attribute as a string to the list. Only keep in mind to replace "-" with "\_". For example:
+
+- Original field name: `attribute-example`
+- New field name: `attribute_example`
+
+If you need to add a new object to the import you need to specify the name of the object and then list all attributes that are nested within the given object. The following example demonstrates import of a nested object which is named `payment-term` and from this object, we need attributes `id` and `name`.
+
+Keep in mind to also replace "-" with "\_" in the name of the object:
+
+```json
+{
+  "fields": [
+    "id",
+    "name",
+    "code",
+    "allowable_precession",
+    "active",
+    "updated_at",
+    "created_at",
+    // highlight-start
+    {
+      "payment_term": ["id", "name"]
+    }
+    // highlight-end
+  ]
+}
+```
 
 ## Configuration examples
 
@@ -1038,36 +1102,5 @@ Query attributes necessary for differential update are highlighted.
     "dataset_name": "COUPA_DEV_uoms_v1",
     "records_per_request": 50
   }
-}
-```
-### How to add a new fields/object to the import configuration
-
-1. In case you want to add a new attribute from the Coupa API to be imported to your Master Data Hub, you need to simply add the attribute as a string to the list. Only keep in mind to replace "-" with "_" .
-
-Original file name: `attribute-example`
-New file name: `attribute_example`
-
-2. If you need to add a new object to the import you need to specify the name of the object and then list all attributes that are nested within the given object.
-
-We want to add a nested object which is named `payment-term` and from this object, we need attributes `id` and `name`
-
-Keep in mind to also replace "-" with "_" in the name of the object.
-
-To the import configuration we need to add the following:
-
-```json
-{
-   "fields": [
-        "id",
-        "name",
-        "code",
-        "allowable_precession",
-        "active",
-        "updated_at",
-        "created_at",
-       {
-        "payment_term": ["id", "name"]
-       }
-      ]
 }
 ```
