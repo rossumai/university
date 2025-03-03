@@ -3,6 +3,8 @@ title: 'Sandboxes'
 sidebar_position: 1
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import PaidFeature from '../\_paid_feature.md';
 
 <PaidFeature />
@@ -13,7 +15,49 @@ Using Sandboxes currently requires installation of an external tooling available
 
 ## Installation
 
-First, download the install script for our Sandboxing tool `deployment-manager` from its Rossum GitHub repository:
+<Tabs groupId="prd">
+  <TabItem value="prd2" label="v2 (latest)" default>
+
+First, download the installation script for our Sandboxing tool `deployment-manager` from its Rossum GitHub repository:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rossumai/deployment-manager/main/install.sh)"
+```
+
+The script will automatically run and install the Sandboxing tool in the `~/.local/bin` folder making it available globally under the command `prd2`.
+
+To upgrade to the latest version, run:
+
+```bash
+prd2 update
+```
+
+You can find more information here: https://github.com/rossumai/deployment-manager
+
+:::warning[Using Microsoft Windows?]
+
+Sandboxes are currently not supported on Windows. You can, however, use WSL to run the `prd2` command: https://learn.microsoft.com/en-us/windows/wsl/install
+
+:::
+
+Alternatively, you can install the tool manually (advanced):
+
+```bash
+cd $(mktemp -d)
+git clone git@github.com:rossumai/deployment-manager.git
+cd deployment-manager
+
+python3 -m venv .
+source bin/activate
+python3 -m pip install pipx
+
+python3 -m pipx install . --force
+```
+
+  </TabItem>
+  <TabItem value="prd" label="v1 (deprecated)">
+
+First, download the installation script for our Sandboxing tool `deployment-manager` from its Rossum GitHub repository:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rossumai/deployment-manager/main/install.sh)"
@@ -34,6 +78,9 @@ You can find more information here: https://github.com/rossumai/deployment-manag
 Sandboxes are currently not supported on Windows. You can, however, use WSL to run the `prd` command: https://learn.microsoft.com/en-us/windows/wsl/install
 
 :::
+
+  </TabItem>
+</Tabs>
 
 ## Available CLI commands
 
@@ -139,7 +186,7 @@ ORGANIZATION:
           targets:
             # ID(s) of the `target` queue(s) (there can be none or more than one):
             - target_id: null
-              # (optional) You could override attribute on the target using `attribute_override` 
+              # (optional) You could override attribute on the target using `attribute_override`
               ## - for example you can have `name:` on `target` different from the `source`
               attribute_override:
                 name: Invoices (PROD)
