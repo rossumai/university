@@ -6,6 +6,7 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import PaidFeature from '../\_paid_feature.md';
+import WIP from '../\_wip.md';
 
 <PaidFeature />
 
@@ -84,6 +85,16 @@ Sandboxes are currently not supported on Windows. You can, however, use WSL to r
 
 ## Available CLI commands
 
+<Tabs groupId="prd">
+  <TabItem value="prd2" label="v2 (latest)" default>
+
+<WIP />
+
+Complete list of commands and their parameters can be found when running `prd2 --help`.
+
+  </TabItem>
+  <TabItem value="prd" label="v1 (deprecated)">
+
 `prd` is a CLI tool and offers the following main commands:
 
 - `prd init`: Initialize a new project (creates mainly `credentials.json` and `prd_config.yaml` files). When called with a project name, it also initialized an empty Git repository.
@@ -94,6 +105,9 @@ Sandboxes are currently not supported on Windows. You can, however, use WSL to r
 - `prd purge unused_schemas`: Removes old unused schemas.
 
 Complete list of commands and their parameters can be found when running `prd --help`.
+
+  </TabItem>
+</Tabs>
 
 ## Available configuration options
 
