@@ -33,7 +33,7 @@ import WIP from '../\_wip.md';
 
 ## Basic usage
 
-The Data Value Extractor serves to extract data from a document that is linked in annotation's metadata. The main use case is to process data from (reference rest-api-export) as a part of (reference export-pipeline).
+The Data Value Extractor serves to extract data from a document that is linked in annotation's metadata. The main use case is to process data from [REST API Export](https://rossum.university/docs/learn/export-pipeline/rest-api-export) as a part of the [Export Pipeline](https://rossum.university/docs/learn/export-pipeline).
 
 ## Available configuration options
 
