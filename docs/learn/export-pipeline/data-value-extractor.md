@@ -37,6 +37,27 @@ The Data Value Extractor serves to extract data from a document that is linked i
 
 ## Available configuration options
 
+Simple extraction example.
+
+```json
+{
+  "extract": [
+    {
+      "format": "json",
+      "source_reference_key": "ifs_export_reply_payload",
+      "extract_rules": [
+        {
+          "value_path": "MessageId[0].value",
+          "target_schema_id": "ifs_reply_message_id"
+        }
+      ]
+    }
+  ]
+}
+```
+
+More complex configuration example using extraction from two different `source_reference_key` and two `extract_rules` in the second one.
+
 ```json
 {
   "extract": [
@@ -44,21 +65,25 @@ The Data Value Extractor serves to extract data from a document that is linked i
       "format": "json",
       "extract_rules": [
         {
-          "value_path": "status_code",
-          "target_schema_id": "api1_status_code"
+          "value_path": "doc_id",
+          "target_schema_id": "erp_doc_id"
         }
       ],
-      "source_reference_key": "export_reply_headers"
+      "source_reference_key": "api_xml_export_reply_payload"
     },
     {
       "format": "json",
       "extract_rules": [
         {
-          "value_path": "id",
-          "target_schema_id": "coupa_invoice_id"
+          "value_path": "status_code",
+          "target_schema_id": "erp_api_status_code"
+        },
+        {
+          "value_path": "headers.etag",
+          "target_schema_id": "erp_api_etag"
         }
       ],
-      "source_reference_key": "export_reply_payload"
+      "source_reference_key": "api_xml_export_reply_headers"
     }
   ]
 }
