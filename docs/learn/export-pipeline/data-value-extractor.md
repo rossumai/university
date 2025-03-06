@@ -56,7 +56,7 @@ Simple extraction example.
 }
 ```
 
-More complex configuration example using extraction from two different `source_reference_key` and two `extract_rules` in the second one.
+More complex configuration example using extraction from two different `source_reference_key` and two `extract_rules` in the second one. There is also the `condition` used, which is reference to a document ID in the annotation which triggers the execution of the extraction.
 
 ```json
 {
@@ -73,6 +73,7 @@ More complex configuration example using extraction from two different `source_r
     },
     {
       "format": "json",
+      "condition": "extraction_trigger",
       "extract_rules": [
         {
           "value_path": "status_code",
@@ -89,8 +90,22 @@ More complex configuration example using extraction from two different `source_r
 }
 ```
 
-Currently only `json` format is supported.
+## Parameters
 
-- `value_path` is the jmespath to the desired place of the response (be it headers or body). Headers are stored in `json` format.
-- `target_schema_id` is the schema_id of the annotation you are exporting, where the data will be stored and thus available for further extensions in the export pipeline (reference).
-- `source_reference_key` is the reference key for the stored data in annotation's metadata
+### Extract Object
+
+The extract object consists of the following parameters:
+
+| Attribute            | Type   | Description |
+|----------------------|--------|-------------|
+| `format`            | str    | File format. Currently, only `json` value is supported. |
+| `condition`         | str    | Reference to `annotation.content` `schema_id` that holds evaluated value. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. |
+| `source_reference_key` | str  | Relation key into metadata for source document. |
+| `extract_rules`     | object | Rules to update annotation's content. |
+
+The `extract_rules` object defines how values are extracted and stored:
+
+| Attribute         | Type   | Description |
+|------------------|--------|-------------|
+| `value_path`    | str    | Query to get the value from the referred document. In case of `format=json`, it should be in `jmespath` syntax. |
+| `target_schema_id` | str  | Annotation's `schema_id` to be updated. |
