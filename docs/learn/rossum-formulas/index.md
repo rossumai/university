@@ -99,8 +99,11 @@ tmp = t.field.amount
 #### Formula field
 
 ```py
-field.amount.id               # Datapoint system ID
-field.amount.rir_confidence   # Confidence score
+field.amount.id                  # Datapoint system ID
+field.amount.rir_confidence      # Confidence score
+
+field.amount.attr.ocr_raw_text   # Raw value extracted by OCR, if applicable
+field.amount.attr.rir_raw_text   # Raw extracted text by RIR
 ```
 
 #### Serverless function
@@ -108,6 +111,9 @@ field.amount.rir_confidence   # Confidence score
 ```py
 t.field.amount.id
 t.field.amount.rir_confidence
+
+t.field.amount.attr.ocr_raw_text
+t.field.amount.attr.rir_raw_text
 ```
 
 ### Write into datapoint value
