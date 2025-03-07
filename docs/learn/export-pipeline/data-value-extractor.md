@@ -5,9 +5,10 @@ sidebar_position: 4
 ---
 
 import WebhookEndpoints from '../\_webhook_endpoints.md';
-import WIP from '../\_wip.md';
 
 # Data value extractor
+
+The Data Value Extractor serves to extract data from a document that is linked in annotation's metadata. The main use case is to process data from [REST API Export](./rest-api-export.md) as a part of the [Export Pipeline](./index.md).
 
 ## Installation
 
@@ -22,18 +23,12 @@ import WIP from '../\_wip.md';
 1. In "Advanced settings" select **Token owner** (should have Admin access)
 1. Click **Create the webhook**.
 
-<WIP />
-
 <WebhookEndpoints
   eu1="https://elis.data-value-extractor.rossum-ext.app/"
   eu2="https://shared-eu2.data-value-extractor.rossum-ext.app/"
   us="https://us.data-value-extractor.rossum-ext.app/"
   jp="https://shared-jp.data-value-extractor.rossum-ext.app/"
 />
-
-## Basic usage
-
-The Data Value Extractor serves to extract data from a document that is linked in annotation's metadata. The main use case is to process data from [REST API Export](https://rossum.university/docs/learn/export-pipeline/rest-api-export) as a part of the [Export Pipeline](https://rossum.university/docs/learn/export-pipeline).
 
 ## Available configuration options
 
@@ -96,16 +91,16 @@ More complex configuration example using extraction from two different `source_r
 
 The extract object consists of the following parameters:
 
-| Attribute            | Type   | Description |
-|----------------------|--------|-------------|
-| `format`            | str    | File format. Currently, only `json` value is supported. |
-| `condition`         | str    | Reference to `annotation.content` `schema_id` that holds evaluated value. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. |
-| `source_reference_key` | str  | Relation key into metadata for source document. |
-| `extract_rules`     | object | Rules to update annotation's content. |
+| Attribute              | Type   | Description                                                                                                                                                                           |
+| ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`               | str    | File format. Currently, only `json` value is supported.                                                                                                                               |
+| `condition`            | str    | Reference to `annotation.content` `schema_id` that holds evaluated value. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. |
+| `source_reference_key` | str    | Relation key into metadata for source document.                                                                                                                                       |
+| `extract_rules`        | object | Rules to update annotation's content.                                                                                                                                                 |
 
 The `extract_rules` object defines how values are extracted and stored:
 
-| Attribute         | Type   | Description |
-|------------------|--------|-------------|
-| `value_path`    | str    | Query to get the value from the referred document. In case of `format=json`, it should be in `jmespath` syntax. |
-| `target_schema_id` | str  | Annotation's `schema_id` to be updated. |
+| Attribute          | Type | Description                                                                                                     |
+| ------------------ | ---- | --------------------------------------------------------------------------------------------------------------- |
+| `value_path`       | str  | Query to get the value from the referred document. In case of `format=json`, it should be in `jmespath` syntax. |
+| `target_schema_id` | str  | Annotation's `schema_id` to be updated.                                                                         |
