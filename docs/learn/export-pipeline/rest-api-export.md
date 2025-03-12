@@ -160,12 +160,26 @@ The `response_headers_reference_key` stores the headers of the reply with added 
 }
 ```
 
-
 The `response_payload_reference_key` stores the full body from the reply.
 
 Both of them are stored as documents in Rossum and can be retrieved via API. There is an extension prepared for you, extracts important information from the response, key values which can be then stored to the Rossum annontation [Data value extractor](./data-value-extractor.md).
 
-For original file use `#{original_file}`.
+For sending original document file e.g in the API POST request use `#{original_file}` For exampe this is useful when attachning original invoice file to existing invoice object in an ERP system. In the followoing exmaple the `export_reference_key` is not used because it is not needed, we are senting only the original document file, not usinfg a previously generated payload.
+
+```json
+{
+  "request": {
+    "url": "https://apiexport.myserver.com/attachment",
+    "method": "POST",
+    "content": "#{original_file}",
+    "headers": {
+      "Content-Type": "application/pdf"
+    }
+  },
+  "response_headers_reference_key": "api_attach_export_reply_headers",
+  "response_payload_reference_key": "api_attach_export_reply_payload"
+}
+```
 
 You can use condition that controls whether the export is triggered. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. E.g. if the referred field is non-empty (`!= ""`) it will start export and skip it if it is empty (`== ""`). The condition definition follows the [JSON templating](./../json-templating/index.md) syntax, e.g. `"condition": "@{api_gate}"`.
 
