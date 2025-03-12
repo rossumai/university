@@ -240,6 +240,49 @@ Specifically, this example is for Azure API Management:
 }
 ```
 
+## Status Code Resolver
+
+The `status_code_resolver` is a tool that allows you to define error handling, that means how HTTP status codes from the API response are handled in Rossum.
+
+* **error**: A list of status codes that should be considered as errors. They will cause the export process to fail and will be displayes as errors on the document in Rossum. The content of the error message is the content sent by the API.
+* **warning**: A list of status codes that should be considered warnings. They will NOT cause the export process to fail, but will be shown as warning message. The content of the warning message is the content sent by the API.
+* All other status codes will be considered successful.
+
+By default when no error handling by `status_code_resolver` is defined, all status codes are considered successful.
+The resolver only applies to the export request, not the authentication request.
+
+If you are using the OAuth2 authentication method, keep in mind that the hook uses the HTTP status code 401 (Unauthorized) to detect when authentication is required. So in that case, it will always try to authenticate first, regardless of the status code resolver. However, if the export request fails again after a successful authentication, the hook will consider the status code according to the resolver. For example, if you have 401 listed as an error status code, the export process will fail if the export request returns 401 after a successful authentication.
+
+Example configuration with status code resolver:
+
+```json
+{
+  "request": {
+    "url": "https://apiexport.yourserver.com/payload",
+    "method": "POST",
+    "content": "#{file_content}",
+    "headers": {
+      "Content-Type": "application/xml"
+    }
+  },
+  "export_reference_key": "export_annotation_to_xml_bas64",
+  "status_code_resolver": {
+    "error": [
+      403,
+      500
+    ],
+    "warning": [
+      201,
+      202,
+      204,
+      206
+    ]
+  },
+  "response_headers_reference_key": "api_xml_export_reply_headers",
+  "response_payload_reference_key": "api_xml_export_reply_payload"
+}
+```
+
 ## Parameters
 
 ### Export Object
@@ -254,6 +297,7 @@ The export object consists of the following parameters:
 | `condition` *(optional)*      | str    | Reference to a `schema_id` in `annotation.content` controlling execution. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. The condition definition follows the [JSON templating](./../json-templating/index.md) syntax e.g. `"condition": "@{api_gate}"`                    |
 | `response_headers_reference_key` *(optional)* | str    | Key to store API response headers (including `status_code`).                                  |
 | `response_payload_reference_key` *(optional)* | str    | Key to store the full response body from the API.                                             |
+| `status_code_resolver` *(optional)* | object    | Defines status code handling.                                             |
 
 ### Request Object
 
@@ -276,3 +320,12 @@ The authentication object defines how credentials are used to obtain an access t
 | `method`     | str    | The HTTP method (`POST`, `GET`, etc.).                          |
 | `headers`    | object | Headers for authentication request.                             |
 | `data`       | object | Credentials and grant type for authentication.                  |
+
+### Status Code Resolver Object
+
+Dictionary defining how to to handle different HTTP status codes in Rossum.
+
+| Attribute      | Type   | Description                                                       |
+|---------------|--------|-------------------------------------------------------------------|
+| `error`        | list of integers    | List of error status codes (export fails).                                 |
+| `warning`     | list of integers    | List of warning status codes (export continues with warning).                          |
