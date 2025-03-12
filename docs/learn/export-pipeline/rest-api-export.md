@@ -118,7 +118,52 @@ The `access_token` is automatically retrieved using given credentials and saved 
 }
 ```
 
-Please note the `response_headers_reference_key` and `response_payload_reference_key`. The first stores the headers of the reply (with added `status_code`), the later stores the full body from the reply. Both of them can be retrieved via API. There is an extension prepared for you, that will extract key values [Data value extractor](./data-value-extractor.md).
+The `response_headers_reference_key` stores the headers of the reply with added `status_code`, `headers` converted to json strucutre and `raw` headers. See the following example:
+
+```json
+{
+    "status_code": 200,
+    "headers": {
+        "access_control_allow_origin": "*",
+        "alt_svc": "h3=\":443\"; ma=2592000",
+        "content_type": "application/json",
+        "date": "Tue, 25 Jun 2024 08:02:26 GMT",
+        "vary": "Accept-Encoding",
+        "transfer_encoding": "chunked"
+    },
+    "raw": [
+        [
+            "Access-Control-Allow-Origin",
+            "*"
+        ],
+        [
+            "Alt-Svc",
+            "h3=\":443\"; ma=2592000"
+        ],
+        [
+            "Content-Type",
+            "application/json"
+        ],
+        [
+            "Date",
+            "Tue, 25 Jun 2024 08:02:26 GMT"
+        ],
+        [
+            "Vary",
+            "Accept-Encoding"
+        ],
+        [
+            "Transfer-Encoding",
+            "chunked"
+        ]
+    ]
+}
+```
+
+
+The `response_payload_reference_key` stores the full body from the reply.
+
+Both of them are stored as documents in Rossum and can be retrieved via API. There is an extension prepared for you, extracts important information from the response, key values which can be then stored to the Rossum annontation [Data value extractor](./data-value-extractor.md).
 
 For original file use `#{original_file}`.
 
