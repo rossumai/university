@@ -37,7 +37,7 @@ Webhook URL endpoints:
 />
 
 
-## Available configuration options
+## Configuration examples
 
 This extension works as a part of the [Export Pipeline](./index.md) and it expects a payload file to be generated using [Custom format templating extension](./custom-format-templating.md).
 
@@ -283,7 +283,7 @@ Example configuration with status code resolver:
 }
 ```
 
-## Parameters
+## Available configuration options
 
 ### Export Object
 
