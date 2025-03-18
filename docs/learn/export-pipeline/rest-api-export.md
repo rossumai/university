@@ -36,7 +36,6 @@ Webhook URL endpoints:
   jp="https://shared-jp.rest-api-export.rossum-ext.app/"
 />
 
-
 ## Configuration examples
 
 This extension works as a part of the [Export Pipeline](./index.md) and it expects a payload file to be generated using [Custom format templating extension](./custom-format-templating.md).
@@ -122,41 +121,23 @@ The `response_headers_reference_key` stores the headers of the reply with added 
 
 ```json
 {
-    "status_code": 200,
-    "headers": {
-        "access_control_allow_origin": "*",
-        "alt_svc": "h3=\":443\"; ma=2592000",
-        "content_type": "application/json",
-        "date": "Tue, 25 Jun 2024 08:02:26 GMT",
-        "vary": "Accept-Encoding",
-        "transfer_encoding": "chunked"
-    },
-    "raw": [
-        [
-            "Access-Control-Allow-Origin",
-            "*"
-        ],
-        [
-            "Alt-Svc",
-            "h3=\":443\"; ma=2592000"
-        ],
-        [
-            "Content-Type",
-            "application/json"
-        ],
-        [
-            "Date",
-            "Tue, 25 Jun 2024 08:02:26 GMT"
-        ],
-        [
-            "Vary",
-            "Accept-Encoding"
-        ],
-        [
-            "Transfer-Encoding",
-            "chunked"
-        ]
-    ]
+  "status_code": 200,
+  "headers": {
+    "access_control_allow_origin": "*",
+    "alt_svc": "h3=\":443\"; ma=2592000",
+    "content_type": "application/json",
+    "date": "Tue, 25 Jun 2024 08:02:26 GMT",
+    "vary": "Accept-Encoding",
+    "transfer_encoding": "chunked"
+  },
+  "raw": [
+    ["Access-Control-Allow-Origin", "*"],
+    ["Alt-Svc", "h3=\":443\"; ma=2592000"],
+    ["Content-Type", "application/json"],
+    ["Date", "Tue, 25 Jun 2024 08:02:26 GMT"],
+    ["Vary", "Accept-Encoding"],
+    ["Transfer-Encoding", "chunked"]
+  ]
 }
 ```
 
@@ -244,9 +225,9 @@ Specifically, this example is for Azure API Management:
 
 The `status_code_resolver` is a tool that allows you to define error handling, that means how HTTP status codes from the API response are handled in Rossum.
 
-* **error**: A list of status codes that should be considered as errors. They will cause the export process to fail and will be displayes as errors on the document in Rossum. The content of the error message is the content sent by the API.
-* **warning**: A list of status codes that should be considered warnings. They will NOT cause the export process to fail, but will be shown as warning message. The content of the warning message is the content sent by the API.
-* All other status codes will be considered successful.
+- **error**: A list of status codes that should be considered as errors. They will cause the export process to fail and will be displayes as errors on the document in Rossum. The content of the error message is the content sent by the API.
+- **warning**: A list of status codes that should be considered warnings. They will NOT cause the export process to fail, but will be shown as warning message. The content of the warning message is the content sent by the API.
+- All other status codes will be considered successful.
 
 By default when no error handling by `status_code_resolver` is defined, all status codes are considered successful.
 The resolver only applies to the export request, not the authentication request.
@@ -267,16 +248,8 @@ Example configuration with status code resolver:
   },
   "export_reference_key": "export_annotation_to_xml_bas64",
   "status_code_resolver": {
-    "error": [
-      403,
-      500
-    ],
-    "warning": [
-      201,
-      202,
-      204,
-      206
-    ]
+    "error": [403, 500],
+    "warning": [201, 202, 204, 206]
   },
   "response_headers_reference_key": "api_xml_export_reply_headers",
   "response_payload_reference_key": "api_xml_export_reply_payload"
@@ -289,43 +262,43 @@ Example configuration with status code resolver:
 
 The export object consists of the following parameters:
 
-| Attribute                      | Type   | Description                                                                                      |
-|--------------------------------|--------|------------------------------------------------------------------------------------------------|
-| `export_reference_key`        | str    | A unique key referencing the exported data prepared by the [Custom format templating extension](./custom-format-templating.md).                                                    |
-| `request`                     | object | Defines the REST API request (URL, method, headers, and body content).                        |
-| `auth` *(optional)*           | object | Configuration for authentication, supporting OAuth2.                                          |
-| `condition` *(optional)*      | str    | Reference to a `schema_id` in `annotation.content` controlling execution. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. The condition definition follows the [JSON templating](./../json-templating/index.md) syntax e.g. `"condition": "@{api_gate}"`                    |
-| `response_headers_reference_key` *(optional)* | str    | Key to store API response headers (including `status_code`).                                  |
-| `response_payload_reference_key` *(optional)* | str    | Key to store the full response body from the API.                                             |
-| `status_code_resolver` *(optional)* | object    | Defines status code handling.                                             |
+| Attribute                                     | Type   | Description                                                                                                                                                                                                                                                                                                          |
+| --------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `export_reference_key`                        | str    | A unique key referencing the exported data prepared by the [Custom format templating extension](./custom-format-templating.md).                                                                                                                                                                                      |
+| `request`                                     | object | Defines the REST API request (URL, method, headers, and body content).                                                                                                                                                                                                                                               |
+| `auth` _(optional)_                           | object | Configuration for authentication, supporting OAuth2.                                                                                                                                                                                                                                                                 |
+| `condition` _(optional)_                      | str    | Reference to a `schema_id` in `annotation.content` controlling execution. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. The condition definition follows the [JSON templating](./../json-templating/index.md) syntax e.g. `"condition": "@{api_gate}"` |
+| `response_headers_reference_key` _(optional)_ | str    | Key to store API response headers (including `status_code`).                                                                                                                                                                                                                                                         |
+| `response_payload_reference_key` _(optional)_ | str    | Key to store the full response body from the API.                                                                                                                                                                                                                                                                    |
+| `status_code_resolver` _(optional)_           | object | Defines status code handling.                                                                                                                                                                                                                                                                                        |
 
 ### Request Object
 
 The `request` object contains parameters defining the HTTP request:
 
-| Attribute      | Type   | Description                                                       |
-|---------------|--------|-------------------------------------------------------------------|
-| `url`        | str    | The target API endpoint URL.                                     |
-| `method`     | str    | The HTTP method (`POST`, `PUT`, etc.).                          |
-| `headers`    | object | HTTP headers for the request.                                   |
-| `content`    | str    | The body of the request (supports placeholders like `#{file_content}`). |
+| Attribute | Type   | Description                                                             |
+| --------- | ------ | ----------------------------------------------------------------------- |
+| `url`     | str    | The target API endpoint URL.                                            |
+| `method`  | str    | The HTTP method (`POST`, `PUT`, etc.).                                  |
+| `headers` | object | HTTP headers for the request.                                           |
+| `content` | str    | The body of the request (supports placeholders like `#{file_content}`). |
 
 ### Authentication Object (`auth`)
 
 The authentication object defines how credentials are used to obtain an access token.
 
-| Attribute      | Type   | Description                                                       |
-|---------------|--------|-------------------------------------------------------------------|
-| `url`        | str    | The authentication endpoint URL.                                 |
-| `method`     | str    | The HTTP method (`POST`, `GET`, etc.).                          |
-| `headers`    | object | Headers for authentication request.                             |
-| `data`       | object | Credentials and grant type for authentication.                  |
+| Attribute | Type   | Description                                    |
+| --------- | ------ | ---------------------------------------------- |
+| `url`     | str    | The authentication endpoint URL.               |
+| `method`  | str    | The HTTP method (`POST`, `GET`, etc.).         |
+| `headers` | object | Headers for authentication request.            |
+| `data`    | object | Credentials and grant type for authentication. |
 
 ### Status Code Resolver Object
 
 Dictionary defining how to to handle different HTTP status codes in Rossum.
 
-| Attribute      | Type   | Description                                                       |
-|---------------|--------|-------------------------------------------------------------------|
-| `error`        | list of integers    | List of error status codes (export fails).                                 |
-| `warning`     | list of integers    | List of warning status codes (export continues with warning).                          |
+| Attribute | Type             | Description                                                   |
+| --------- | ---------------- | ------------------------------------------------------------- |
+| `error`   | list of integers | List of error status codes (export fails).                    |
+| `warning` | list of integers | List of warning status codes (export continues with warning). |

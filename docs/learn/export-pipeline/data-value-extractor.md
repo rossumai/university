@@ -91,12 +91,12 @@ More complex configuration example using extraction from two different `source_r
 
 The extract object consists of the following parameters:
 
-| Attribute              | Type   | Description                                                                                                                                                                           |
-| ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `format`               | str    | File format. Currently, only `json` value is supported.                                                                                                                               |
-| `condition`            | str    | Reference to `annotation.content` `schema_id` that holds evaluated value. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. The condition follows the [JSON templating](./../json-templating/index.md) syntax e.g. `"condition": "@{api_gate}"`|
-| `source_reference_key` | str    | Relation key into metadata for source document.                                                                                                                                       |
-| `extract_rules`        | object | Rules to update annotation's content.                                                                                                                                                 |
+| Attribute              | Type   | Description                                                                                                                                                                                                                                                                                               |
+| ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`               | str    | File format. Currently, only `json` value is supported.                                                                                                                                                                                                                                                   |
+| `condition`            | str    | Reference to `annotation.content` `schema_id` that holds evaluated value. When it's empty or "false" (case insensitive), this section won't be evaluated. Otherwise, it will proceed. The condition follows the [JSON templating](./../json-templating/index.md) syntax e.g. `"condition": "@{api_gate}"` |
+| `source_reference_key` | str    | Relation key into metadata for source document.                                                                                                                                                                                                                                                           |
+| `extract_rules`        | object | Rules to update annotation's content.                                                                                                                                                                                                                                                                     |
 
 The `extract_rules` object defines how values are extracted and stored:
 
