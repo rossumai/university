@@ -68,7 +68,7 @@ More complex configuration example using extraction from two different `source_r
     },
     {
       "format": "json",
-      "condition": "condition": "@{api_gate}",
+      "condition": "@{api_gate}",
       "extract_rules": [
         {
           "value_path": "status_code",
